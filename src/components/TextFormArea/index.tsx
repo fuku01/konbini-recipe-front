@@ -4,6 +4,7 @@ type TextFormProps = {
   label?: string
   placeholder?: string
   witdh: string
+  value?: string
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
