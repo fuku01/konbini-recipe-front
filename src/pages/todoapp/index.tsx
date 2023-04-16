@@ -7,7 +7,7 @@ import { Todo } from '@/types/Todo'
 //
 //
 //
-const Home = () => {
+const Todoapp = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [todo, setTodo] = useState<string>('')
 
@@ -127,4 +127,4 @@ const Home = () => {
   }
 }
 
-export default Home
+export default Todoapp
