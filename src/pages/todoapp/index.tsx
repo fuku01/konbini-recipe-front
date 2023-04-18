@@ -116,15 +116,4 @@ const Todoapp = () => {
   )
 }
 
-{
-  {
-    {
-      {
-        {
-        }
-      }
-    }
-  }
-}
-
 export default Todoapp
