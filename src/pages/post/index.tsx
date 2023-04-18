@@ -1,6 +1,5 @@
-import { log } from 'console'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PostButton } from '@/components/Button'
 import TextForm from '@/components/TextForm'
 import TextFormArea from '@/components/TextFormArea'
@@ -15,7 +14,6 @@ const Post = () => {
   const postRecipe = () => {
     axios.post('http://localhost:8000/recipes', {
       recipe: {
-        user_id: 1, // ユーザーIDを追加
         title: title,
         content: content,
         time: time,
@@ -31,8 +29,7 @@ const Post = () => {
   //
   // この下からリターンの中身
   return (
-    <div className='px-5 py-5'>
-      <p className='text-center text-4xl mb-10'>レシピ投稿画面</p>
+    <div>
       <input type='file' />
       <TextForm
         label='レシピタイトル'
@@ -47,7 +44,7 @@ const Post = () => {
       <TextFormArea
         placeholder='例）じゃがりこをレンジで５分温めるとマッシュポテトになります。'
         witdh='w-full'
-        label='説明'
+        label='作り方'
         value={content}
         onChange={(e) => {
           setContent(e.target.value)
@@ -87,7 +84,7 @@ const Post = () => {
           }}
         />
       </div>
-      <div className='text-right mt-5'>
+      <div className='text-right mt-14'>
         <PostButton
           onClick={() => {
             console.log('クリック！！')
