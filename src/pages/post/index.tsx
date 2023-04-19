@@ -40,7 +40,11 @@ const Post = () => {
           setTitle(e.target.value)
         }}
       />
-      <TextForm label='カテゴリ' placeholder='※未実装（仮でフォームを置いてる）' witdh='w-full' />
+      <TextForm
+        label='カテゴリ'
+        placeholder='※未実装（仮でフォームを置いてる）'
+        witdh='w-full'
+      />
       <TextFormArea
         placeholder='例）じゃがりこをレンジで５分温めるとマッシュポテトになります。'
         witdh='w-full'

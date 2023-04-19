@@ -40,11 +40,10 @@ const Myrecipe = () => {
         {myrecipe.map((recipe) => (
           <div
             key={recipe.id}
-            className='bg-[#FFFAF2] hover:bg-[#FDF1DE] rounded-lg shadow-md hover:shadow-lg py-5 my-5'
+            className='bg-[#FFFAF2] hover:bg-[#FDF1DE] hover:text-orange-500 rounded-lg shadow-md hover:shadow-lg py-5 my-3'
           >
             <Link href={`/recipes/${recipe.id}`}>
               <div
-                className='text-xl font-semibold'
                 onClick={() => {
                   console.log(recipe.id, '←このIDのレシピをクリックしました')
                 }}
