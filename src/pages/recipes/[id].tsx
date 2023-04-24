@@ -1,9 +1,11 @@
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import { faFire, faYenSign } from '@fortawesome/free-solid-svg-icons'
+import { faFire, faPen, faYenSign } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
+import { PostButton } from '@/components/Button'
 
 type Recipe = {
   id: number
@@ -12,13 +14,16 @@ type Recipe = {
   content: string
   time: number
   calorie: number
-  image: string
+  image: string | undefined
   created_at: Date
   updated_at: Date
   price: number
 }
 
-const Recipe = () => {
+const Recipes = () => {
+  // 以下のコードはレシピの詳細ページを表示するためのコード。
+  // useRouterを使って、URLのパラメーターからIDを取得しています。
+  // そのIDを使って、axiosを使って、レシピの詳細を取得しています。
   const router = useRouter()
   const { id } = router.query
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined)
@@ -45,11 +50,11 @@ const Recipe = () => {
     if (!recipe?.time) {
       return 'text-gray-400'
     } else if (recipe.time < 5) {
-      return 'text-green-400'
+      return 'text-[#68B68D]'
     } else if (recipe.time < 20) {
-      return 'text-yellow-400'
+      return 'text-[#FBD87F]'
     } else {
-      return 'text-red-400'
+      return 'text-[#F16B6E]'
     }
   }
   // 金額アイコンの色を変える関数
@@ -57,11 +62,11 @@ const Recipe = () => {
     if (!recipe?.price) {
       return 'text-gray-400'
     } else if (recipe.price < 500) {
-      return 'text-green-400'
+      return 'text-[#68B68D]'
     } else if (recipe.price < 2000) {
-      return 'text-yellow-400'
+      return 'text-[#FBD87F]'
     } else {
-      return 'text-red-400'
+      return 'text-[#F16B6E]'
     }
   }
   // カロリーアイコンの色を変える関数
@@ -69,11 +74,11 @@ const Recipe = () => {
     if (!recipe?.calorie) {
       return 'text-gray-400'
     } else if (recipe.calorie < 500) {
-      return 'text-green-400'
+      return 'text-[#68B68D]'
     } else if (recipe.calorie < 1000) {
-      return 'text-yellow-400'
+      return 'text-[#FBD87F]'
     } else {
-      return 'text-red-400'
+      return 'text-[#F16B6E]'
     }
   }
 
@@ -111,7 +116,16 @@ const Recipe = () => {
       <div className='my-1 text-orange-500'>作り方</div>
       <div className='bg-[#FDF1DE] rounded-sm shadow-md px-2 py-2 '>{recipe?.content}</div>
       <div className='my-5 text-orange-500'>バーコードタグ</div>
+
+      <div className='text-right mt-14'>
+        <Link href={'/editrecipes/' + id}>
+          <PostButton>
+            {' '}
+            <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
+          </PostButton>
+        </Link>
+      </div>
     </div>
   )
 }
-export default Recipe
+export default Recipes

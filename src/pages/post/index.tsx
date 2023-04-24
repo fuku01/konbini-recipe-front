@@ -1,5 +1,8 @@
+import { faShare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import router, { Router } from 'next/router'
+import React, { useState } from 'react'
 import { PostButton } from '@/components/Button'
 import TextForm from '@/components/TextForm'
 import TextFormArea from '@/components/TextFormArea'
@@ -10,27 +13,40 @@ const Post = () => {
   const [time, setTime] = useState('')
   const [price, setPrice] = useState('')
   const [calorie, setCalorie] = useState('')
+  const [image, setImage] = useState<File | null>(null)
 
   const postRecipe = () => {
-    axios.post('http://localhost:8000/recipes', {
-      recipe: {
-        title: title,
-        content: content,
-        time: time,
-        price: price,
-        calorie: calorie,
-      },
-    })
+    axios
+      .post('http://localhost:8000/recipes', {
+        recipe: {
+          title: title,
+          content: content,
+          time: time,
+          price: price,
+          calorie: calorie,
+          image: image,
+        },
+      })
+      .then((response) => {
+        router.push('/home')
+        alert('レシピの投稿に成功しました')
+        console.log('レシピの投稿に成功しました', response.data)
+      })
+      .catch((error) => {
+        console.log('レシピの投稿に失敗しました', error)
+      })
   }
 
-  //
-  //
-  //
-  //
   // この下からリターンの中身
   return (
     <div>
-      <input type='file' />
+      <input
+        className=''
+        type='file'
+        onChange={(e) => {
+          setImage(e.target.files?.[0] || null)
+        }}
+      />
       <TextForm
         label='レシピタイトル'
         placeholder='例）じゃがりこマッシュポテト'
@@ -40,11 +56,7 @@ const Post = () => {
           setTitle(e.target.value)
         }}
       />
-      <TextForm
-        label='カテゴリ'
-        placeholder='※未実装（仮でフォームを置いてる）'
-        witdh='w-full'
-      />
+      <TextForm label='カテゴリ' placeholder='※未実装（仮でフォームを置いてる）' witdh='w-full' />
       <TextFormArea
         placeholder='例）じゃがりこをレンジで５分温めるとマッシュポテトになります。'
         witdh='w-full'
@@ -95,7 +107,7 @@ const Post = () => {
             postRecipe()
           }}
         >
-          投稿
+          <FontAwesomeIcon icon={faShare} />
         </PostButton>
       </div>
     </div>

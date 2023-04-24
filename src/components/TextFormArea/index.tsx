@@ -4,7 +4,7 @@ type TextFormProps = {
   label?: string
   placeholder?: string
   witdh: string
-  value?: string
+  value?: string | number
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
@@ -16,6 +16,7 @@ const TextFormArea = (props: TextFormProps) => {
       <div className='relative w-full min-w-[100px]'>
         <textarea
           placeholder={placeholder}
+          value={props.value} // ここにvalueプロパティを追加（編集ページの初期値表示のために必要）
           className='peer h-full min-h-[200px] mt-5 w-full resize-none border-b border-blue-gray-200 bg-transparent pt-6 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-orange-500 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50 rounded-none'
           onChange={props.onChange}
         ></textarea>

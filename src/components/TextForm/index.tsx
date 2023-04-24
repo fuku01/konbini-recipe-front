@@ -4,7 +4,7 @@ type TextFormProps = {
   label?: string
   placeholder?: string
   witdh: string
-  value?: string
+  value?: string | number
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -16,6 +16,7 @@ const TextForm = (props: TextFormProps) => {
       <div className='relative h-15 w-full'>
         <input
           placeholder={placeholder}
+          value={props.value} // ここにvalueプロパティを追加（編集ページの初期値表示のために必要）
           className='peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-10 pb-2 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-orange-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 rounded-none'
           onChange={props.onChange}
         />
