@@ -1,53 +1,56 @@
-import React from 'react'
+import React from 'react';
 
 type ButtonProps = {
-  children?: React.ReactNode
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-}
-
+  children?: React.ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+};
 export const PostButton = (props: ButtonProps) => {
   return (
     <button
-      className={
-        'py-5 px-6 text-center text-xl rounded-full text-white bg-[#94C8AD] hover:bg-[#68B68D] shadow-md hover:syadow-lg'
-      }
+      className="hover:syadow-lg rounded-full bg-[#94C8AD] px-5 py-4 text-center text-xl text-white shadow-md hover:bg-[#68B68D]"
       onClick={props.onClick}
     >
       {props.children}
     </button>
-  )
-}
+  );
+};
 
 export const EditButton = (props: ButtonProps) => {
   return (
     <button
-      className={
-        'py-3 px-4 text-center text-base rounded-full text-white bg-[#9FCDE5] hover:bg-[#61B3DF] shadow-md hover:syadow-lg'
-      }
+      className="hover:syadow-lg rounded-full bg-[#94C8AD] px-5 py-4 text-center text-xl text-white shadow-md hover:bg-[#68B68D]"
       onClick={props.onClick}
     >
       {props.children}
     </button>
-  )
-}
+  );
+};
+
+export const CheckButton = (props: ButtonProps) => {
+  return (
+    <button
+      className="hover:syadow-lg rounded-full bg-[#9FCDE5] px-4 py-3 text-center text-base text-white shadow-md hover:bg-[#61B3DF]"
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
+};
 
 export const DeleteButton = (props: ButtonProps) => {
   const Deletecheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (window.confirm('本当に削除しますか？')) {
       if (props.onClick) {
-        props.onClick(e)
+        props.onClick(e);
       }
     }
-  }
-
+  };
   return (
     <button
-      className={
-        'py-3 px-4 text-center text-base rounded-full text-white bg-[#FEABAE] hover:bg-[#F16B6E] shadow-md hover:syadow-lg'
-      }
+      className="hover:syadow-lg rounded-full bg-[#FEABAE] px-4 py-3 text-center text-base text-white shadow-md hover:bg-[#F16B6E]"
       onClick={Deletecheck}
     >
       {props.children}
     </button>
-  )
-}
+  );
+};

@@ -1,67 +1,67 @@
-import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
-import { useRouter } from 'next/router'
-import React, { useCallback, useEffect, useState } from 'react'
-import { DeleteButton, EditButton } from '@/components/Button'
-import TextForm from '@/components/TextForm'
-import TextFormArea from '@/components/TextFormArea'
+import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { CheckButton, DeleteButton } from '@/components/Button';
+import TextForm from '@/components/TextForm';
+import TextFormArea from '@/components/TextFormArea';
 
 type Recipe = {
-  id: number
-  user_id: number
-  title: string
-  content: string
-  time: number
-  calorie: number
-  image: string | undefined
-  created_at: Date
-  updated_at: Date
-  price: number
-}
+  id: number;
+  user_id: number;
+  title: string;
+  content: string;
+  time: number;
+  calorie: number;
+  image: string | undefined;
+  created_at: Date;
+  updated_at: Date;
+  price: number;
+};
 
 const EditRecipe = () => {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [time, setTime] = useState('')
-  const [price, setPrice] = useState('')
-  const [calorie, setCalorie] = useState('')
-  const [image, setImage] = useState<File | null>(null)
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [time, setTime] = useState('');
+  const [price, setPrice] = useState('');
+  const [calorie, setCalorie] = useState('');
+  const [image, setImage] = useState<File | null>(null);
 
   // 以下のコードはレシピの詳細ページを表示するためのコード。
   // useRouterを使って、URLのパラメーターからIDを取得しています。
   // そのIDを使って、axiosを使って、レシピの詳細を取得しています。
-  const router = useRouter()
-  const { id } = router.query
-  const [recipe, setRecipe] = useState<Recipe | undefined>(undefined)
+  const router = useRouter();
+  const { id } = router.query;
+  const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
 
   // レシピの取得
   const getRecipe = useCallback(() => {
     axios
       .get<Recipe>('http://localhost:8000/recipes/' + id)
       .then((response) => {
-        setRecipe(response.data)
-        console.log('レシピの取得に成功しました', response.data)
+        setRecipe(response.data);
+        console.log('レシピの取得に成功しました', response.data);
       })
       .catch((error) => {
-        console.log('レシピの取得に失敗しました', error)
-      })
-  }, [id])
+        console.log('レシピの取得に失敗しました', error);
+      });
+  }, [id]);
 
   useEffect(() => {
-    getRecipe()
-  }, [getRecipe])
+    getRecipe();
+  }, [getRecipe]);
 
   // フォームの初期値に現在登録されているレシピ情報を表示させる処理
   useEffect(() => {
     if (recipe) {
-      setTitle(recipe.title ? recipe.title : '')
-      setContent(recipe.content ? recipe.content : '')
-      setTime(recipe.time ? recipe.time.toString() : '')
-      setPrice(recipe.price ? recipe.price.toString() : '')
-      setCalorie(recipe.calorie ? recipe.calorie.toString() : '')
+      setTitle(recipe.title ? recipe.title : '');
+      setContent(recipe.content ? recipe.content : '');
+      setTime(recipe.time ? recipe.time.toString() : '');
+      setPrice(recipe.price ? recipe.price.toString() : '');
+      setCalorie(recipe.calorie ? recipe.calorie.toString() : '');
     }
-  }, [recipe])
+  }, [recipe]);
 
   // 編集したレシピを送信する処理
   const editRecipe = () => {
@@ -77,27 +77,27 @@ const EditRecipe = () => {
         },
       })
       .then((response) => {
-        router.push('/myrecipe')
-        alert('レシピを更新しました')
-        console.log('レシピの更新に成功しました', response.data)
+        router.push('/myrecipe');
+        alert('レシピを更新しました');
+        console.log('レシピの更新に成功しました', response.data);
       })
       .catch((error) => {
-        console.log('レシピの更新に失敗しました', error)
-      })
-  }
+        console.log('レシピの更新に失敗しました', error);
+      });
+  };
 
   const deleteRecipe = () => {
     axios
       .delete('http://localhost:8000/recipes/' + id)
       .then((response) => {
-        router.push('/myrecipe')
-        alert('レシピを削除しました')
-        console.log('レシピの削除に成功しました', response.data)
+        router.push('/myrecipe');
+        alert('レシピを削除しました');
+        console.log('レシピの削除に成功しました', response.data);
       })
       .catch((error) => {
-        console.log('レシピの削除に失敗しました', error)
-      })
-  }
+        console.log('レシピの削除に失敗しました', error);
+      });
+  };
 
   return (
     <div>
@@ -105,70 +105,74 @@ const EditRecipe = () => {
       <p>Recipe ID: {id}</p>
 
       <TextForm
-        label='レシピタイトル'
-        witdh='w-full'
+        label="レシピタイトル"
+        witdh="w-full"
         value={title}
         onChange={(e) => {
-          setTitle(e.target.value)
-        }}
-      />
-      <TextForm label='カテゴリ' placeholder='※未実装（仮でフォームを置いてる）' witdh='w-full' />
-      <TextFormArea
-        witdh='w-full'
-        label='作り方'
-        value={content}
-        onChange={(e) => {
-          setContent(e.target.value)
+          setTitle(e.target.value);
         }}
       />
       <TextForm
-        label='バーコードタグ'
-        placeholder='※未実装（仮でフォームを置いてる）'
-        witdh='w-full'
+        label="カテゴリ"
+        placeholder="※未実装（仮でフォームを置いてる）"
+        witdh="w-full"
       />
-      <div className='flex space-x-5'>
+      <TextFormArea
+        witdh="w-full"
+        label="作り方"
+        value={content}
+        onChange={(e) => {
+          setContent(e.target.value);
+        }}
+      />
+      <TextForm
+        label="バーコードタグ"
+        placeholder="※未実装（仮でフォームを置いてる）"
+        witdh="w-full"
+      />
+      <div className="flex space-x-5">
         <TextForm
-          label='調理時間'
-          witdh='w-1/3'
+          label="調理時間"
+          witdh="w-1/3"
           value={time}
           onChange={(e) => {
-            setTime(e.target.value)
+            setTime(e.target.value);
           }}
         />
         <TextForm
-          label='金額'
-          witdh='w-1/3'
+          label="金額"
+          witdh="w-1/3"
           value={price}
           onChange={(e) => {
-            setPrice(e.target.value)
+            setPrice(e.target.value);
           }}
         />
         <TextForm
-          label='カロリー'
-          witdh='w-1/3'
+          label="カロリー"
+          witdh="w-1/3"
           value={calorie}
           onChange={(e) => {
-            setCalorie(e.target.value)
+            setCalorie(e.target.value);
           }}
         />
       </div>
-      <div className='flex justify-end space-x-6'>
-        <div className='mt-14'>
-          <EditButton
+      <div className="flex justify-end space-x-6">
+        <div className="mt-14">
+          <CheckButton
             onClick={() => {
-              editRecipe()
-              console.log('クリック！！')
+              editRecipe();
+              console.log('クリック！！');
             }}
           >
             {' '}
             <FontAwesomeIcon icon={faCheck} />
-          </EditButton>
+          </CheckButton>
         </div>
-        <div className='mt-14'>
+        <div className="mt-14">
           <DeleteButton
             onClick={() => {
-              deleteRecipe()
-              console.log('クリック！！')
+              deleteRecipe();
+              console.log('クリック！！');
             }}
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -176,7 +180,7 @@ const EditRecipe = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditRecipe
+export default EditRecipe;
