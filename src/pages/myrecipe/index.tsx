@@ -1,51 +1,51 @@
-import axios from 'axios'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import axios from 'axios';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 type Recipe = {
-  id: number
-  user_id: number
-  title: string
-  content: string
-  time: number
-  calorie: number
-  image: string
-  created_at: Date
-  updated_at: Date
-  price: number
-}
+  id: number;
+  user_id: number;
+  title: string;
+  content: string;
+  time: number;
+  calorie: number;
+  image: string;
+  created_at: Date;
+  updated_at: Date;
+  price: number;
+};
 
 const Myrecipe = () => {
-  const [myrecipe, setMyrecipe] = useState<Recipe[]>([])
+  const [myrecipe, setMyrecipe] = useState<Recipe[]>([]);
 
   const getMyrecipes = () => {
     axios
       .get<Recipe[]>('http://localhost:8000/user_recipes')
       .then((response) => {
-        setMyrecipe(response.data)
-        console.log('マイレシピの取得に成功しました', response.data)
+        setMyrecipe(response.data);
+        console.log('マイレシピの取得に成功しました', response.data);
       })
       .catch((error) => {
-        console.log('マイレシピの取得に失敗しました', error)
-      })
-  }
+        console.log('マイレシピの取得に失敗しました', error);
+      });
+  };
   useEffect(() => {
-    getMyrecipes()
-  }, [])
+    getMyrecipes();
+  }, []);
 
   return (
     <div>
-      <div className='text-center text-2xl'>マイレシピ</div>
+      <div className="text-center text-2xl">マイレシピ</div>
       <div>
         {myrecipe.map((recipe) => (
           <div
             key={recipe.id}
-            className='bg-[#FFFAF2] hover:bg-[#FDF1DE] hover:text-orange-500 rounded-lg shadow-md hover:shadow-lg py-5 my-3'
+            className="my-3 rounded-lg bg-[#FFFAF2] py-5 shadow-md hover:bg-[#FDF1DE] hover:text-orange-500 hover:shadow-lg"
           >
             <Link href={'/recipes/' + recipe.id}>
               <div
                 onClick={() => {
-                  console.log(recipe.id, '←このIDのレシピをクリックしました')
+                  console.log(recipe.id, '←このIDのレシピをクリックしました');
                 }}
               >
                 （{recipe.id}）{recipe.title}
@@ -55,6 +55,6 @@ const Myrecipe = () => {
         ))}
       </div>
     </div>
-  )
-}
-export default Myrecipe
+  );
+};
+export default Myrecipe;
