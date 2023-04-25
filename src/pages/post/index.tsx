@@ -4,6 +4,7 @@ import axios from 'axios';
 import router, { Router } from 'next/router';
 import React, { useState } from 'react';
 import { PostButton } from '@/components/Button';
+import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
 
@@ -15,26 +16,21 @@ const Post = () => {
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
 
-  const postRecipe = () => {
-    axios
-      .post('http://localhost:8000/recipes', {
-        recipe: {
-          title: title,
-          content: content,
-          time: time,
-          price: price,
-          calorie: calorie,
-          image: image,
-        },
-      })
-      .then((response) => {
-        router.push('/home');
-        alert('レシピの投稿に成功しました');
-        console.log('レシピの投稿に成功しました', response.data);
-      })
-      .catch((error) => {
-        console.log('レシピの投稿に失敗しました', error);
-      });
+  const postRecipe = async () => {
+    const response = await axios.post('/recipes', {
+      recipe: {
+        title: title,
+        content: content,
+        time: time,
+        price: price,
+        calorie: calorie,
+        image: image,
+      },
+    });
+    console.log(response);
+    console.log('レシピの投稿に成功しました', response.data);
+    alert('レシピの投稿に成功しました');
+    await router.push('/home');
   };
 
   // この下からリターンの中身
@@ -69,9 +65,9 @@ const Post = () => {
         witdh="w-full"
       />
       <div className="flex space-x-5">
-        <TextForm
+        <SelectForm
           label="調理時間"
-          placeholder="30分"
+          placeholder="5分"
           witdh="w-1/3"
           value={time}
           onChange={(e) => {

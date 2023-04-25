@@ -1,13 +1,25 @@
+import axios from 'axios';
 import type { AppProps } from 'next/app';
-import React, { useState } from 'react';
+import React from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import '@/styles/globals.css';
+import useAuth from '@/hooks/auth/useAuth';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const { auth } = useAuth();
+  // ログインユーザーがいる場合
+  if (auth.currentUser) {
+    auth.currentUser.getIdToken().then((token) => {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    });
+  }
+
+  axios.defaults.baseURL = 'http://localhost:8000';
+
   return (
     <div className="bg-orange-50 text-black">
-      <div className="mx-auto flex min-h-screen flex-col bg-white lg:w-1/3">
+      <div className="lg: mx-auto flex min-h-screen flex-col bg-white lg:w-1/3">
         <Header />
         <div className="flex-1 px-8 pb-10 pt-5">
           <Component {...pageProps} />

@@ -19,7 +19,7 @@ const Todoapp = () => {
 
   const getTodoList = () => {
     axios
-      .get<Todo[]>('http://localhost:8000/todos')
+      .get<Todo[]>('/todos')
       .then((response) => {
         setTodos(response.data);
       })
@@ -29,7 +29,7 @@ const Todoapp = () => {
   };
   const postTodo = () => {
     axios
-      .post('http://localhost:8000/todos', {
+      .post('/todos', {
         title: todo,
         content: todo,
         completed: false,
@@ -92,7 +92,7 @@ const Todoapp = () => {
                     checked={todo.completed}
                     onChange={() => {
                       axios
-                        .patch(`http://localhost:8000/todos/${todo.id}`, {
+                        .patch(`/todos/${todo.id}`, {
                           completed: !todo.completed,
                         })
                         .then((response) => {
@@ -106,12 +106,10 @@ const Todoapp = () => {
                 <div
                   className="ml-auto"
                   onClick={() => {
-                    axios
-                      .delete(`http://localhost:8000/todos/${todo.id}`)
-                      .then((response) => {
-                        console.log(response);
-                        getTodoList();
-                      });
+                    axios.delete(`/todos/${todo.id}`).then((response) => {
+                      console.log(response);
+                      getTodoList();
+                    });
                   }}
                 >
                   {/* swichがtureの場合のみButtonコンポーネントを表示させる */}

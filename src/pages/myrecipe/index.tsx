@@ -20,7 +20,7 @@ const Myrecipe = () => {
 
   const getMyrecipes = () => {
     axios
-      .get<Recipe[]>('http://localhost:8000/user_recipes')
+      .get<Recipe[]>('/user_recipes')
       .then((response) => {
         setMyrecipe(response.data);
         console.log('マイレシピの取得に成功しました', response.data);
