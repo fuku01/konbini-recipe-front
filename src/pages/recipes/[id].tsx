@@ -36,7 +36,7 @@ const Recipes = () => {
   // レシピの取得
   const getRecipe = useCallback(() => {
     axios
-      .get<Recipe>('http://localhost:8000/recipes/' + id)
+      .get<Recipe>('/recipes/' + id)
       .then((response) => {
         setRecipe(response.data);
         console.log('レシピの取得に成功しました', response.data);

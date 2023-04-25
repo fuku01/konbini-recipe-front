@@ -1,17 +1,18 @@
 import {
   faCircleQuestion,
-  faFile,
   faFileLines,
-  faFilePen,
   faPen,
+  faUser,
   faUserPen,
   faUserPlus,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// プラグインでスクロールを制御（サイドメニュー表示中の）
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
+
 // SideMenuPropsを定義
 // isMenuOpenはboolean型、setIsMenuOpenはReact.Dispatch<React.SetStateAction<boolean>>型である。
 type SideMenuProps = {
@@ -23,7 +24,7 @@ type SideMenuProps = {
 export const SideMenu = (props: SideMenuProps) => {
   const { isMenuOpen, setIsMenuOpen } = props;
 
-  // サイドメニューが出てる時に、背景をスクロールできなくする。//
+  // サイドメニュー表示中に、背景をスクロールできなくする。//
   const sideMenu = useRef(null);
   useEffect(() => {
     if (isMenuOpen && sideMenu.current) {
@@ -76,6 +77,12 @@ export const SideMenu = (props: SideMenuProps) => {
             <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">
               <FontAwesomeIcon icon={faUserPlus} className="mr-3" />
               新規登録
+            </div>
+          </Link>
+          <Link href="/login">
+            <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">
+              <FontAwesomeIcon icon={faUser} className="mr-3" />
+              ログイン
             </div>
           </Link>
           <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">

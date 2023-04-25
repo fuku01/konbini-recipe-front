@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CheckButton, DeleteButton } from '@/components/Button';
+import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
 
@@ -36,16 +37,10 @@ const EditRecipe = () => {
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
 
   // レシピの取得
-  const getRecipe = useCallback(() => {
-    axios
-      .get<Recipe>('http://localhost:8000/recipes/' + id)
-      .then((response) => {
-        setRecipe(response.data);
-        console.log('レシピの取得に成功しました', response.data);
-      })
-      .catch((error) => {
-        console.log('レシピの取得に失敗しました', error);
-      });
+  const getRecipe = useCallback(async () => {
+    const response = await axios.get<Recipe>('/recipes/' + id);
+    setRecipe(response.data);
+    console.log('レシピの取得に成功しました', response.data);
   }, [id]);
 
   useEffect(() => {
@@ -64,39 +59,27 @@ const EditRecipe = () => {
   }, [recipe]);
 
   // 編集したレシピを送信する処理
-  const editRecipe = () => {
-    axios
-      .put('http://localhost:8000/recipes/' + id, {
-        recipe: {
-          title: title,
-          content: content,
-          time: time,
-          price: price,
-          calorie: calorie,
-          image: image,
-        },
-      })
-      .then((response) => {
-        router.push('/myrecipe');
-        alert('レシピを更新しました');
-        console.log('レシピの更新に成功しました', response.data);
-      })
-      .catch((error) => {
-        console.log('レシピの更新に失敗しました', error);
-      });
+  const editRecipe = async () => {
+    const respomse = await axios.put('/recipes/' + id, {
+      recipe: {
+        title: title,
+        content: content,
+        time: time,
+        price: price,
+        calorie: calorie,
+        image: image,
+      },
+    });
+    alert('レシピを更新しました');
+    await router.push('/myrecipe');
+    console.log('レシピの更新に成功しました', respomse.data);
   };
 
-  const deleteRecipe = () => {
-    axios
-      .delete('http://localhost:8000/recipes/' + id)
-      .then((response) => {
-        router.push('/myrecipe');
-        alert('レシピを削除しました');
-        console.log('レシピの削除に成功しました', response.data);
-      })
-      .catch((error) => {
-        console.log('レシピの削除に失敗しました', error);
-      });
+  const deleteRecipe = async () => {
+    const respomse = await axios.delete('/recipes/' + id);
+    alert('レシピを削除しました');
+    await router.push('/myrecipe');
+    console.log('レシピの削除に成功しました', respomse.data);
   };
 
   return (
@@ -131,7 +114,7 @@ const EditRecipe = () => {
         witdh="w-full"
       />
       <div className="flex space-x-5">
-        <TextForm
+        <SelectForm
           label="調理時間"
           witdh="w-1/3"
           value={time}

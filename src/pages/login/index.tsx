@@ -1,50 +1,30 @@
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import router from 'next/router';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { PostButton } from '@/components/Button';
 import TextForm from '@/components/TextForm';
 import useAuth from '@/hooks/auth/useAuth';
 
-const Signup = () => {
-  const [name, setName] = useState('');
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { auth } = useAuth();
 
-  //ユーザー登録処理
-  const signupUser = async () => {
-    // FirebaseのcreateUserWithEmailAndPasswordを使用して登録処理を実行
-    const userCredential = await createUserWithEmailAndPassword(
+  const loginUser = async () => {
+    const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
-
-    // ユーザー名を登録
-    await updateProfile(userCredential.user, { displayName: name });
     // IDトークンを取得
     const idToken = await userCredential.user.getIdToken();
-    // ユーザー情報をDBに登録
-    await axios.post('/users', {
-      id_token: idToken, // IDトークンを送信
-    });
-    alert('ユーザーを登録しました');
-    await router.push('/home');
   };
 
   return (
     <div>
-      <p className="mb-10 text-center text-4xl">ユーザー登録画面</p>
-      <TextForm
-        label="ユーザー名"
-        placeholder="ユーザー名"
-        witdh="w-full"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+      <p className="mb-10 text-center text-4xl">ログイン画面</p>
       <TextForm
         label="メールアドレス"
         placeholder="メールアドレス"
@@ -60,7 +40,7 @@ const Signup = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <div className="mt-5 text-right">
-        <PostButton onClick={signupUser}>
+        <PostButton onClick={loginUser}>
           <FontAwesomeIcon icon={faUserPlus} />
         </PostButton>
       </div>
@@ -68,4 +48,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
