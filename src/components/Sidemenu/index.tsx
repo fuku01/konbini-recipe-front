@@ -2,9 +2,7 @@ import {
   faCircleQuestion,
   faFileLines,
   faPen,
-  faUser,
-  faUserPen,
-  faUserPlus,
+  faUserGear,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -82,10 +80,12 @@ const SideMenu = (props: SideMenuProps) => {
           {/* ログイン中の場合 */}
           {auth.currentUser ? (
             <div>
-              <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
-                <FontAwesomeIcon icon={faUserPen} className="mr-3" />
-                設定
-              </div>
+              <Link href="/edituser">
+                <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon icon={faUserGear} className="mr-3" />
+                  設定
+                </div>
+              </Link>
               <Link href="/post">
                 <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
                   <FontAwesomeIcon icon={faPen} className="mr-3" />
