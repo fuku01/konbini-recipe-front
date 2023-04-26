@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app'  // Firebaseアプリの初期化を行うためのinitializeApp関数を'firebase/app'からインポート
 import { getAuth } from 'firebase/auth'  // Firebase Authenticationを使用するためのgetAuth関数を'firebase/auth'からインポート
-import { useState } from 'react'
 
 const firebaseConfig = {  // Firebaseアプリの設定情報を変数に代入
   apiKey: 'AIzaSyByqxWEw-2JEqFypPU9dx9rZdZHuk4Pwic',
@@ -12,7 +11,7 @@ const firebaseConfig = {  // Firebaseアプリの設定情報を変数に代入
   measurementId: 'G-3GHZEN3HYV',
 }
 
-const useAuth = () => {  // useAuthという名前の関数を定義
+const useAuth = () => {  // useAuthという名前の関数を定義する
   const app = initializeApp(firebaseConfig)  // Firebaseアプリの初期化
   const auth = getAuth(app)  // Firebase Authenticationの認証オブジェクトを取得
   return {auth}  // 認証オブジェクトを返す
