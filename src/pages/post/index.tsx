@@ -72,7 +72,13 @@ const Post = () => {
           />
           <div className="flex space-x-5">
             <SelectForm
-              label="調理時間"
+              label={
+                <div>
+                  調理時間
+                  <br />
+                  <div className="ml-14 text-xs">（分）</div>
+                </div>
+              }
               placeholder="5分"
               witdh="w-1/3"
               value={time}
@@ -81,19 +87,36 @@ const Post = () => {
               }}
             />
             <TextForm
-              label="金額"
-              placeholder="300円"
+              label={
+                <div>
+                  金額
+                  <br />
+                  <div className="ml-14 text-xs">（円）</div>
+                </div>
+              }
+              placeholder="300"
               witdh="w-1/3"
               value={price}
+              type="number"
+              min={0}
               onChange={(e) => {
                 setPrice(e.target.value);
               }}
             />
+
             <TextForm
-              label="カロリー"
-              placeholder="500kcal"
+              label={
+                <div>
+                  カロリー
+                  <br />
+                  <div className="ml-14 text-xs">（kcal）</div>
+                </div>
+              }
+              placeholder="500"
               witdh="w-1/3"
               value={calorie}
+              type="number"
+              min={0}
               onChange={(e) => {
                 setCalorie(e.target.value);
               }}
