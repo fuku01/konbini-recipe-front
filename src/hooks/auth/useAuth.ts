@@ -11,7 +11,7 @@ const firebaseConfig = {  // Firebaseアプリの設定情報を変数に代入
   measurementId: 'G-3GHZEN3HYV',
 }
 
-const useAuth = () => {  // useAuthという名前の関数を定義
+const useAuth = () => {  // useAuthという名前の関数を定義する
   const app = initializeApp(firebaseConfig)  // Firebaseアプリの初期化
   const auth = getAuth(app)  // Firebase Authenticationの認証オブジェクトを取得
   return {auth}  // 認証オブジェクトを返す
