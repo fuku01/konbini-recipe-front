@@ -1,7 +1,7 @@
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import router from 'next/router';
 import React, { useState } from 'react';
 import { PostButton } from '@/components/Button';
 import TextForm from '@/components/TextForm';
@@ -13,13 +13,14 @@ const Login = () => {
   const { auth } = useAuth();
 
   const loginUser = async () => {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    // IDトークンを取得
-    const idToken = await userCredential.user.getIdToken();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert('ログインしました');
+      await router.push('/home');
+    } catch (error) {
+      alert('ログインに失敗しました');
+      await router.push('/login');
+    }
   };
 
   return (
@@ -28,6 +29,7 @@ const Login = () => {
       <TextForm
         label="メールアドレス"
         placeholder="メールアドレス"
+        type="email"
         witdh="w-full"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -35,6 +37,7 @@ const Login = () => {
       <TextForm
         label="パスワード"
         placeholder="パスワード"
+        type="password"
         witdh="w-full"
         value={password}
         onChange={(e) => setPassword(e.target.value)}

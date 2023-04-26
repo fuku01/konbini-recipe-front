@@ -17,22 +17,26 @@ const Signup = () => {
   //ユーザー登録処理
   const signupUser = async () => {
     // FirebaseのcreateUserWithEmailAndPasswordを使用して登録処理を実行
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    // ユーザー名を登録
-    await updateProfile(userCredential.user, { displayName: name });
-    // IDトークンを取得
-    const idToken = await userCredential.user.getIdToken();
-    // ユーザー情報をDBに登録
-    await axios.post('/users', {
-      id_token: idToken, // IDトークンを送信
-    });
-    alert('ユーザーを登録しました');
-    await router.push('/home');
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // ユーザー名を登録
+      await updateProfile(userCredential.user, { displayName: name });
+      // IDトークンを取得
+      const idToken = await userCredential.user.getIdToken();
+      // ユーザー情報をDBに登録
+      await axios.post('/users', {
+        id_token: idToken, // IDトークンを送信
+      });
+      alert('ユーザーを登録しました');
+      await router.push('/home');
+    } catch (error) {
+      alert('ユーザー登録に失敗しました');
+      await router.push('/signup');
+    }
   };
 
   return (
@@ -48,6 +52,7 @@ const Signup = () => {
       <TextForm
         label="メールアドレス"
         placeholder="メールアドレス"
+        type="email"
         witdh="w-full"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -55,6 +60,7 @@ const Signup = () => {
       <TextForm
         label="パスワード"
         placeholder="パスワード"
+        type="password"
         witdh="w-full"
         value={password}
         onChange={(e) => setPassword(e.target.value)}

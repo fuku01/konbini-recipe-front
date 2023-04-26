@@ -12,6 +12,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
+import SignupButton from './SignupButton';
+import useAuth from '@/hooks/auth/useAuth';
 
 // SideMenuPropsを定義
 // isMenuOpenはboolean型、setIsMenuOpenはReact.Dispatch<React.SetStateAction<boolean>>型である。
@@ -21,8 +25,10 @@ type SideMenuProps = {
 };
 
 // Header.tsxで定義した「isMenuOpenとsetIsMenuOpen」を受け取る。
-export const SideMenu = (props: SideMenuProps) => {
+const SideMenu = (props: SideMenuProps) => {
   const { isMenuOpen, setIsMenuOpen } = props;
+
+  const { auth } = useAuth();
 
   // サイドメニュー表示中に、背景をスクロールできなくする。//
   const sideMenu = useRef(null);
@@ -56,7 +62,7 @@ export const SideMenu = (props: SideMenuProps) => {
     <>
       {overlay}
       <div
-        className="bod absolute left-0 top-0 z-50 h-screen w-1/2 flex-1 bg-[#FCCFA5] text-black"
+        className="bod absolute left-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] text-black"
         ref={sideMenu}
       >
         <FontAwesomeIcon
@@ -73,40 +79,51 @@ export const SideMenu = (props: SideMenuProps) => {
             setIsMenuOpen(!isMenuOpen);
           }}
         >
-          <Link href="/signup">
-            <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">
-              <FontAwesomeIcon icon={faUserPlus} className="mr-3" />
-              新規登録
+          {/* ログイン中の場合 */}
+          {auth.currentUser ? (
+            <div>
+              <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
+                <FontAwesomeIcon icon={faUserPen} className="mr-3" />
+                設定
+              </div>
+              <Link href="/post">
+                <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon icon={faPen} className="mr-3" />
+                  レシピ投稿
+                </div>
+              </Link>
+              <Link href="/myrecipe">
+                <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon icon={faFileLines} className="mr-4" />
+                  マイレシピ
+                </div>
+              </Link>
+              <div className="ml-9 mt-6 hover:text-orange-500 hover:underline ">
+                <FontAwesomeIcon icon={faCircleQuestion} className="mr-4" />
+                使い方
+              </div>
+              <div className="ml-8 mt-10">
+                <LogoutButton />
+              </div>
             </div>
-          </Link>
-          <Link href="/login">
-            <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">
-              <FontAwesomeIcon icon={faUser} className="mr-3" />
-              ログイン
+          ) : (
+            // ログアウト中の場合
+            <div>
+              <div className="ml-8 mt-6">
+                <SignupButton />
+              </div>
+              <div className="ml-8 mt-6">
+                <LoginButton />
+              </div>
+              <div className="ml-9 mt-8 hover:text-orange-500 hover:underline ">
+                <FontAwesomeIcon icon={faCircleQuestion} className="mr-4" />
+                使い方
+              </div>
             </div>
-          </Link>
-          <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">
-            <FontAwesomeIcon icon={faUserPen} className="mr-3" />
-            プロフィール編集
-          </div>
-          <Link href="/post">
-            <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">
-              <FontAwesomeIcon icon={faPen} className="mr-3" />
-              レシピ投稿
-            </div>
-          </Link>
-          <Link href="/myrecipe">
-            <div className="mx-6 mt-8 hover:text-orange-500 hover:underline">
-              <FontAwesomeIcon icon={faFileLines} className="mr-4" />
-              マイレシピ
-            </div>
-          </Link>
-          <div className="ml-6 mt-8 hover:text-orange-500 hover:underline ">
-            <FontAwesomeIcon icon={faCircleQuestion} className="pr-4" />
-            使い方
-          </div>
+          )}
         </div>
       </div>
     </>
   );
 };
+export default SideMenu;

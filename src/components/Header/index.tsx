@@ -1,7 +1,7 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { SideMenu } from '../Sidemenu';
+import SideMenu from '../Sidemenu';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
