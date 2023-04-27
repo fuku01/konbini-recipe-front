@@ -1,3 +1,5 @@
+import { faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -35,7 +37,10 @@ const Myrecipe = () => {
 
   return (
     <div>
-      <div className="text-center text-2xl">マイレシピ</div>
+      <div className="text-center text-[#FBB87F]">
+        <FontAwesomeIcon icon={faFileLines} className="text-6xl" />
+        <div className="mr-1 mt-2 text-2xl">マイレシピ</div>
+      </div>
       <div>
         {myrecipe.map((recipe) => (
           <div
