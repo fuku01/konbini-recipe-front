@@ -1,10 +1,11 @@
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { S3 } from 'aws-sdk';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import axios from 'axios';
+import Image from 'next/image';
 import router from 'next/router';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
@@ -56,7 +57,9 @@ const Post = () => {
   const [price, setPrice] = useState('');
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const { auth } = useAuth();
+  const imageForm = useRef<HTMLInputElement>(null);
 
   // レシピを投稿（データベースへの登録）する関数
   const postRecipe = async () => {
@@ -92,6 +95,22 @@ const Post = () => {
     }
   };
 
+  // 画像のチェックを行う関数
+  const imageCheck = (fileList: FileList) => {
+    if (fileList[0]) {
+      const imageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!imageTypes.includes(fileList[0].type)) {
+        alert('許可されていないファイルタイプです。');
+        return;
+      }
+      setImage(fileList[0]);
+      setPreview(URL.createObjectURL(fileList[0]));
+    } else {
+      setImage(null);
+      setPreview(null);
+    }
+  };
+
   // この下からリターンの中身
   return (
     <div>
@@ -102,14 +121,46 @@ const Post = () => {
             <div className="mt-2 text-2xl">レシピ投稿</div>
           </div>
           <input
+            ref={imageForm}
             type="file"
-            className="w-full"
+            className="hidden w-full"
+            accept="image/*"
             onChange={(e) => {
-              if (e.target.files) {
-                setImage(e.target.files[0]);
+              const fileList = e.target.files;
+              if (fileList) {
+                imageCheck(fileList);
               }
             }}
           />
+
+          {preview ? (
+            <div className="flex justify-center">
+              <Image
+                className="mt-4 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] shadow-xl"
+                onClick={() => {
+                  if (imageForm.current) {
+                    imageForm.current.click();
+                  }
+                }}
+                src={preview}
+                alt="プレビュー"
+                width={300}
+                height={300}
+              />
+            </div>
+          ) : (
+            <div
+              className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm"
+              onClick={() => {
+                if (imageForm.current) {
+                  imageForm.current.click();
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faCamera} className="text-8xl" />
+              <div className="text-2xl">写真</div>
+            </div>
+          )}
           <TextForm
             label="レシピタイトル"
             placeholder="例）じゃがりこマッシュポテト"
