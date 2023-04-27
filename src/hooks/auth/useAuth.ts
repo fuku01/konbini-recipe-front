@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app'  // Firebaseアプリの初期化�
 import { getAuth } from 'firebase/auth'  // Firebase Authenticationを使用するためのgetAuth関数を'firebase/auth'からインポート
 
 const firebaseConfig = {  // Firebaseアプリの設定情報を変数に代入
-  apiKey: 'AIzaSyByqxWEw-2JEqFypPU9dx9rZdZHuk4Pwic',
-  authDomain: 'konbini-recipe.firebaseapp.com',
-  projectId: 'konbini-recipe',
-  storageBucket: 'konbini-recipe.appspot.com',
-  messagingSenderId: '161237504907',
-  appId: '1:161237504907:web:aa9c6d3abd16d34674158e',
-  measurementId: 'G-3GHZEN3HYV',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 }
 
 const useAuth = () => {  // useAuthという名前の関数を定義する

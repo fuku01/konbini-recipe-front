@@ -11,7 +11,6 @@ const EditUser = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [photoURL, setPhotoURL] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
-  const [editEmail, setEditEmail] = useState('');
 
   //  ログイン中のユーザ情報をステートに保存
   useEffect(() => {
