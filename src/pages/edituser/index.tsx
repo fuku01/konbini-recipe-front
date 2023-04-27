@@ -1,3 +1,5 @@
+import { faUserGear } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { updateProfile } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import TextForm from '@/components/TextForm';
@@ -40,6 +42,10 @@ const EditUser = () => {
       {auth.currentUser ? (
         <div>
           <div>
+            <div className="text-center text-[#61B3DF]">
+              <FontAwesomeIcon icon={faUserGear} className="text-6xl" />
+              <div className="mr-1 mt-2 text-2xl">ユーザー設定</div>
+            </div>
             <h1>ユーザー情報</h1>
             <div>名前：{displayName}</div>
             <div>メールアドレス：{email}</div>

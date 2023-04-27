@@ -41,7 +41,10 @@ const Signup = () => {
 
   return (
     <div>
-      <p className="mb-10 text-center text-4xl">ユーザー登録画面</p>
+      <div className="text-center text-[#68B68D]">
+        <FontAwesomeIcon icon={faUserPlus} className="text-6xl" />
+        <div className="mr-4 mt-2 text-2xl">新規登録</div>
+      </div>
       <TextForm
         label="ユーザー名"
         placeholder="ユーザー名"

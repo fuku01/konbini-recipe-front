@@ -15,10 +15,10 @@ export const PostButton = (props: ButtonProps) => {
   );
 };
 
-export const EditButton = (props: ButtonProps) => {
+export const PostBlueButton = (props: ButtonProps) => {
   return (
     <button
-      className="hover:syadow-lg rounded-full bg-[#94C8AD] px-5 py-4 text-center text-xl text-white shadow-md hover:bg-[#68B68D]"
+      className="hover:syadow-lg rounded-full bg-[#9FCDE5] px-5 py-4 text-center text-xl text-white shadow-md hover:bg-[#61B3DF]"
       onClick={props.onClick}
     >
       {props.children}

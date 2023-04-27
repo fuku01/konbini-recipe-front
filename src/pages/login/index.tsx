@@ -1,9 +1,9 @@
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import router from 'next/router';
 import React, { useState } from 'react';
-import { PostButton } from '@/components/Button';
+import { PostBlueButton } from '@/components/Button';
 import TextForm from '@/components/TextForm';
 import useAuth from '@/hooks/auth/useAuth';
 
@@ -25,7 +25,10 @@ const Login = () => {
 
   return (
     <div>
-      <p className="mb-10 text-center text-4xl">ログイン画面</p>
+      <div className="text-center text-[#61B3DF]">
+        <FontAwesomeIcon icon={faRightToBracket} className="text-6xl" />
+        <div className="ml-1 mt-2 text-2xl">ログイン</div>
+      </div>
       <TextForm
         label="メールアドレス"
         placeholder="メールアドレス"
@@ -43,9 +46,9 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <div className="mt-5 text-right">
-        <PostButton onClick={loginUser}>
-          <FontAwesomeIcon icon={faUserPlus} />
-        </PostButton>
+        <PostBlueButton onClick={loginUser}>
+          <FontAwesomeIcon icon={faRightToBracket} />
+        </PostBlueButton>
       </div>
     </div>
   );

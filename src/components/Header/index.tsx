@@ -7,7 +7,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 z-40 flex h-20 items-center justify-center bg-[#FCCFA5] text-white shadow-sm">
+    <div className="sticky top-0 z-40 flex h-20 items-center justify-center bg-[#FCCFA5] text-white shadow-md">
       <div className="relative w-full">
         <FontAwesomeIcon
           icon={faBars}

@@ -1,13 +1,53 @@
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { S3 } from 'aws-sdk';
+import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import axios from 'axios';
-import router, { Router } from 'next/router';
+import router from 'next/router';
 import React, { useState } from 'react';
 import { PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
 import useAuth from '@/hooks/auth/useAuth';
+
+// S3の設定
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+
+// S3に画像をアップロードし、そのURLを取得する関数
+const uploadImageToS3 = async (file: File) => {
+  // アップロード時のファイル名を作成
+  const fileName = `${Date.now()}-${file.name}`;
+  // S3へのアップロードに必要な情報をまとめるオブジェクト
+  const params: PutObjectRequest = {
+    Bucket: process.env.S3_BUCKET_NAME ? process.env.S3_BUCKET_NAME : '',
+    Key: fileName,
+    ContentType: file.type,
+    Body: file,
+  };
+  // Bucket: アップロード先のバケット名を環境変数から取得します。
+  // Key: アップロードするファイルのキーを指定します。
+  // ContentType: アップロードするファイルのMIMEタイプを指定します。
+  // Body: アップロードするファイルデータを指定します。
+
+  try {
+    // S3に画像をアップロードする
+    const data = await s3.upload(params).promise();
+    // アップロード成功時の処理
+    console.log('画像アップロード成功:', data.Location);
+    // アップロードされた画像のURLを取得
+    return data.Location;
+  } catch (error) {
+    // アップロードエラー発生時の処理
+    console.error('画像アップロードエラー:', error);
+    // null値を返す
+    return null;
+  }
+};
 
 const Post = () => {
   const [title, setTitle] = useState('');
@@ -16,25 +56,40 @@ const Post = () => {
   const [price, setPrice] = useState('');
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
-
   const { auth } = useAuth();
 
-  // レシピの投稿処理
+  // レシピを投稿（データベースへの登録）する関数
   const postRecipe = async () => {
-    const response = await axios.post('/recipes', {
-      recipe: {
-        title: title,
-        content: content,
-        time: time,
-        price: price,
-        calorie: calorie,
-        image: image,
-      },
-    });
-    console.log(response);
-    console.log('レシピの投稿に成功しました', response.data);
-    alert('レシピの投稿に成功しました');
-    await router.push('/home');
+    // 画像が存在する場合は、S3にアップロードし、そのURLを取得する
+    if (image) {
+      const imageUrl = await uploadImageToS3(image);
+      // URLの取得に失敗した場合はエラーメッセージを表示して処理を終了する
+      if (!imageUrl) {
+        alert('画像のアップロードに失敗しました');
+        return;
+      }
+
+      // レシピ情報を送信するリクエスト
+      const response = await axios.post('/recipes', {
+        recipe: {
+          title: title,
+          content: content,
+          time: time,
+          price: price,
+          calorie: calorie,
+          image: imageUrl, // 画像のURLを送信する
+        },
+      });
+      console.log(response);
+      console.log('レシピの投稿に成功しました', response.data);
+      alert('レシピの投稿に成功しました');
+      await router.push('/home');
+    }
+
+    // 画像が選択されていない場合、アラートを表示する
+    else {
+      alert('画像を選択してください');
+    }
   };
 
   // この下からリターンの中身
@@ -42,11 +97,23 @@ const Post = () => {
     <div>
       {auth.currentUser ? (
         <div>
+          <div className="text-center text-[#68B68D]">
+            <FontAwesomeIcon icon={faPen} className="text-6xl" />
+            <div className="mt-2 text-2xl">レシピ投稿</div>
+          </div>
+          <input
+            type="file"
+            className="w-full"
+            onChange={(e) => {
+              if (e.target.files) {
+                setImage(e.target.files[0]);
+              }
+            }}
+          />
           <TextForm
             label="レシピタイトル"
             placeholder="例）じゃがりこマッシュポテト"
             witdh="w-full"
-            value={title}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -60,7 +127,6 @@ const Post = () => {
             placeholder="例）じゃがりこをレンジで５分温めるとマッシュポテトになります。"
             witdh="w-full"
             label="作り方"
-            value={content}
             onChange={(e) => {
               setContent(e.target.value);
             }}
@@ -81,7 +147,6 @@ const Post = () => {
               }
               placeholder="5分"
               witdh="w-1/3"
-              value={time}
               onChange={(e) => {
                 setTime(e.target.value);
               }}
@@ -96,7 +161,6 @@ const Post = () => {
               }
               placeholder="300"
               witdh="w-1/3"
-              value={price}
               type="number"
               min={0}
               onChange={(e) => {
@@ -114,7 +178,6 @@ const Post = () => {
               }
               placeholder="500"
               witdh="w-1/3"
-              value={calorie}
               type="number"
               min={0}
               onChange={(e) => {

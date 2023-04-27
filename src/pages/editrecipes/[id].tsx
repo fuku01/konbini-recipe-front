@@ -1,4 +1,4 @@
-import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faFilePen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -84,9 +84,10 @@ const EditRecipe = () => {
 
   return (
     <div>
-      <h1>Edit Recipe</h1>
-      <p>Recipe ID: {id}</p>
-
+      <div className="text-center text-[#68B68D]">
+        <FontAwesomeIcon icon={faFilePen} className="text-6xl" />
+        <div className="mr-1 mt-2 text-2xl">レシピ編集</div>
+      </div>
       <TextForm
         label="レシピタイトル"
         witdh="w-full"
@@ -115,7 +116,13 @@ const EditRecipe = () => {
       />
       <div className="flex space-x-5">
         <SelectForm
-          label="調理時間"
+          label={
+            <div>
+              調理時間
+              <br />
+              <div className="ml-14 text-xs">（分）</div>
+            </div>
+          }
           witdh="w-1/3"
           value={time}
           onChange={(e) => {
@@ -123,7 +130,13 @@ const EditRecipe = () => {
           }}
         />
         <TextForm
-          label="金額"
+          label={
+            <div>
+              金額
+              <br />
+              <div className="ml-14 text-xs">（円）</div>
+            </div>
+          }
           witdh="w-1/3"
           value={price}
           onChange={(e) => {
@@ -131,7 +144,13 @@ const EditRecipe = () => {
           }}
         />
         <TextForm
-          label="カロリー"
+          label={
+            <div>
+              カロリー
+              <br />
+              <div className="ml-14 text-xs">（kcal）</div>
+            </div>
+          }
           witdh="w-1/3"
           value={calorie}
           onChange={(e) => {

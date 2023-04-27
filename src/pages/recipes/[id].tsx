@@ -2,7 +2,6 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import {
   faFilePen,
   faFire,
-  faPen,
   faYenSign,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +9,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { EditButton } from '@/components/Button';
+import { PostButton } from '@/components/Button';
 
 type Recipe = {
   id: number;
@@ -134,10 +133,10 @@ const Recipes = () => {
 
       <div className="mt-14 text-right">
         <Link href={'/editrecipes/' + id}>
-          <EditButton>
+          <PostButton>
             {' '}
             <FontAwesomeIcon icon={faFilePen}></FontAwesomeIcon>
-          </EditButton>
+          </PostButton>
         </Link>
       </div>
     </div>
