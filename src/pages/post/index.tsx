@@ -96,7 +96,7 @@ const Post = () => {
 
           {preview ? (
             <Image
-              className="mx-auto h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
+              className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
               onClick={() => {
                 if (imageForm.current) {
                   imageForm.current.click();

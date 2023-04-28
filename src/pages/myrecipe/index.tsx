@@ -38,9 +38,7 @@ const Myrecipe = () => {
 
   return (
     <div>
-      <div className="mr-1 mt-2 text-center text-2xl text-[#FBB87F]">
-        マイレシピ
-      </div>
+      <div className="mt-2 text-center text-2xl text-[#FBB87F]">マイレシピ</div>
       <div>
         {myrecipe.map((recipe) => (
           <div
@@ -54,22 +52,27 @@ const Myrecipe = () => {
                 }}
               >
                 <div className="flex">
-                  <Image
-                    className="bottom-7 ml-3 h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover"
-                    alt="マイレシピ"
-                    width={300}
-                    height={200}
-                    src={recipe.image}
-                  />
+                  <div className="flex-shrink-0">
+                    <Image
+                      className="mx-2 h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover"
+                      alt="マイレシピ"
+                      width={128}
+                      height={96}
+                      src={recipe.image}
+                    />
+                  </div>
                   <div className="flex flex-col">
-                    <div>
-                      （{recipe.id}）{recipe.title}
+                    <div className="font-semibold">{recipe.title}</div>
+                    <div className="mt-2 line-clamp-2 overflow-hidden text-xs">
+                      {recipe.content}
                     </div>
-                    <div>
+                    <div className="mr-2 mt-2 text-right text-sm lg:text-base">
                       <FontAwesomeIcon icon={faClock} />
-                      {recipe.time}分 / <FontAwesomeIcon icon={faYenSign} />
-                      {recipe.price}円 / <FontAwesomeIcon icon={faFire} />
-                      {recipe.calorie}kcal
+                      {recipe.time}／
+                      <FontAwesomeIcon icon={faYenSign} />
+                      {recipe.price}／
+                      <FontAwesomeIcon icon={faFire} />
+                      {recipe.calorie}
                     </div>
                   </div>
                 </div>
