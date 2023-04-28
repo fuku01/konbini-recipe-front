@@ -78,9 +78,8 @@ const Post = () => {
     <div>
       {auth.currentUser ? (
         <div>
-          <div className="text-center text-[#68B68D]">
-            <FontAwesomeIcon icon={faPen} className="text-6xl" />
-            <div className="mt-2 text-2xl">レシピ投稿</div>
+          <div className="mt-2 text-center text-2xl text-[#68B68D]">
+            レシピ投稿
           </div>
           <input
             ref={imageForm}
@@ -110,7 +109,7 @@ const Post = () => {
             />
           ) : (
             <div
-              className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm"
+              className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm hover:border-orange-500"
               onClick={() => {
                 if (imageForm.current) {
                   imageForm.current.click();

@@ -7,7 +7,7 @@ const s3 = new S3({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: process.env.AWS_REGION,
   });
-  
+
   const useS3 = () => {
     // S3に画像をアップロードし、そのURLを取得する関数
     const uploadImageToS3 = async (file: File) => {
@@ -24,7 +24,7 @@ const s3 = new S3({
     // Key: アップロードするファイルのキーを指定します。
     // ContentType: アップロードするファイルのMIMEタイプを指定します。
     // Body: アップロードするファイルデータを指定します。
-  
+
     try {
       // S3に画像をアップロードする
       const data = await s3.upload(params).promise();
