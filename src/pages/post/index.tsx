@@ -1,7 +1,5 @@
 import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { S3 } from 'aws-sdk';
-import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import axios from 'axios';
 import Image from 'next/image';
 import router from 'next/router';
@@ -11,44 +9,7 @@ import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
 import useAuth from '@/hooks/auth/useAuth';
-
-// S3の設定
-const s3 = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
-
-// S3に画像をアップロードし、そのURLを取得する関数
-const uploadImageToS3 = async (file: File) => {
-  // アップロード時のファイル名を作成
-  const fileName = `${Date.now()}-${file.name}`;
-  // S3へのアップロードに必要な情報をまとめるオブジェクト
-  const params: PutObjectRequest = {
-    Bucket: process.env.S3_BUCKET_NAME ? process.env.S3_BUCKET_NAME : '',
-    Key: fileName,
-    ContentType: file.type,
-    Body: file,
-  };
-  // Bucket: アップロード先のバケット名を環境変数から取得します。
-  // Key: アップロードするファイルのキーを指定します。
-  // ContentType: アップロードするファイルのMIMEタイプを指定します。
-  // Body: アップロードするファイルデータを指定します。
-
-  try {
-    // S3に画像をアップロードする
-    const data = await s3.upload(params).promise();
-    // アップロード成功時の処理
-    console.log('画像アップロード成功:', data.Location);
-    // アップロードされた画像のURLを取得
-    return data.Location;
-  } catch (error) {
-    // アップロードエラー発生時の処理
-    console.error('画像アップロードエラー:', error);
-    // null値を返す
-    return null;
-  }
-};
+import useS3 from '@/hooks/auth/useS3';
 
 const Post = () => {
   const [title, setTitle] = useState('');
@@ -60,6 +21,8 @@ const Post = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const { auth } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
+  // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
+  const { uploadImageToS3 } = useS3();
 
   // レシピを投稿（データベースへの登録）する関数
   const postRecipe = async () => {
@@ -83,7 +46,6 @@ const Post = () => {
           image: imageUrl, // 画像のURLを送信する
         },
       });
-      console.log(response);
       console.log('レシピの投稿に成功しました', response.data);
       alert('レシピの投稿に成功しました');
       await router.push('/home');
@@ -95,7 +57,7 @@ const Post = () => {
     }
   };
 
-  // 画像のチェックを行う関数
+  // 画像の形式チェックとプレビュー表示を行う関数
   const imageCheck = (fileList: FileList) => {
     if (fileList[0]) {
       const imageTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -134,20 +96,18 @@ const Post = () => {
           />
 
           {preview ? (
-            <div className="flex justify-center">
-              <Image
-                className="mt-4 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] shadow-xl"
-                onClick={() => {
-                  if (imageForm.current) {
-                    imageForm.current.click();
-                  }
-                }}
-                src={preview}
-                alt="プレビュー"
-                width={300}
-                height={300}
-              />
-            </div>
+            <Image
+              className="mx-auto h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
+              onClick={() => {
+                if (imageForm.current) {
+                  imageForm.current.click();
+                }
+              }}
+              src={preview}
+              alt="プレビュー"
+              width={300}
+              height={200}
+            />
           ) : (
             <div
               className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm"

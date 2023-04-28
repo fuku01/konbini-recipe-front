@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import useAuth from '@/hooks/auth/useAuth';
 
 // ログイン中のユーザを確認する用のページ

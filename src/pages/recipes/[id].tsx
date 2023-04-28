@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -88,8 +89,16 @@ const Recipes = () => {
 
   return (
     <div>
-      <div>画像</div>
-      <div className="mx-2 mb-5 rounded-md bg-[#FDF1DE] py-1 pl-5 text-xl shadow-md">
+      {recipe?.image && (
+        <Image
+          src={recipe.image}
+          alt="レシピ画像"
+          width={300}
+          height={200}
+          className="mx-auto mb-3 h-52 w-72 rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
+        />
+      )}
+      <div className="mx-2 mb-8 rounded-md text-center text-2xl font-bold text-orange-500">
         {recipe?.title}
       </div>
       <div className="flex justify-around">
@@ -138,7 +147,6 @@ const Recipes = () => {
         })}
       </div>
       <div className="my-5 text-orange-500">バーコードタグ</div>
-
       <div className="mt-14 text-right">
         <Link href={'/editrecipes/' + id}>
           <PostButton>
