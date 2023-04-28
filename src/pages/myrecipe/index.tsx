@@ -61,9 +61,9 @@ const Myrecipe = () => {
                       src={recipe.image}
                     />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex w-full flex-col">
                     <div className="font-semibold">{recipe.title}</div>
-                    <div className="mt-2 line-clamp-2 overflow-hidden text-xs">
+                    <div className="mr-2 mt-2 line-clamp-2 flex-grow overflow-hidden text-xs">
                       {recipe.content}
                     </div>
                     <div className="mr-2 mt-2 text-right text-sm lg:text-base">
