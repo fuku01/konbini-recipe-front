@@ -76,32 +76,28 @@ const EditRecipe = () => {
 
   const editPostRecipe = async () => {
     // 画像が存在する場合は、S3にアップロードし、そのURLを取得する
-    if (image) {
-      const imageUrl = await uploadImageToS3(image);
-      // URLの取得に失敗した場合はエラーメッセージを表示して処理を終了する
-      if (!imageUrl) {
-        alert('画像のアップロードに失敗しました');
-        return;
-      }
-      const respomse = await axios.put('/recipes/' + id, {
-        recipe: {
-          title: title,
-          content: content,
-          time: time,
-          price: price,
-          calorie: calorie,
-          image: imageUrl,
-        },
-      });
-      console.log('レシピの更新に成功しました', respomse.data);
-      alert('レシピを更新しました');
-      await router.push('/myrecipe');
+    const uploadedImage = image ? await uploadImageToS3(image) : null;
+    const imageUrl = uploadedImage ? uploadedImage : defaultImage;
+    // URLの取得に失敗した場合はエラーメッセージを表示して処理を終了する
+    if (!imageUrl) {
+      alert('画像のアップロードに失敗しました');
+      return;
     }
-    // 画像が選択されていない場合、アラートを表示する
-    else {
-      alert('画像を選択してください');
-    }
+    const respomse = await axios.put('/recipes/' + id, {
+      recipe: {
+        title: title,
+        content: content,
+        time: time,
+        price: price,
+        calorie: calorie,
+        image: imageUrl,
+      },
+    });
+    console.log('レシピの更新に成功しました', respomse.data);
+    alert('レシピを更新しました');
+    await router.push('/myrecipe');
   };
+
   // 画像の形式チェックとプレビュー表示を行う関数
   const imageCheck = (fileList: FileList) => {
     if (fileList[0]) {
@@ -136,7 +132,7 @@ const EditRecipe = () => {
       />
       {preview ? (
         <Image
-          className="mx-auto h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
+          className="mx-auto h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
           onClick={() => {
             if (imageForm.current) {
               imageForm.current.click();
@@ -149,7 +145,7 @@ const EditRecipe = () => {
         />
       ) : (
         <div
-          className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm"
+          className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm hover:border-orange-500"
           onClick={() => {
             if (imageForm.current) {
               imageForm.current.click();
@@ -255,5 +251,4 @@ const EditRecipe = () => {
     </div>
   );
 };
-
 export default EditRecipe;
