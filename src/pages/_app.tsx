@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className="bg-orange-50 text-black">
       <div className="lg: mx-auto flex min-h-screen flex-col bg-white lg:w-1/3">
         <Header />
-        <div className="flex-1 px-8 pb-10 pt-5">
+        <div className="flex-1 px-6 pb-10 pt-5 lg:px-8">
           <Component {...pageProps} />
         </div>
         <Footer />

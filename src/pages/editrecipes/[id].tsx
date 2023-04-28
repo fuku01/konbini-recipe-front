@@ -132,7 +132,7 @@ const EditRecipe = () => {
       />
       {preview ? (
         <Image
-          className="mx-auto h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
+          className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
           onClick={() => {
             if (imageForm.current) {
               imageForm.current.click();
