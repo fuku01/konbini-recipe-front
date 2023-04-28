@@ -1,8 +1,6 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
 
-  // Next.jsの場合は.envをここで読み込む必要がある
   env: {
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
@@ -15,7 +13,11 @@ const nextConfig = {
     FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID
-  }
-}
+  },
 
-module.exports = nextConfig
+  images: {
+    domains: ['konbini-recipe.s3.ap-northeast-1.amazonaws.com'],
+  },
+};
+
+module.exports = nextConfig;
