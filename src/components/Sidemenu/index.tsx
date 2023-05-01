@@ -16,6 +16,7 @@ import SignupButton from './SignupButton';
 import useAuth from '@/hooks/auth/useAuth';
 
 // SideMenuPropsを定義
+
 // isMenuOpenはboolean型、setIsMenuOpenはReact.Dispatch<React.SetStateAction<boolean>>型である。
 type SideMenuProps = {
   isMenuOpen: boolean;
