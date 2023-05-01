@@ -18,7 +18,6 @@ type Recipe = {
 
 const Home = () => {
   const [allRecipe, setAllRecipe] = useState<Recipe[]>([]);
-  // スクロールさせるためのRef
 
   // レシピの取得
   const getRecipe = async () => {

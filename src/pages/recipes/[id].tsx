@@ -24,6 +24,9 @@ type Recipe = {
   updated_at: Date;
   price: number;
 };
+type User = {
+  id: number;
+};
 
 const Recipes = () => {
   // 以下のコードはレシピの詳細ページを表示するためのコード。
@@ -32,6 +35,7 @@ const Recipes = () => {
   const router = useRouter();
   const { id } = router.query;
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<User>();
 
   // レシピの取得
   const getRecipe = useCallback(() => {
@@ -46,8 +50,20 @@ const Recipes = () => {
       });
   }, [id]);
 
+  // ログイン中のユーザーの取得;
+  const getCurrentUser = async () => {
+    try {
+      const response = await axios.get<User>('/me');
+      setCurrentUser(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log('ユーザーの取得に失敗しました', error);
+    }
+  };
+
   useEffect(() => {
     getRecipe();
+    getCurrentUser();
   }, [getRecipe]);
 
   // 分アイコンの色を変える関数
@@ -147,14 +163,18 @@ const Recipes = () => {
         })}
       </div>
       <div className="my-5 text-orange-500">バーコードタグ</div>
-      <div className="mt-14 text-right">
-        <Link href={'/editrecipes/' + id}>
-          <PostButton>
-            <FontAwesomeIcon icon={faFilePen}></FontAwesomeIcon>
-          </PostButton>
-        </Link>
-      </div>
+
+      {recipe?.user_id === currentUser?.id && (
+        <div className="mt-14 text-right">
+          <Link href={'/editrecipes/' + id}>
+            <PostButton>
+              <FontAwesomeIcon icon={faFilePen}></FontAwesomeIcon>
+            </PostButton>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
+
 export default Recipes;
