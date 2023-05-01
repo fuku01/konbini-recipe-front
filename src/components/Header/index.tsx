@@ -11,7 +11,7 @@ const Header = () => {
       <div className="relative w-full">
         <FontAwesomeIcon
           icon={faBars}
-          className="absolute left-6 cursor-pointer text-4xl text-black hover:text-orange-500"
+          className="absolute left-6 cursor-pointer text-3xl text-black hover:text-orange-500"
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
           }}
