@@ -1,7 +1,6 @@
 import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import Image from 'next/image';
 import router from 'next/router';
 import React, { useRef, useState } from 'react';
 import { PostButton } from '@/components/Button';
@@ -95,7 +94,7 @@ const Post = () => {
           />
 
           {preview ? (
-            <Image
+            <img
               className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
               onClick={() => {
                 if (imageForm.current) {

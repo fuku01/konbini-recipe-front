@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
@@ -44,7 +43,7 @@ const Home = () => {
                     console.log(recipe.id, '←このIDのレシピをクリックしました');
                   }}
                 >
-                  <Image
+                  <img
                     className="h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover hover:border-4 hover:border-orange-500"
                     alt="マイレシピ"
                     width={128}

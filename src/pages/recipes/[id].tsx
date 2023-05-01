@@ -6,7 +6,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -106,7 +105,7 @@ const Recipes = () => {
   return (
     <div>
       {recipe?.image && (
-        <Image
+        <img
           src={recipe.image}
           alt="レシピ画像"
           width={300}
