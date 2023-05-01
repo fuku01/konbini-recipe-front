@@ -34,6 +34,7 @@ const Signup = () => {
       alert('ユーザーを登録しました');
       await router.push('/home');
     } catch (error) {
+      console.log('ユーザー登録に失敗しました', error);
       alert('ユーザー登録に失敗しました');
       await router.push('/signup');
     }
