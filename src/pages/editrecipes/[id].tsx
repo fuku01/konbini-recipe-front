@@ -207,6 +207,8 @@ const EditRecipe = () => {
           }
           witdh="w-1/3"
           value={price}
+          type="number"
+          min={0}
           onChange={(e) => {
             setPrice(e.target.value);
           }}
@@ -221,6 +223,8 @@ const EditRecipe = () => {
           }
           witdh="w-1/3"
           value={calorie}
+          type="number"
+          min={0}
           onChange={(e) => {
             setCalorie(e.target.value);
           }}

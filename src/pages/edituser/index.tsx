@@ -9,7 +9,7 @@ const EditUser = () => {
   const { auth } = useAuth();
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
-  const [photoURL, setPhotoURL] = useState<string | null>(null);
+  // const [photoURL, setPhotoURL] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
 
   //  ログイン中のユーザ情報をステートに保存
@@ -18,7 +18,7 @@ const EditUser = () => {
       console.log(auth.currentUser);
       setDisplayName(auth.currentUser.displayName);
       setEmail(auth.currentUser.email);
-      setPhotoURL(auth.currentUser.photoURL);
+      // setPhotoURL(auth.currentUser.photoURL);
     }
   }, [auth.currentUser]); // auth.currentUserを依存配列に追加
 
