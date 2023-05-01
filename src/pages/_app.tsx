@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   }
 
-  axios.defaults.baseURL = 'http://localhost:8000';
+  axios.defaults.baseURL = process.env.API_HOST;
 
   return (
     <div className="bg-orange-50 text-black">
