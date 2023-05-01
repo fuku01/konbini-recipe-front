@@ -1,7 +1,6 @@
 import { faClock, faFire, faYenSign } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
@@ -53,7 +52,7 @@ const Myrecipe = () => {
               >
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <Image
+                    <img
                       className="mx-2 h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover"
                       alt="マイレシピ"
                       width={128}

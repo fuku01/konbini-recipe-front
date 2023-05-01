@@ -1,7 +1,6 @@
 import { faCamera, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckButton, DeleteButton } from '@/components/Button';
@@ -131,7 +130,7 @@ const EditRecipe = () => {
         }}
       />
       {preview ? (
-        <Image
+        <img
           className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
           onClick={() => {
             if (imageForm.current) {
