@@ -18,7 +18,7 @@ const Post = () => {
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const { auth } = useAuth();
+  const { currentUser, loading } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
   const { uploadImageToS3 } = useS3();
@@ -72,10 +72,18 @@ const Post = () => {
     }
   };
 
+  if (loading) {
+    // ローディング画面を表示
+    return (
+      <div>
+        <p>ロード中...</p>
+      </div>
+    );
+  }
   // この下からリターンの中身
-  return (
-    <div>
-      {auth.currentUser ? (
+  if (currentUser) {
+    return (
+      <div>
         <div>
           <div className="mt-2 text-center text-2xl text-[#68B68D]">
             レシピ投稿
@@ -205,11 +213,15 @@ const Post = () => {
             </PostButton>
           </div>
         </div>
-      ) : (
+      </div>
+    );
+  } else {
+    return (
+      <div>
         <p>ログインしてください</p>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
 };
 
 export default Post;
