@@ -18,7 +18,7 @@ const Post = () => {
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const { currentUser, loading } = useAuth();
+  const { currentUser } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
   const { uploadImageToS3 } = useS3();
@@ -72,14 +72,6 @@ const Post = () => {
     }
   };
 
-  if (loading) {
-    // ローディング画面を表示
-    return (
-      <div>
-        <p>ロード中...</p>
-      </div>
-    );
-  }
   // この下からリターンの中身
   if (currentUser) {
     return (
@@ -216,11 +208,7 @@ const Post = () => {
       </div>
     );
   } else {
-    return (
-      <div>
-        <p>ログインしてください</p>
-      </div>
-    );
+    return <div>ログインしてください</div>;
   }
 };
 
