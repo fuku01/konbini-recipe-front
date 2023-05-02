@@ -18,7 +18,7 @@ type Recipe = {
 const Home = () => {
   const [allRecipe, setAllRecipe] = useState<Recipe[]>([]);
 
-  // レシピの取得
+  // レシピを取得する関数
   const getRecipe = async () => {
     const response = await axios.get<Recipe[]>('/new_recipes');
     setAllRecipe(response.data);
