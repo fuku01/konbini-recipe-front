@@ -104,18 +104,23 @@ const Recipes = () => {
 
   return (
     <div>
-      {recipe?.image && (
-        <img
-          src={recipe.image}
-          alt="レシピ画像"
-          width={300}
-          height={200}
-          className="mx-auto mb-3 h-52 w-72 rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
-        />
-      )}
-      <div className="mx-2 mb-8 rounded-md text-center text-2xl font-bold text-orange-500">
-        {recipe?.title}
+      <div className="mx-auto mb-3 h-52 w-72">
+        {recipe?.image && (
+          <img
+            src={recipe.image}
+            alt="レシピ画像"
+            className="h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
+          />
+        )}
       </div>
+      {recipe?.title ? (
+        <div className="mx-2 mb-8 rounded-md text-center text-2xl font-bold text-orange-500">
+          {recipe.title}
+        </div>
+      ) : (
+        <div className="mx-2 h-16" />
+      )}
+
       <div className="flex justify-around">
         <div className="inline-flex min-w-[5rem] flex-col items-center rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
