@@ -61,11 +61,13 @@ const Myrecipe = () => {
                     />
                   </div>
                   <div className="flex w-full flex-col">
-                    <div className="font-semibold">{recipe.title}</div>
+                    <div className="mr-1 line-clamp-1 font-semibold">
+                      {recipe.title}
+                    </div>
                     <div className="mr-2 mt-2 line-clamp-2 flex-grow overflow-hidden text-xs">
                       {recipe.content}
                     </div>
-                    <div className="mr-2 mt-2 text-right text-sm lg:text-base">
+                    <div className="mr-2 mt-3 text-right text-sm lg:text-base">
                       <FontAwesomeIcon icon={faClock} />
                       {recipe.time}／
                       <FontAwesomeIcon icon={faYenSign} />
