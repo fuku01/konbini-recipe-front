@@ -71,6 +71,23 @@ const Post = () => {
       setPreview(null);
     }
   };
+  // 未入力の必須項目がある場合のエラー表示を行う関数
+  const getErrorMessage = () => {
+    const errorMessages = [];
+    if (!image) {
+      errorMessages.push('写真');
+    }
+    if (!title) {
+      errorMessages.push('レシピタイトル');
+    }
+    if (!content) {
+      errorMessages.push('作り方');
+    }
+    if (errorMessages.length > 0) {
+      return '※' + errorMessages.join('・') + 'は必須です！';
+    }
+    return '';
+  };
 
   // この下からリターンの中身
   if (currentUser) {
@@ -121,8 +138,9 @@ const Post = () => {
           )}
           <TextForm
             label="レシピタイトル"
-            placeholder="例）じゃがりこマッシュポテト"
+            placeholder="※ 必須(40文字以内)"
             witdh="w-full"
+            maxLength={40}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -133,9 +151,10 @@ const Post = () => {
             witdh="w-full"
           />
           <TextFormArea
-            placeholder="例）じゃがりこをレンジで５分温めるとマッシュポテトになります。"
+            placeholder="※ 必須(1,000文字以内)"
             witdh="w-full"
             label="作り方"
+            maxLength={1000}
             onChange={(e) => {
               setContent(e.target.value);
             }}
@@ -172,6 +191,7 @@ const Post = () => {
               witdh="w-1/3"
               type="number"
               min={0}
+              max={9999}
               onChange={(e) => {
                 setPrice(e.target.value);
               }}
@@ -189,6 +209,7 @@ const Post = () => {
               witdh="w-1/3"
               type="number"
               min={0}
+              max={9999}
               onChange={(e) => {
                 setCalorie(e.target.value);
               }}
@@ -196,6 +217,7 @@ const Post = () => {
           </div>
           <div className="mt-14 text-right">
             <PostButton
+              disabled={!title || !content || !image}
               onClick={() => {
                 console.log('クリック！！');
                 postRecipe();
@@ -203,6 +225,13 @@ const Post = () => {
             >
               <FontAwesomeIcon icon={faPen} />
             </PostButton>
+            <div>
+              {getErrorMessage() ? (
+                <div className="mt-3 text-sm text-red-500">
+                  {getErrorMessage()}
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

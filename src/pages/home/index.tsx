@@ -32,7 +32,6 @@ const Home = () => {
 
   return (
     <div>
-      <Link href="/myrecipe">あああ</Link>
       <div className="mt-2 text-2xl text-[#FBB87F]">新着レシピ</div>
       <div className="flex">
         <div className="flex overflow-x-scroll whitespace-nowrap">
