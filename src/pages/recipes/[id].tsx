@@ -163,7 +163,7 @@ const Recipes = () => {
       </div>
       <div className="my-5 text-orange-500">バーコードタグ</div>
 
-      {recipe?.user_id === currentUser?.id && (
+      {currentUser && recipe && recipe.user_id === currentUser.id && (
         <div className="mt-14 text-right">
           <Link href={'/editrecipes/' + id}>
             <PostButton>
