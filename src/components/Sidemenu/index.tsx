@@ -62,16 +62,18 @@ const SideMenu = (props: SideMenuProps) => {
     <>
       {overlay}
       <div
-        className="bod absolute left-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] text-black"
+        className="bod absolute right-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] text-black"
         ref={sideMenu}
       >
-        <FontAwesomeIcon
-          icon={faXmark}
-          className="ml-6 mt-6 cursor-pointer text-4xl hover:text-orange-500"
-          onClick={() => {
-            setIsMenuOpen(!isMenuOpen);
-          }}
-        />
+        <div className="flex justify-end">
+          <FontAwesomeIcon
+            icon={faXmark}
+            className="mr-6 mt-2 cursor-pointer text-4xl hover:text-orange-500"
+            onClick={() => {
+              setIsMenuOpen(!isMenuOpen);
+            }}
+          />
+        </div>
         {/* 以下にメニュー項目を追加する */}
         <div
           className="text-lg"
