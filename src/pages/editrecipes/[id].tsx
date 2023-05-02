@@ -231,16 +231,6 @@ const EditRecipe = () => {
       </div>
       <div className="flex justify-end space-x-6">
         <div className="mt-14">
-          <CheckButton
-            onClick={() => {
-              editPostRecipe();
-              console.log('クリック！！');
-            }}
-          >
-            <FontAwesomeIcon icon={faCheck} />
-          </CheckButton>
-        </div>
-        <div className="mt-14">
           <DeleteButton
             onClick={() => {
               deleteRecipe();
@@ -249,6 +239,16 @@ const EditRecipe = () => {
           >
             <FontAwesomeIcon icon={faTrash} />
           </DeleteButton>
+        </div>
+        <div className="mt-14">
+          <CheckButton
+            onClick={() => {
+              editPostRecipe();
+              console.log('クリック！！');
+            }}
+          >
+            <FontAwesomeIcon icon={faCheck} />
+          </CheckButton>
         </div>
       </div>
     </div>

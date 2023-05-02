@@ -20,7 +20,7 @@ const Home = () => {
 
   // レシピの取得
   const getRecipe = async () => {
-    const response = await axios.get<Recipe[]>('/recipes/');
+    const response = await axios.get<Recipe[]>('/new_recipes');
     setAllRecipe(response.data);
     console.log(response.data);
   };

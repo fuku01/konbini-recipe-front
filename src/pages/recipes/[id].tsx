@@ -124,7 +124,7 @@ const Recipes = () => {
           />
           <div className="inline-flex items-center justify-center">
             {recipe?.time ? recipe.time : '-'}
-            <span className="ml-1 text-xs">分</span>
+            <span className="ml-1 mt-1 text-xs">分</span>
           </div>
         </div>
         <div className="inline-flex min-w-[5rem] flex-col rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
@@ -134,7 +134,7 @@ const Recipes = () => {
           />
           <div className="inline-flex items-center justify-center">
             {recipe?.price ? recipe.price.toLocaleString() : '-'}
-            <span className="ml-1 text-xs">円</span>
+            <span className="ml-1 mt-1 text-xs">円</span>
           </div>
         </div>
         <div className="inline-flex min-w-[5rem] flex-col rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
@@ -144,7 +144,7 @@ const Recipes = () => {
           />
           <div className="inline-flex items-center justify-center">
             {recipe?.calorie ? recipe.calorie.toLocaleString() : '-'}
-            <span className="ml-1 text-xs">kcal</span>
+            <span className="ml-1 mt-1 text-xs">kcal</span>
           </div>
         </div>
       </div>
