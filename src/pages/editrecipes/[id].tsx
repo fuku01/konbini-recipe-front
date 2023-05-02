@@ -1,9 +1,9 @@
-import { faCamera, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { CheckButton, DeleteButton } from '@/components/Button';
+import { DeleteButton, PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
@@ -113,6 +113,21 @@ const EditRecipe = () => {
     }
   };
 
+  // 未入力の必須項目がある場合のエラー表示を行う関数
+  const getErrorMessage = () => {
+    const errorMessages = [];
+    if (!title) {
+      errorMessages.push('レシピタイトル');
+    }
+    if (!content) {
+      errorMessages.push('作り方');
+    }
+    if (errorMessages.length > 0) {
+      return '※' + errorMessages.join('・') + 'は必須です！';
+    }
+    return '';
+  };
+
   return (
     <div>
       <div className="mt-2 text-center text-2xl text-[#68B68D]">レシピ編集</div>
@@ -157,8 +172,10 @@ const EditRecipe = () => {
       )}
       <TextForm
         label="レシピタイトル"
+        placeholder="※ 必須(40文字以内)"
         witdh="w-full"
         value={title}
+        maxLength={40}
         onChange={(e) => {
           setTitle(e.target.value);
         }}
@@ -169,9 +186,11 @@ const EditRecipe = () => {
         witdh="w-full"
       />
       <TextFormArea
-        witdh="w-full"
         label="作り方"
+        placeholder="※ 必須(1,000文字以内)"
+        witdh="w-full"
         value={content}
+        maxLength={1000}
         onChange={(e) => {
           setContent(e.target.value);
         }}
@@ -240,16 +259,24 @@ const EditRecipe = () => {
             <FontAwesomeIcon icon={faTrash} />
           </DeleteButton>
         </div>
-        <div className="mt-14">
-          <CheckButton
+        <div className="mt-12">
+          <PostButton
+            disabled={!title || !content || !image}
             onClick={() => {
               editPostRecipe();
               console.log('クリック！！');
             }}
           >
-            <FontAwesomeIcon icon={faCheck} />
-          </CheckButton>
+            <FontAwesomeIcon icon={faPen} />
+          </PostButton>
         </div>
+      </div>
+      <div>
+        {getErrorMessage() ? (
+          <div className="mt-3 text-end text-sm text-red-500">
+            {getErrorMessage()}
+          </div>
+        ) : null}
       </div>
     </div>
   );

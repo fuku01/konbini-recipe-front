@@ -5,6 +5,7 @@ type TextFormProps = {
   placeholder?: string;
   witdh: string;
   value?: string | number;
+  maxLength?: number;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
@@ -19,6 +20,7 @@ const TextFormArea = (props: TextFormProps) => {
           value={props.value} // ここにvalueプロパティを追加（編集ページの初期値表示のために必要）
           className="peer mt-5 h-full min-h-[200px] w-full resize-none rounded-none border-b border-blue-gray-200 bg-transparent pb-1.5 pt-6 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-orange-500 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
           onChange={props.onChange}
+          maxLength={props.maxLength}
         ></textarea>
 
         {label && (
