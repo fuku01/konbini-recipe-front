@@ -56,7 +56,7 @@ const Post = () => {
     }
   };
 
-  // 画像の形式チェックとプレビュー表示を行う関数
+  // 画像の形式バリデーションとプレビュー表示を行う関数
   const imageCheck = (fileList: FileList) => {
     if (fileList[0]) {
       const imageTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -141,6 +141,7 @@ const Post = () => {
             placeholder="※ 必須(40文字以内)"
             witdh="w-full"
             maxLength={40}
+            value={title}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -155,6 +156,7 @@ const Post = () => {
             witdh="w-full"
             label="作り方"
             maxLength={1000}
+            value={content}
             onChange={(e) => {
               setContent(e.target.value);
             }}
@@ -175,6 +177,7 @@ const Post = () => {
               }
               placeholder="5分"
               witdh="w-1/3"
+              value={time}
               onChange={(e) => {
                 setTime(e.target.value);
               }}
@@ -192,8 +195,11 @@ const Post = () => {
               type="number"
               min={0}
               max={9999}
+              value={price}
               onChange={(e) => {
-                setPrice(e.target.value);
+                if (e.target.value.length <= 4) {
+                  setPrice(e.target.value);
+                }
               }}
             />
 
@@ -210,8 +216,11 @@ const Post = () => {
               type="number"
               min={0}
               max={9999}
+              value={calorie}
               onChange={(e) => {
-                setCalorie(e.target.value);
+                if (e.target.value.length <= 4) {
+                  setCalorie(e.target.value);
+                }
               }}
             />
           </div>
