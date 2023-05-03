@@ -64,7 +64,7 @@ const Myrecipe = () => {
                     <div className="mr-1 line-clamp-1 font-semibold">
                       {recipe.title}
                     </div>
-                    <div className="mr-2 mt-2 line-clamp-2 flex-grow overflow-hidden text-xs">
+                    <div className="mr-2 mt-2 line-clamp-2 flex-grow overflow-hidden break-all text-xs">
                       {recipe.content}
                     </div>
                     <div className="mr-2 mt-3 text-right text-sm lg:text-base">

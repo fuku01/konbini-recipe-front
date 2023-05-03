@@ -157,14 +157,7 @@ const Recipes = () => {
       <div className="my-1 text-orange-500">作り方</div>
       <div className="rounded-sm bg-[#FDF1DE] px-2 py-2 shadow-md ">
         {/* 改行や空白を正しく表示させる処理 */}
-        {recipe?.content.split('\n').map((line, index) => {
-          return (
-            <p key={index}>
-              {line}
-              <br />
-            </p>
-          );
-        })}
+        <div className="whitespace-pre-wrap break-all">{recipe?.content}</div>
       </div>
       <div className="my-5 text-orange-500">バーコードタグ</div>
 
