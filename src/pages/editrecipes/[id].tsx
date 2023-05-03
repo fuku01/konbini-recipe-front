@@ -33,7 +33,7 @@ const EditRecipe = () => {
   const [defaultImage, setDefaultImage] = useState<string | null>(null);
   const imageForm = useRef<HTMLInputElement>(null);
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
-  const { uploadImageToS3 } = useS3();
+  const { uploadImageToS3, deleteImageFromS3 } = useS3();
 
   // 以下のコードはレシピの詳細ページを表示するためのコード。
   // useRouterを使って、URLのパラメーターからIDを取得しています。
@@ -67,12 +67,17 @@ const EditRecipe = () => {
 
   // レシピを削除する関数
   const deleteRecipe = async () => {
-    const respomse = await axios.delete('/recipes/' + id);
-    alert('レシピを削除しました');
-    await router.push('/myrecipe');
-    console.log('レシピの削除に成功しました', respomse.data);
+    // 画像が存在する場合は、S3から削除する
+    if (recipe?.image) {
+      await deleteImageFromS3(recipe.image);
+      const respomse = await axios.delete('/recipes/' + id);
+      alert('レシピを削除しました');
+      await router.push('/myrecipe');
+      console.log('レシピの削除に成功しました', respomse.data);
+    }
   };
 
+  // レシピを更新する関数
   const editPostRecipe = async () => {
     // 画像が存在する場合は、S3にアップロードし、そのURLを取得する
     const uploadedImage = image ? await uploadImageToS3(image) : null;
@@ -228,7 +233,9 @@ const EditRecipe = () => {
           type="number"
           min={0}
           onChange={(e) => {
-            setPrice(e.target.value);
+            if (e.target.value.length <= 4) {
+              setPrice(e.target.value);
+            }
           }}
         />
         <TextForm
@@ -244,7 +251,9 @@ const EditRecipe = () => {
           type="number"
           min={0}
           onChange={(e) => {
-            setCalorie(e.target.value);
+            if (e.target.value.length <= 4) {
+              setCalorie(e.target.value);
+            }
           }}
         />
       </div>
@@ -261,7 +270,7 @@ const EditRecipe = () => {
         </div>
         <div className="mt-12">
           <PostButton
-            disabled={!title || !content || !image}
+            disabled={!title || !content}
             onClick={() => {
               editPostRecipe();
               console.log('クリック！！');
