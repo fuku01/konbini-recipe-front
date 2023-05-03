@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { initializeApp } from 'firebase/app'; // Firebaseアプリの初期化を行うためのinitializeApp関数を'firebase/app'からインポート
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth'; // Firebase Authenticationを使用するためのgetAuth関数を'firebase/auth'からインポート
 import { useEffect, useState } from 'react';
@@ -19,28 +19,20 @@ const useAuth = () => {
   const app = initializeApp(firebaseConfig); // Firebaseアプリの初期化
   const auth = getAuth(app); // Firebase Authenticationの認証オブジェクトを取得
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // ローディング状態を追加
+  const [isWaitingUser, setIsWaitingUser] = useState(true);
 
-  // ログイン状態の変化を監視
+  // ログイン状態の変化を監視する（初期描画のタイミングで、ログイン状態をセットする）
+  // ※ログインのセットより初期描画の方が早いため、これをしないと、初期描画時にログイン状態がセットされず、ログインが必要なページを表示できない。
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
       }
-      setLoading(false); // ローディング状態を更新
+      setIsWaitingUser(false);
     });
   }, [auth]);
 
-  useEffect(() => {
-    // ログインユーザーがいる場合
-    if (currentUser) {
-      currentUser.getIdToken().then((token) => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      });
-    }
-  }, [currentUser]);
-
-  return { auth, currentUser, loading, }; // 認証オブジェクトを返す
+  return { auth, currentUser, isWaitingUser, }; // 認証オブジェクトを返す
 };
 
-export default useAuth; // useAuth関数をデフォルトエクスポートする
+export default useAuth;
