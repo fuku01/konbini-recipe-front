@@ -1,21 +1,18 @@
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { signOut } from 'firebase/auth';
-import router from 'next/router';
 import React from 'react';
 import useAuth from '@/hooks/auth/useAuth';
 
 const LogoutButton = () => {
   const { auth } = useAuth();
-  const Logout = async () => {
-    await signOut(auth);
-    alert('ログアウトしました');
-    router.push('/home');
-  };
 
   const LogoutCheck = () => {
     if (window.confirm('ログアウトしますか？')) {
-      Logout();
+      // useAuth内でログアウト処理（FIREBASEからのログアウトと、CurrentUserをNUllに更新z）
+      signOut(auth);
+      alert('ログアウトしました');
+      window.location.href = '/home';
     }
   };
 

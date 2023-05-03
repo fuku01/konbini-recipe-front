@@ -7,14 +7,7 @@ import '@/styles/globals.css';
 import useAuth from '@/hooks/auth/useAuth';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { loading, currentUser } = useAuth();
-
-  // ログインユーザーがいる場合
-  if (currentUser) {
-    currentUser.getIdToken().then((token) => {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    });
-  }
+  const { loading } = useAuth();
 
   axios.defaults.baseURL = process.env.API_HOST;
 
