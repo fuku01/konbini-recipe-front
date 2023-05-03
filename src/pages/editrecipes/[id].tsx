@@ -232,6 +232,7 @@ const EditRecipe = () => {
           value={price}
           type="number"
           min={0}
+          maxLength={4}
           onChange={(e) => {
             if (e.target.value.length <= 4) {
               setPrice(e.target.value);
@@ -250,6 +251,7 @@ const EditRecipe = () => {
           value={calorie}
           type="number"
           min={0}
+          maxLength={4}
           onChange={(e) => {
             if (e.target.value.length <= 4) {
               setCalorie(e.target.value);
