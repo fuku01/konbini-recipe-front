@@ -18,6 +18,7 @@ const SelectForm = (props: SelectFormProps) => {
           className="peer h-full w-full rounded-none border-b border-blue-gray-200 bg-transparent pb-2 pt-10 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-orange-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
           onChange={props.onChange}
         >
+          <option value="">未選択</option>
           <option value="1">1</option>
           <option value="3">3</option>
           <option value="5">5</option>

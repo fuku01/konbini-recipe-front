@@ -114,7 +114,7 @@ const Recipes = () => {
         )}
       </div>
       {recipe?.title ? (
-        <div className="mx-2 mb-8 rounded-md text-center text-2xl font-bold text-orange-500">
+        <div className="mx-2 mb-8 ml-7 whitespace-pre-wrap break-all rounded-md text-2xl font-bold text-orange-500">
           {recipe.title}
         </div>
       ) : (
