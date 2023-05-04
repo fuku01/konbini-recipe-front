@@ -12,6 +12,7 @@ const Header = () => {
   return (
     <div className="sticky top-0 z-40 flex h-14 items-center justify-center bg-[#FCCFA5] text-white shadow-md">
       <div className="relative w-full">
+        {/* ホーム画面以外には戻るボタンを表示する処理 */}
         {router.pathname !== '/home' ? (
           <div
             className="absolute left-4 cursor-pointer text-3xl text-black hover:text-orange-500"
