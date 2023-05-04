@@ -1,31 +1,49 @@
-import { BrowserMultiFormatReader } from "@zxing/browser";
-import { Result } from "@zxing/library";
-import { useMemo, useRef } from "react";
-import { useDebounce } from "react-use";
+import { BrowserMultiFormatReader } from '@zxing/browser';
+import { Result } from '@zxing/library';
+import { useEffect, useMemo, useRef } from 'react';
+import { useDebounce } from 'react-use';
 
 type UseScannerProps = {
-  onReadCode?: (text: Result) => void;
+  setCode: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-export const useScanner = ({ onReadCode }: UseScannerProps) => {
+export const useScanner = ({ setCode }: UseScannerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const codeReader = useMemo(() => new BrowserMultiFormatReader(), []);
 
-  useDebounce(async () => {
-    if (!videoRef.current) return;
-    await codeReader.decodeFromVideoDevice(
-      undefined,
-      videoRef.current,
-      (result, error) => {
-        if (!result) return;
-        if (error) {
-          console.log("ERROR!! : ", error);
-          return;
-        }
+  const onReadCode = (result: Result) => {
+    const updatedCode = result.getText();
+    setCode(updatedCode);
+  };
+
+  useDebounce(
+    async () => {
+      if (!videoRef.current) return;
+      const result = await codeReader.decodeOnceFromVideoDevice(
+        undefined,
+        videoRef.current
+      );
+      if (result) {
         onReadCode?.(result);
       }
-    );
-  }, 1000);
+    },
+    50,
+    [videoRef.current]
+  );
+
+  useEffect(() => {
+    const videoRefCurrent = videoRef.current;
+    return () => {
+      if (videoRefCurrent) {
+        const mediaStream = videoRefCurrent.srcObject as MediaStream;
+        if (mediaStream) {
+          mediaStream.getTracks().forEach((track) => {
+            track.stop();
+          });
+        }
+      }
+    };
+  }, []);
 
   return { videoRef };
 };

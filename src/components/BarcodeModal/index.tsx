@@ -1,10 +1,12 @@
 // プラグインでスクロールを制御（サイドメニュー表示中の）
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBarcode, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { Result } from '@zxing/library';
+// カメラ関係
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import React, { useEffect, useRef } from 'react';
-// import { useScanner } from '@/hooks/scanner/useScanner';
+import React, { useEffect, useRef, useState } from 'react';
+// カメラ関係
+import { BarcodeButton } from '../Button';
+import { useScanner } from '@/hooks/scanner/useScanner';
 
 // SideMenuPropsを定義
 
@@ -12,26 +14,34 @@ import React, { useEffect, useRef } from 'react';
 type BarcodeModalProps = {
   isBarcodeModalOpen: boolean;
   setIsBarcodeModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setBarcode: React.Dispatch<React.SetStateAction<string>>;
+  setBarcodeName: React.Dispatch<React.SetStateAction<string>>;
 };
 
 // Header.tsxで定義した「isMenuOpenとsetIsMenuOpen」を受け取る。
 const BarcodeModal = (props: BarcodeModalProps) => {
-  const { isBarcodeModalOpen, setIsBarcodeModalOpen } = props;
-  const storedScrollY = useRef(0);
-  // const [code, setCode] = useState<string>();
-  // const onReadCode = (result: Result) => {
-  //   const updatedCode = result.getText();
-  //   setCode(updatedCode);
-  // };
-  // const { videoRef } = useScanner({ onReadCode });
+  const {
+    isBarcodeModalOpen,
+    setIsBarcodeModalOpen,
+    setBarcode,
+    setBarcodeName,
+  } = props;
 
-  // サイドメニュー表示中に、背景をスクロールできなくする。//
+  // カメラ関係
+  const [code, setCode] = useState<string>();
+  const [name, setName] = useState<string>();
+
+  const { videoRef } = useScanner({ setCode });
+
+  // サイドメニュー表示中に、背景をスクロールできなくする。
   const barcodeModal = useRef(null);
+  const storedScrollY = useRef(0);
   useEffect(() => {
     if (isBarcodeModalOpen && barcodeModal.current) {
       storedScrollY.current = window.scrollY;
       disableBodyScroll(barcodeModal.current);
     }
+    // モーダルが閉じた時に行う処理
     return () => {
       clearAllBodyScrollLocks();
       window.scrollTo(0, storedScrollY.current);
@@ -57,7 +67,7 @@ const BarcodeModal = (props: BarcodeModalProps) => {
         {overlay()}
         <div className="flex justify-center">
           <div
-            className="fixed z-50 mt-2 h-3/4 w-5/6 bg-[#FCCFA5] text-black shadow-xl lg:mt-0 lg:w-1/4"
+            className="fixed z-50 h-3/4 w-80 bg-[#FCCFA5] text-black shadow-xl lg:mt-0"
             ref={barcodeModal}
           >
             <div className="flex justify-end">
@@ -70,23 +80,39 @@ const BarcodeModal = (props: BarcodeModalProps) => {
               />
             </div>
             {/* 以下にモーダル項目を追加する */}
-            <div
-              className="text-lg"
-              onClick={() => {
-                setIsBarcodeModalOpen(false);
-              }}
-            >
-              {/* <div className="mt-10 flex flex-col justify-center">
-            <video
-              ref={videoRef}
-              className="mx-auto w-52 rounded-lg shadow-sm"
-            />
-            <textarea
-              value={code}
-              disabled
-              className="mx-auto mt-10 rounded-lg border border-black"
-            />
-          </div> */}
+            <div>
+              <div className="mt-10 flex flex-col justify-center">
+                <video
+                  ref={videoRef}
+                  className="mx-auto w-52 rounded-lg shadow-sm"
+                />
+                <textarea
+                  value={code}
+                  disabled
+                  className="mx-auto mt-10 rounded-lg border border-black"
+                />
+                <input
+                  className="mx-auto mt-2 rounded-lg border border-black"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+                <div className="mt-2 text-center">
+                  <BarcodeButton
+                    onClick={() => {
+                      if (code) {
+                        setBarcode(code);
+                      }
+                      if (name) {
+                        setBarcodeName(name);
+                      }
+                      setIsBarcodeModalOpen(false);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faBarcode} />
+                  </BarcodeButton>
+                </div>
+              </div>
             </div>
           </div>
         </div>
