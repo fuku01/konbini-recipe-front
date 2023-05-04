@@ -1,14 +1,15 @@
-import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faBarcode, faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import router from 'next/router';
 import React, { useRef, useState } from 'react';
-import { PostButton } from '@/components/Button';
+import BarcodeModal from '@/components/BarcodeModal';
+import { BarcodeButton, PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
 import useAuth from '@/hooks/auth/useAuth';
-import useS3 from '@/hooks/auth/useS3';
+import useS3 from '@/hooks/s3/useS3';
 
 const Post = () => {
   const [title, setTitle] = useState('');
@@ -20,6 +21,7 @@ const Post = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const { currentUser } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
+  const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
   const { uploadImageToS3 } = useS3();
 
@@ -93,7 +95,13 @@ const Post = () => {
   if (currentUser) {
     return (
       <div>
-        <div>
+        <div className="relative">
+          {isBarcodeModalOpen && (
+            <BarcodeModal
+              isBarcodeModalOpen={isBarcodeModalOpen}
+              setIsBarcodeModalOpen={setIsBarcodeModalOpen}
+            />
+          )}
           <div className="mt-2 text-center text-2xl text-[#68B68D]">
             レシピ投稿
           </div>
@@ -161,11 +169,14 @@ const Post = () => {
               setContent(e.target.value);
             }}
           />
-          <TextForm
-            label="バーコードタグ"
-            placeholder="※未実装（仮でフォームを置いてる）"
-            witdh="w-full"
-          />
+          <div className="pb-4 pt-4">バーコードタグ</div>
+          <BarcodeButton
+            onClick={() => {
+              setIsBarcodeModalOpen(!isBarcodeModalOpen);
+            }}
+          >
+            <FontAwesomeIcon icon={faBarcode} />
+          </BarcodeButton>
           <div className="flex space-x-5">
             <SelectForm
               label={

@@ -7,7 +7,7 @@ import { DeleteButton, PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
-import useS3 from '@/hooks/auth/useS3';
+import useS3 from '@/hooks/s3/useS3';
 
 type Recipe = {
   id: number;

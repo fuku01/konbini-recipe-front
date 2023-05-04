@@ -62,7 +62,7 @@ const SideMenu = (props: SideMenuProps) => {
     <>
       {overlay}
       <div
-        className="bod absolute right-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] text-black"
+        className="absolute right-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] text-black"
         ref={sideMenu}
       >
         <div className="flex justify-end">

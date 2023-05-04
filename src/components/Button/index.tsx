@@ -57,3 +57,15 @@ export const DeleteButton = (props: ButtonProps) => {
     </button>
   );
 };
+
+export const BarcodeButton = (props: ButtonProps) => {
+  return (
+    <button
+      className="hover:syadow-lg disabled: rounded-full bg-[#94C8AD] px-5 py-4 text-center text-xl text-white shadow-md hover:bg-[#68B68D] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-400"
+      disabled={props.disabled}
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
+};
