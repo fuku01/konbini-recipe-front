@@ -3,7 +3,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { Result } from '@zxing/library';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 // import { useScanner } from '@/hooks/scanner/useScanner';
 
 // SideMenuPropsを定義
@@ -17,6 +17,7 @@ type BarcodeModalProps = {
 // Header.tsxで定義した「isMenuOpenとsetIsMenuOpen」を受け取る。
 const BarcodeModal = (props: BarcodeModalProps) => {
   const { isBarcodeModalOpen, setIsBarcodeModalOpen } = props;
+  const storedScrollY = useRef(0);
   // const [code, setCode] = useState<string>();
   // const onReadCode = (result: Result) => {
   //   const updatedCode = result.getText();
@@ -28,10 +29,12 @@ const BarcodeModal = (props: BarcodeModalProps) => {
   const barcodeModal = useRef(null);
   useEffect(() => {
     if (isBarcodeModalOpen && barcodeModal.current) {
+      storedScrollY.current = window.scrollY;
       disableBodyScroll(barcodeModal.current);
     }
     return () => {
       clearAllBodyScrollLocks();
+      window.scrollTo(0, storedScrollY.current);
     };
   }, [isBarcodeModalOpen]);
   ///////////////////////////////////////////////////
