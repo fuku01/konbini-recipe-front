@@ -11,6 +11,22 @@ import TextFormArea from '@/components/TextFormArea';
 import useAuth from '@/hooks/auth/useAuth';
 import useS3 from '@/hooks/s3/useS3';
 
+// レシピ投稿時に送信するデータの型
+type RecipeRequestData = {
+  recipe: {
+    title: string;
+    content: string;
+    time: string;
+    price: string;
+    calorie: string;
+    image: string;
+    barcodetags_attributes?: {
+      barcode: string;
+      name: string;
+    }[];
+  };
+};
+
 const Post = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -18,10 +34,12 @@ const Post = () => {
   const [price, setPrice] = useState('');
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
+  const [barcode, setBarcode] = useState<string>('');
+  const [barcodeName, setBarcodeName] = useState<string>('');
   const [preview, setPreview] = useState<string | null>(null);
+  const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
   const { currentUser } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
-  const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
   const { uploadImageToS3 } = useS3();
 
@@ -37,7 +55,7 @@ const Post = () => {
       }
 
       // レシピ情報を送信するリクエスト
-      const response = await axios.post('/recipes', {
+      const data: RecipeRequestData = {
         recipe: {
           title: title,
           content: content,
@@ -46,7 +64,18 @@ const Post = () => {
           calorie: calorie,
           image: imageUrl, // 画像のURLを送信する
         },
-      });
+      };
+      // バーコードが入力されている場合は、バーコード情報も送信する
+      if (barcode) {
+        data.recipe.barcodetags_attributes = [
+          {
+            barcode: barcode,
+            name: barcodeName,
+          },
+        ];
+      }
+      const response = await axios.post('/recipes', data);
+
       console.log('レシピの投稿に成功しました', response.data);
       alert('レシピの投稿に成功しました');
       await router.push('/home');
@@ -100,6 +129,8 @@ const Post = () => {
             <BarcodeModal
               isBarcodeModalOpen={isBarcodeModalOpen}
               setIsBarcodeModalOpen={setIsBarcodeModalOpen}
+              setBarcode={setBarcode}
+              setBarcodeName={setBarcodeName}
             />
           )}
           <div className="mt-2 text-center text-2xl text-[#68B68D]">

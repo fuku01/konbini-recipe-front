@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2family=Noto+Serif+JP&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,6 +18,7 @@
 }
 
 body {
+  font-family: "Noto Serif JP", serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
