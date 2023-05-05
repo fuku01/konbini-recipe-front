@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2family=Noto+Serif+JP&display=swap');
+/* ここでフォントを変える↓ */
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,7 +19,8 @@
 }
 
 body {
-  font-family: "Noto Serif JP", serif;
+  /* ここでフォントを変える↓ */
+  font-family: 'Kiwi Maru', serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,

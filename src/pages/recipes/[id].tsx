@@ -49,7 +49,7 @@ const Recipes = () => {
       });
   }, [id]);
 
-  // ログイン中のユーザーの取得;
+  // ログイン中のユーザー情報の取得（ログインユーザのみ編集ボタンを表示させたいため、取得する必要がある）
   const getCurrentUser = async () => {
     try {
       const response = await axios.get<User>('/me');
@@ -161,6 +161,7 @@ const Recipes = () => {
       </div>
       <div className="my-5 text-orange-500">バーコードタグ</div>
 
+      {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
       {currentUser && recipe && recipe.user_id === currentUser.id && (
         <div className="mt-14 text-right">
           <Link href={'/editrecipes/' + id}>

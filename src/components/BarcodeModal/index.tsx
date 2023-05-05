@@ -4,13 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // カメラ関係
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import React, { useEffect, useRef, useState } from 'react';
-// カメラ関係
 import { BarcodeButton } from '../Button';
 import { useScanner } from '@/hooks/scanner/useScanner';
 
-// SideMenuPropsを定義
-
-// isMenuOpenはboolean型、setIsMenuOpenはReact.Dispatch<React.SetStateAction<boolean>>型である。
+// Postページから受け取るステートの型を定義
 type BarcodeModalProps = {
   isBarcodeModalOpen: boolean;
   setIsBarcodeModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +15,7 @@ type BarcodeModalProps = {
   setBarcodeName: React.Dispatch<React.SetStateAction<string>>;
 };
 
-// Header.tsxで定義した「isMenuOpenとsetIsMenuOpen」を受け取る。
+// Postページで定義した「isMenuOpenとsetIsMenuOpen」を受け取る。
 const BarcodeModal = (props: BarcodeModalProps) => {
   const {
     isBarcodeModalOpen,
@@ -41,13 +38,11 @@ const BarcodeModal = (props: BarcodeModalProps) => {
       storedScrollY.current = window.scrollY;
       disableBodyScroll(barcodeModal.current);
     }
-    // モーダルが閉じた時に行う処理
     return () => {
-      clearAllBodyScrollLocks();
-      window.scrollTo(0, storedScrollY.current);
+      clearAllBodyScrollLocks(); // モーダルが閉じた時に行う処理
+      window.scrollTo(0, storedScrollY.current); // モーダルが閉じた時にスクロール位置を戻す
     };
   }, [isBarcodeModalOpen]);
-  ///////////////////////////////////////////////////
 
   // サイドメニューを表示中は背景にオーバーレイを表示する;
   const overlay = () => {
