@@ -6,7 +6,7 @@ import { useDebounce } from 'react-use';
 type UseScannerProps = {
   setCode: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
-
+// カメラの映像を取得し、バーコードを読み取る関数
 export const useScanner = ({ setCode }: UseScannerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const codeReader = useMemo(() => new BrowserMultiFormatReader(), []);

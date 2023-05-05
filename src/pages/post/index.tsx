@@ -1,10 +1,15 @@
-import { faBarcode, faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBarcode,
+  faCamera,
+  faPen,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import router from 'next/router';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BarcodeModal from '@/components/BarcodeModal';
-import { BarcodeButton, PostButton } from '@/components/Button';
+import { TagButton, BarcodeButton, PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
@@ -34,9 +39,12 @@ const Post = () => {
   const [price, setPrice] = useState('');
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [barcode, setBarcode] = useState<string>('');
   const [barcodeName, setBarcodeName] = useState<string>('');
-  const [preview, setPreview] = useState<string | null>(null);
+  const [tag, setTag] = useState<string>('');
+  const [previewTag, setPreviewTag] = useState<string | null>(null);
+
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
   const { currentUser } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
@@ -53,7 +61,6 @@ const Post = () => {
         alert('画像のアップロードに失敗しました');
         return;
       }
-
       // レシピ情報を送信するリクエスト
       const data: RecipeRequestData = {
         recipe: {
@@ -65,7 +72,7 @@ const Post = () => {
           image: imageUrl, // 画像のURLを送信する
         },
       };
-      // バーコードが入力されている場合は、バーコード情報も送信する
+      // バーコードが入力されている場合だけ、バーコード情報も送信する（空のバーコードテーブルを作成しないために条件分岐させている）
       if (barcode) {
         data.recipe.barcodetags_attributes = [
           {
@@ -102,6 +109,7 @@ const Post = () => {
       setPreview(null);
     }
   };
+
   // 未入力の必須項目がある場合のエラー表示を行う関数
   const getErrorMessage = () => {
     const errorMessages = [];
@@ -119,6 +127,12 @@ const Post = () => {
     }
     return '';
   };
+
+  useEffect(() => {
+    // 入力したタグを配列に追加する
+    const tags = tag.split(' ');
+    console.log(tags);
+  }, [tag]);
 
   // この下からリターンの中身
   if (currentUser) {
@@ -150,6 +164,7 @@ const Post = () => {
           />
 
           {preview ? (
+            // 画像が選択されている場合は、プレビューを表示する
             <img
               className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
               onClick={() => {
@@ -163,6 +178,7 @@ const Post = () => {
               height={200}
             />
           ) : (
+            // 画像が選択されていない場合は、プレビューを表示しない
             <div
               className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm hover:border-orange-500"
               onClick={() => {
@@ -200,14 +216,35 @@ const Post = () => {
               setContent(e.target.value);
             }}
           />
-          <div className="pb-4 pt-4">バーコードタグ</div>
-          <BarcodeButton
-            onClick={() => {
-              setIsBarcodeModalOpen(!isBarcodeModalOpen);
-            }}
-          >
-            <FontAwesomeIcon icon={faBarcode} />
-          </BarcodeButton>
+          <div className="flex items-center justify-between">
+            <TextForm
+              label="タグ"
+              placeholder="タグを追加する"
+              witdh="w-full"
+              onChange={(e) => {
+                setPreviewTag(e.target.value);
+              }}
+            />
+            <div className="ml-1 mr-4 mt-16">
+              <TagButton
+                onClick={() => {
+                  setTag(tag + previewTag);
+                  setPreviewTag('');
+                }}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </TagButton>
+            </div>
+            <div className="mt-14">
+              <BarcodeButton
+                onClick={() => {
+                  setIsBarcodeModalOpen(!isBarcodeModalOpen);
+                }}
+              >
+                <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
+              </BarcodeButton>
+            </div>
+          </div>
           <div className="flex space-x-5">
             <SelectForm
               label={
@@ -270,12 +307,12 @@ const Post = () => {
             <PostButton
               disabled={!title || !content || !image}
               onClick={() => {
-                console.log('クリック！！');
                 postRecipe();
               }}
             >
               <FontAwesomeIcon icon={faPen} />
             </PostButton>
+            {/* 未入力項目があればエラーを表示する */}
             <div>
               {getErrorMessage() ? (
                 <div className="mt-3 text-sm text-red-500">

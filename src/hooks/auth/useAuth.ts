@@ -22,7 +22,7 @@ const useAuth = () => {
   const [isWaitingUser, setIsWaitingUser] = useState(true);
 
   // ログイン状態の変化を監視する（初期描画のタイミングで、ログイン状態をセットする）
-  // ※ログインのセットより初期描画の方が早いため、これをしないと、初期描画時にログイン状態がセットされず、ログインが必要なページを表示できない。
+  // ※ログインのセットより初期描画の方が早いため、これをしないと、初期描画時にログイン状態がセットされず、初期描画時にログインが必要なページを表示できない。
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -32,7 +32,7 @@ const useAuth = () => {
     });
   }, [auth]);
 
-  return { auth, currentUser, isWaitingUser, }; // 認証オブジェクトを返す
+  return { auth, currentUser, isWaitingUser }; // 認証オブジェクトを返す
 };
 
 export default useAuth;
