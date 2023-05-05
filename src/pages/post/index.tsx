@@ -252,11 +252,11 @@ const Post = () => {
               {/* tags配列の中身を表示 */}
               {tags.map((tag, index) => (
                 <div key={index} className="flex">
-                  <div className="mx-2 mt-2 bg-slate-400">
-                    #{tag}
+                  <div className="mx-2 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+                    # {tag}
                     <FontAwesomeIcon
                       icon={faCircleXmark}
-                      className="cursor-pointer"
+                      className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"
                       onClick={() => {
                         // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
                         // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
