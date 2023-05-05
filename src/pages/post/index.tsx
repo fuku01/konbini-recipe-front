@@ -42,8 +42,10 @@ const Post = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [barcode, setBarcode] = useState<string>('');
   const [barcodeName, setBarcodeName] = useState<string>('');
-  const [tag, setTag] = useState<string>('');
-  const [previewTag, setPreviewTag] = useState<string | null>(null);
+
+  const [tempTag, setTempTag] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState('');
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
   const { currentUser } = useAuth();
@@ -128,11 +130,10 @@ const Post = () => {
     return '';
   };
 
+  // タグ配列を確認するためのuseEffect
   useEffect(() => {
-    // 入力したタグを配列に追加する
-    const tags = tag.split(' ');
     console.log(tags);
-  }, [tag]);
+  }, [tags]);
 
   // この下からリターンの中身
   if (currentUser) {
@@ -221,18 +222,23 @@ const Post = () => {
               label="タグ"
               placeholder="タグを追加する"
               witdh="w-full"
+              value={inputValue}
               onChange={(e) => {
-                setPreviewTag(e.target.value);
+                setTempTag(e.target.value);
+                setInputValue(e.target.value);
               }}
             />
             <div className="ml-1 mr-4 mt-16">
               <TagButton
                 onClick={() => {
-                  setTag(tag + previewTag);
-                  setPreviewTag('');
+                  if (tempTag) {
+                    setTags([...tags, tempTag]);
+                    setTempTag('');
+                    setInputValue('');
+                  }
                 }}
               >
-                <FontAwesomeIcon icon={faPlus} />
+                <FontAwesomeIcon icon={faPlus} className="text-lg" />
               </TagButton>
             </div>
             <div className="mt-14">
