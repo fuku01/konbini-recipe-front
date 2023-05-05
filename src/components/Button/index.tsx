@@ -28,18 +28,6 @@ export const PostBlueButton = (props: ButtonProps) => {
   );
 };
 
-export const TagButton = (props: ButtonProps) => {
-  return (
-    <button
-      className="hover:syadow-lg rounded-full bg-orange-300 px-2 py-1 text-center text-base text-white shadow-md hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-400"
-      disabled={props.disabled}
-      onClick={props.onClick}
-    >
-      {props.children}
-    </button>
-  );
-};
-
 export const DeleteButton = (props: ButtonProps) => {
   const Deletecheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (window.confirm('本当に削除しますか？')) {
@@ -62,6 +50,18 @@ export const BarcodeButton = (props: ButtonProps) => {
   return (
     <button
       className="hover:syadow-lg disabled: rounded-md bg-[#94C8AD] px-3 py-2 text-center text-xl text-white shadow-md hover:bg-[#68B68D] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-400"
+      disabled={props.disabled}
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
+};
+
+export const TagButton = (props: ButtonProps) => {
+  return (
+    <button
+      className="hover:syadow-lg rounded-full bg-orange-300 px-2 py-1 text-center text-base text-white shadow-md hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-400"
       disabled={props.disabled}
       onClick={props.onClick}
     >

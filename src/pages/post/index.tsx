@@ -1,6 +1,7 @@
 import {
   faBarcode,
   faCamera,
+  faCircleXmark,
   faPen,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
@@ -202,11 +203,6 @@ const Post = () => {
               setTitle(e.target.value);
             }}
           />
-          <TextForm
-            label="カテゴリ"
-            placeholder="※未実装（仮でフォームを置いてる）"
-            witdh="w-full"
-          />
           <TextFormArea
             placeholder="※ 必須(1,000文字以内)"
             witdh="w-full"
@@ -217,38 +213,61 @@ const Post = () => {
               setContent(e.target.value);
             }}
           />
-          <div className="flex items-center justify-between">
-            <TextForm
-              label="タグ"
-              placeholder="タグを追加する"
-              witdh="w-full"
-              value={inputValue}
-              onChange={(e) => {
-                setTempTag(e.target.value);
-                setInputValue(e.target.value);
-              }}
-            />
-            <div className="ml-1 mr-4 mt-16">
-              <TagButton
-                onClick={() => {
-                  if (tempTag) {
-                    setTags([...tags, tempTag]);
-                    setTempTag('');
-                    setInputValue('');
-                  }
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between">
+              <TextForm
+                label="タグ"
+                placeholder="タグを追加する"
+                witdh="w-full"
+                value={inputValue}
+                onChange={(e) => {
+                  setTempTag(e.target.value);
+                  setInputValue(e.target.value);
                 }}
-              >
-                <FontAwesomeIcon icon={faPlus} className="text-lg" />
-              </TagButton>
+              />
+              <div className="ml-1 mr-4 mt-16">
+                <TagButton
+                  onClick={() => {
+                    if (tempTag) {
+                      setTags([...tags, tempTag]);
+                      setTempTag('');
+                      setInputValue('');
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={faPlus} className="text-lg" />
+                </TagButton>
+              </div>
+              <div className="mt-14">
+                <BarcodeButton
+                  onClick={() => {
+                    setIsBarcodeModalOpen(!isBarcodeModalOpen);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
+                </BarcodeButton>
+              </div>
             </div>
-            <div className="mt-14">
-              <BarcodeButton
-                onClick={() => {
-                  setIsBarcodeModalOpen(!isBarcodeModalOpen);
-                }}
-              >
-                <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
-              </BarcodeButton>
+            <div className="flex flex-wrap">
+              {/* tags配列の中身を表示 */}
+              {tags.map((tag, index) => (
+                <div key={index} className="flex">
+                  <div className="mx-2 mt-2 bg-slate-400">
+                    #{tag}
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
+                        // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
+                        // つまり、クリックしたタグを配列から削除する
+                        const newTags = tags.filter((t) => t !== tag);
+                        setTags(newTags);
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className="flex space-x-5">
