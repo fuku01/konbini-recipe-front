@@ -22,9 +22,14 @@ type Recipe = {
   created_at: Date;
   updated_at: Date;
   price: number;
+  tags: Tag[]; // タグ情報を含むプロパティ
 };
 type User = {
   id: number;
+};
+type Tag = {
+  id: number;
+  name: string;
 };
 
 const Recipes = () => {
@@ -159,8 +164,17 @@ const Recipes = () => {
         {/* 改行や空白を正しく表示させる処理 */}
         <div className="whitespace-pre-wrap break-all">{recipe?.content}</div>
       </div>
-      <div className="my-5 text-orange-500">バーコードタグ</div>
-
+      <div className="mt-5 text-orange-500">タグ</div>
+      {/* レシピに紐づくタグを表示 */}
+      <div className="flex flex-wrap">
+        {recipe?.tags.map((tag) => (
+          <div key={tag.id} className="flex">
+            <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+              # {tag.name}
+            </div>
+          </div>
+        ))}
+      </div>
       {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
       {currentUser && recipe && recipe.user_id === currentUser.id && (
         <div className="mt-14 text-right">

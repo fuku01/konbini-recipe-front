@@ -1,14 +1,27 @@
-import { faCamera, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBarcode,
+  faCamera,
+  faCircleXmark,
+  faPen,
+  faPlus,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { DeleteButton, PostButton } from '@/components/Button';
+import {
+  BarcodeButton,
+  DeleteButton,
+  PostButton,
+  TagButton,
+} from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
 import useS3 from '@/hooks/s3/useS3';
 
+// レシピの型（GET用）
 type Recipe = {
   id: number;
   user_id: number;
@@ -20,6 +33,25 @@ type Recipe = {
   created_at: Date;
   updated_at: Date;
   price: number;
+  tags: Tag[]; // タグ情報を含むプロパティ
+};
+type Tag = {
+  id?: number;
+  name: string;
+  _destroy?: boolean;
+};
+
+// レシピ投稿時に送信するデータの型（put用）
+type RecipeRequestData = {
+  recipe: {
+    title: string;
+    content: string;
+    time: string;
+    price: string;
+    calorie: string;
+    image: string;
+    tags_attributes?: Tag[];
+  };
 };
 
 const EditRecipe = () => {
@@ -32,6 +64,13 @@ const EditRecipe = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [defaultImage, setDefaultImage] = useState<string | null>(null);
   const imageForm = useRef<HTMLInputElement>(null);
+
+  const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
+  const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
+  const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
+
+  const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
+
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
   const { uploadImageToS3, deleteImageFromS3 } = useS3();
 
@@ -62,6 +101,7 @@ const EditRecipe = () => {
       setCalorie(recipe.calorie ? recipe.calorie.toString() : '');
       setDefaultImage(recipe.image ? recipe.image : null);
       setPreview(recipe.image ? recipe.image : null);
+      setTags(recipe.tags ? recipe.tags : []);
     }
   }, [recipe]);
 
@@ -87,16 +127,24 @@ const EditRecipe = () => {
       alert('画像のアップロードに失敗しました');
       return;
     }
-    const respomse = await axios.put('/recipes/' + id, {
+    // レシピ情報を送信するリクエスト
+    const data: RecipeRequestData = {
       recipe: {
         title: title,
         content: content,
         time: time,
         price: price,
         calorie: calorie,
-        image: imageUrl,
+        image: imageUrl, // 画像のURLを送信する
       },
-    });
+    };
+    //タグが一つ以上入力されている場合だけ、タグ情報も送信する（空のタグテーブルを作成しないために条件分岐させている）
+    if (tags.length > 0) {
+      // タグの配列を、送信するデータの形式に合わせて変換する。例：['タグ1', 'タグ2'] => [{name: 'タグ1'}, {name: 'タグ2'}]　※この変換を行わないと、Rails側でタグの保存ができない
+      data.recipe.tags_attributes = tags;
+    }
+
+    const respomse = await axios.put('/recipes/' + id, data);
     console.log('レシピの更新に成功しました', respomse.data);
     alert('レシピを更新しました');
     await router.push('/myrecipe');
@@ -132,6 +180,15 @@ const EditRecipe = () => {
     }
     return '';
   };
+
+  // タグ配列を確認するためのuseEffect
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
+  // レシピとタグの詳細情報を確認するためのuseEffect
+  useEffect(() => {
+    console.log('レシピとタグ情報', recipe);
+  }, [recipe]);
 
   return (
     <div>
@@ -185,11 +242,6 @@ const EditRecipe = () => {
           setTitle(e.target.value);
         }}
       />
-      <TextForm
-        label="カテゴリ"
-        placeholder="※未実装（仮でフォームを置いてる）"
-        witdh="w-full"
-      />
       <TextFormArea
         label="作り方"
         placeholder="※ 必須(1,000文字以内)"
@@ -200,11 +252,75 @@ const EditRecipe = () => {
           setContent(e.target.value);
         }}
       />
-      <TextForm
-        label="バーコードタグ"
-        placeholder="※未実装（仮でフォームを置いてる）"
-        witdh="w-full"
-      />
+      {/* タグの表示 */}
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between">
+          <TextForm
+            label="タグ"
+            placeholder="タグを追加する"
+            witdh="w-full"
+            value={inputValue}
+            onChange={(e) => {
+              setTempTag(e.target.value);
+              setInputValue(e.target.value);
+            }}
+          />
+          <div className="ml-1 mr-4 mt-16">
+            <TagButton
+              onClick={() => {
+                if (tempTag) {
+                  setTags([...tags, { name: tempTag }]);
+                  setTempTag('');
+                  setInputValue('');
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faPlus} className="text-lg" />
+            </TagButton>
+          </div>
+          <div className="mt-14">
+            <BarcodeButton
+              onClick={() => {
+                setIsBarcodeModalOpen(!isBarcodeModalOpen);
+              }}
+            >
+              <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
+            </BarcodeButton>
+          </div>
+        </div>
+        <div className="flex flex-wrap">
+          {/* _destroyがtrueのもの以外の、tags配列の中身を表示 */}
+          {tags.map((tag, index) => {
+            if (!tag._destroy) {
+              return (
+                <div key={index} className="flex">
+                  <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+                    # {tag.name}
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"
+                      onClick={() => {
+                        // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
+                        // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
+                        // つまり、クリックしたタグを配列から削除する
+                        // クリックしたタグを_destroyを使って削除して、新しい配列を作成する
+                        const newTags = tags.map((t) => {
+                          if (t == tag) {
+                            t._destroy = true;
+                          }
+                          return t;
+                        });
+                        setTags(newTags);
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            }
+          })}
+        </div>
+      </div>
+
       <div className="flex space-x-5">
         <SelectForm
           label={

@@ -48,6 +48,7 @@ const Post = () => {
   const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
+
   const { currentUser } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
@@ -247,7 +248,7 @@ const Post = () => {
               {/* tags配列の中身を表示 */}
               {tags.map((tag, index) => (
                 <div key={index} className="flex">
-                  <div className="mx-2 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+                  <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
                     # {tag}
                     <FontAwesomeIcon
                       icon={faCircleXmark}
