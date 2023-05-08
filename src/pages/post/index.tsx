@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import router from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import BarcodeModal from '@/components/BarcodeModal';
+// import BarcodeModal from '@/components/BarcodeModal';
 import { TagButton, BarcodeButton, PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
@@ -26,8 +26,7 @@ type RecipeRequestData = {
     price: string;
     calorie: string;
     image: string;
-    barcodetags_attributes?: {
-      barcode: string;
+    tags_attributes?: {
       name: string;
     }[];
   };
@@ -40,13 +39,13 @@ const Post = () => {
   const [price, setPrice] = useState('');
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [barcode, setBarcode] = useState<string>('');
-  const [barcodeName, setBarcodeName] = useState<string>('');
+  const [preview, setPreview] = useState<string | null>(null); //画像のプレビューを表示するためのstate
+  // const [barcode, setBarcode] = useState<string>('');
+  // const [barcodeName, setBarcodeName] = useState<string>('');
 
-  const [tempTag, setTempTag] = useState<string>('');
-  const [tags, setTags] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
+  const [tags, setTags] = useState<string[]>([]); //送信するためのタグ配列を保持するためのstate
+  const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
   const { currentUser } = useAuth();
@@ -75,14 +74,10 @@ const Post = () => {
           image: imageUrl, // 画像のURLを送信する
         },
       };
-      // バーコードが入力されている場合だけ、バーコード情報も送信する（空のバーコードテーブルを作成しないために条件分岐させている）
-      if (barcode) {
-        data.recipe.barcodetags_attributes = [
-          {
-            barcode: barcode,
-            name: barcodeName,
-          },
-        ];
+      //タグが一つ以上入力されている場合だけ、タグ情報も送信する（空のタグテーブルを作成しないために条件分岐させている）
+      if (tags.length > 0) {
+        // タグの配列を、送信するデータの形式に合わせて変換する。例：['タグ1', 'タグ2'] => [{name: 'タグ1'}, {name: 'タグ2'}]　※この変換を行わないと、Rails側でタグの保存ができない
+        data.recipe.tags_attributes = tags.map((tag) => ({ name: tag }));
       }
       const response = await axios.post('/recipes', data);
 
@@ -141,14 +136,14 @@ const Post = () => {
     return (
       <div>
         <div className="relative">
-          {isBarcodeModalOpen && (
-            <BarcodeModal
-              isBarcodeModalOpen={isBarcodeModalOpen}
-              setIsBarcodeModalOpen={setIsBarcodeModalOpen}
-              setBarcode={setBarcode}
-              setBarcodeName={setBarcodeName}
-            />
-          )}
+          {/* {isBarcodeModalOpen && (
+            // <BarcodeModal
+            //   isBarcodeModalOpen={isBarcodeModalOpen}
+            //   setIsBarcodeModalOpen={setIsBarcodeModalOpen}
+            //   // setBarcode={setBarcode}
+            //   // setBarcodeName={setBarcodeName}
+            // />
+          )} */}
           <div className="mt-2 text-center text-2xl text-[#68B68D]">
             レシピ投稿
           </div>
