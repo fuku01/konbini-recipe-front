@@ -1,10 +1,9 @@
 // プラグインでスクロールを制御（サイドメニュー表示中の）
-import { faBarcode, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // カメラ関係
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import React, { useEffect, useRef, useState } from 'react';
-import { BarcodeButton } from '../Button';
 import { useScanner } from '@/hooks/scanner/useScanner';
 
 // Postページから受け取るステートの型を定義
@@ -12,22 +11,14 @@ type BarcodeModalProps = {
   isBarcodeModalOpen: boolean;
   setIsBarcodeModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setBarcode: React.Dispatch<React.SetStateAction<string>>;
-  setBarcodeName: React.Dispatch<React.SetStateAction<string>>;
 };
 
 // Postページで定義した「isMenuOpenとsetIsMenuOpen」を受け取る。
 const BarcodeModal = (props: BarcodeModalProps) => {
-  const {
-    isBarcodeModalOpen,
-    setIsBarcodeModalOpen,
-    setBarcode,
-    setBarcodeName,
-  } = props;
+  const { isBarcodeModalOpen, setIsBarcodeModalOpen, setBarcode } = props;
 
   // カメラ関係
   const [code, setCode] = useState<string>();
-  const [name, setName] = useState<string>();
-
   const { videoRef } = useScanner({ setCode });
 
   // サイドメニュー表示中に、背景をスクロールできなくする。
@@ -43,6 +34,14 @@ const BarcodeModal = (props: BarcodeModalProps) => {
       window.scrollTo(0, storedScrollY.current); // モーダルが閉じた時にスクロール位置を戻す
     };
   }, [isBarcodeModalOpen]);
+
+  // バーコードを読み取ったら、モーダルを閉じる
+  useEffect(() => {
+    if (code) {
+      setBarcode(code);
+      setIsBarcodeModalOpen(false);
+    }
+  }, [code, setBarcode, setIsBarcodeModalOpen]);
 
   // サイドメニューを表示中は背景にオーバーレイを表示する;
   const overlay = () => {
@@ -79,34 +78,13 @@ const BarcodeModal = (props: BarcodeModalProps) => {
               <div className="mt-10 flex flex-col justify-center">
                 <video
                   ref={videoRef}
-                  className="mx-auto w-52 rounded-lg shadow-sm"
+                  className="mx-auto w-4/5 rounded-lg shadow-sm"
                 />
                 <textarea
                   value={code}
                   disabled
-                  className="mx-auto mt-10 rounded-lg border border-black"
+                  className="mx-auto mt-10 hidden rounded-lg border border-black"
                 />
-                <input
-                  className="mx-auto mt-2 rounded-lg border border-black"
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                />
-                <div className="mt-2 text-center">
-                  <BarcodeButton
-                    onClick={() => {
-                      if (code) {
-                        setBarcode(code);
-                      }
-                      if (name) {
-                        setBarcodeName(name);
-                      }
-                      setIsBarcodeModalOpen(false);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faBarcode} />
-                  </BarcodeButton>
-                </div>
               </div>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import BarcodeModal from '@/components/BarcodeModal';
 import {
   BarcodeButton,
   DeleteButton,
@@ -63,11 +64,14 @@ const EditRecipe = () => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [defaultImage, setDefaultImage] = useState<string | null>(null);
+  const [barcode, setBarcode] = useState<string>('');
+
   const imageForm = useRef<HTMLInputElement>(null);
 
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
   const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
+  const [validTagCount, setValidTagCount] = useState(0); //バリデーションのためにタグの数を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
@@ -102,6 +106,7 @@ const EditRecipe = () => {
       setDefaultImage(recipe.image ? recipe.image : null);
       setPreview(recipe.image ? recipe.image : null);
       setTags(recipe.tags ? recipe.tags : []);
+      setValidTagCount(recipe.tags ? recipe.tags.length - 1 : 0);
     }
   }, [recipe]);
 
@@ -181,6 +186,15 @@ const EditRecipe = () => {
     return '';
   };
 
+  // バーコードに値が入ったら、タグにその値を追加する関数
+  useEffect(() => {
+    if (barcode) {
+      setTags([...tags, { name: barcode }]);
+      setBarcode('');
+      setValidTagCount(validTagCount + 1);
+    }
+  }, [barcode, tags, validTagCount]);
+
   // _destroyがfalseのタグのみを確認するためのuseEffect
   useEffect(() => {
     console.log(
@@ -189,233 +203,240 @@ const EditRecipe = () => {
     );
   }, [tags]);
 
-  // レシピとタグの詳細情報を確認するためのuseEffect
-  useEffect(() => {
-    console.log('レシピとタグ情報', recipe);
-  }, [recipe]);
-
   return (
     <div>
-      <div className="mt-2 text-center text-2xl text-[#68B68D]">レシピ編集</div>
-      {/* 写真編集 */}
-      <input
-        ref={imageForm}
-        type="file"
-        className="hidden w-full"
-        accept="image/*"
-        onChange={(e) => {
-          const fileList = e.target.files;
-          if (fileList) {
-            imageCheck(fileList);
-          }
-        }}
-      />
-      {preview ? (
-        <img
-          className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
-          onClick={() => {
-            if (imageForm.current) {
-              imageForm.current.click();
-            }
-          }}
-          src={preview}
-          alt="プレビュー"
-          width={300}
-          height={200}
-        />
-      ) : (
-        <div
-          className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm hover:border-orange-500"
-          onClick={() => {
-            if (imageForm.current) {
-              imageForm.current.click();
-            }
-          }}
-        >
-          <FontAwesomeIcon icon={faCamera} className="text-8xl" />
-          <div className="text-2xl">写真</div>
+      <div className="relative">
+        {isBarcodeModalOpen && (
+          <BarcodeModal
+            isBarcodeModalOpen={isBarcodeModalOpen}
+            setIsBarcodeModalOpen={setIsBarcodeModalOpen}
+            setBarcode={setBarcode}
+          />
+        )}
+        <div className="mt-2 text-center text-2xl text-[#68B68D]">
+          レシピ編集
         </div>
-      )}
-      <TextForm
-        label="レシピタイトル"
-        placeholder="※ 必須(40文字以内)"
-        witdh="w-full"
-        value={title}
-        maxLength={40}
-        onChange={(e) => {
-          setTitle(e.target.value);
-        }}
-      />
-      <TextFormArea
-        label="作り方"
-        placeholder="※ 必須(1,000文字以内)"
-        witdh="w-full"
-        value={content}
-        maxLength={1000}
-        onChange={(e) => {
-          setContent(e.target.value);
-        }}
-      />
-      {/* タグの表示 */}
-      <div className="flex flex-col">
-        <div className="flex items-center justify-between">
-          <TextForm
-            label="タグ"
-            placeholder="タグを追加する"
-            witdh="w-full"
-            value={inputValue}
+        {/* 写真編集 */}
+        <input
+          ref={imageForm}
+          type="file"
+          className="hidden w-full"
+          accept="image/*"
+          onChange={(e) => {
+            const fileList = e.target.files;
+            if (fileList) {
+              imageCheck(fileList);
+            }
+          }}
+        />
+        {preview ? (
+          <img
+            className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
+            onClick={() => {
+              if (imageForm.current) {
+                imageForm.current.click();
+              }
+            }}
+            src={preview}
+            alt="プレビュー"
+            width={300}
+            height={200}
+          />
+        ) : (
+          <div
+            className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm hover:border-orange-500"
+            onClick={() => {
+              if (imageForm.current) {
+                imageForm.current.click();
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={faCamera} className="text-8xl" />
+            <div className="text-2xl">写真</div>
+          </div>
+        )}
+        <TextForm
+          label="レシピタイトル"
+          placeholder="※ 必須(40文字以内)"
+          witdh="w-full"
+          value={title}
+          maxLength={40}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+        <TextFormArea
+          label="作り方"
+          placeholder="※ 必須(1,000文字以内)"
+          witdh="w-full"
+          value={content}
+          maxLength={1000}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+        />
+        {/* タグの表示 */}
+        <div className="flex flex-col">
+          <div className="flex items-center justify-between">
+            <TextForm
+              label="タグ"
+              placeholder="※ +ボタンでタグを追加（５つ以内)"
+              witdh="w-full"
+              value={inputValue}
+              onChange={(e) => {
+                setTempTag(e.target.value);
+                setInputValue(e.target.value);
+              }}
+            />
+            <div className="ml-1 mr-4 mt-16">
+              <TagButton
+                onClick={() => {
+                  // _destroy が true でないタグのみをカウント
+                  const TagCount = tags.filter((tag) => !tag._destroy).length;
+                  setValidTagCount(TagCount);
+                  // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
+                  if (tempTag && validTagCount < 5) {
+                    setTags([...tags, { name: tempTag }]);
+                    setTempTag('');
+                    setInputValue('');
+                  }
+                }}
+                disabled={validTagCount > 3}
+              >
+                <FontAwesomeIcon icon={faPlus} className="text-lg" />
+              </TagButton>
+            </div>
+            <div className="mt-14">
+              <BarcodeButton
+                onClick={() => {
+                  setIsBarcodeModalOpen(!isBarcodeModalOpen);
+                }}
+                disabled={validTagCount > 3}
+              >
+                <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
+              </BarcodeButton>
+            </div>
+          </div>
+          <div className="flex flex-wrap">
+            {/* _destroyがtrueのもの以外の、tags配列の中身を表示 */}
+            {tags.map((tag, index) => {
+              if (!tag._destroy) {
+                return (
+                  <div key={index} className="flex">
+                    <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+                      # {tag.name}
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"
+                        onClick={() => {
+                          // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
+                          // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
+                          // つまり、クリックしたタグを配列から削除する
+                          // クリックしたタグを_destroyを使って削除して、新しい配列を作成する
+                          const newTags = tags.map((t) => {
+                            if (t == tag) {
+                              t._destroy = true;
+                            }
+                            return t;
+                          });
+                          setTags(newTags);
+                          setValidTagCount(validTagCount - 1);
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
+
+        <div className="flex space-x-5">
+          <SelectForm
+            label={
+              <div>
+                調理時間
+                <br />
+                <div className="ml-14 text-xs">（分）</div>
+              </div>
+            }
+            witdh="w-1/3"
+            value={time}
             onChange={(e) => {
-              setTempTag(e.target.value);
-              setInputValue(e.target.value);
+              setTime(e.target.value);
             }}
           />
-          <div className="ml-1 mr-4 mt-16">
-            <TagButton
-              onClick={() => {
-                // _destroy が true でないタグのみをカウント
-                const validTagCount = tags.filter(
-                  (tag) => !tag._destroy
-                ).length;
-                // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
-                if (tempTag && validTagCount < 5) {
-                  setTags([...tags, { name: tempTag }]);
-                  setTempTag('');
-                  setInputValue('');
-                } else if (validTagCount >= 5) {
-                  // タグの数が 5 を超える場合のエラーメッセージを表示。
-                  alert('タグは5個までしか追加できません!');
-                }
-              }}
-            >
-              <FontAwesomeIcon icon={faPlus} className="text-lg" />
-            </TagButton>
-          </div>
+          <TextForm
+            label={
+              <div>
+                金額
+                <br />
+                <div className="ml-14 text-xs">（円）</div>
+              </div>
+            }
+            placeholder="未入力"
+            witdh="w-1/3"
+            value={price}
+            type="number"
+            min={0}
+            max={9999}
+            onChange={(e) => {
+              if (e.target.value.length <= 4) {
+                setPrice(e.target.value);
+              }
+            }}
+          />
+          <TextForm
+            label={
+              <div>
+                カロリー
+                <br />
+                <div className="ml-14 text-xs">（kcal）</div>
+              </div>
+            }
+            placeholder="未入力"
+            witdh="w-1/3"
+            value={calorie}
+            type="number"
+            min={0}
+            max={9999}
+            onChange={(e) => {
+              if (e.target.value.length <= 4) {
+                setCalorie(e.target.value);
+              }
+            }}
+          />
+        </div>
+        <div className="flex justify-end space-x-6">
           <div className="mt-14">
-            <BarcodeButton
+            <DeleteButton
               onClick={() => {
-                setIsBarcodeModalOpen(!isBarcodeModalOpen);
+                deleteRecipe();
+                console.log('クリック！！');
               }}
             >
-              <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
-            </BarcodeButton>
+              <FontAwesomeIcon icon={faTrash} />
+            </DeleteButton>
+          </div>
+          <div className="mt-12">
+            <PostButton
+              disabled={!title || !content}
+              onClick={() => {
+                editPostRecipe();
+                console.log('クリック！！');
+              }}
+            >
+              <FontAwesomeIcon icon={faPen} />
+            </PostButton>
           </div>
         </div>
-        <div className="flex flex-wrap">
-          {/* _destroyがtrueのもの以外の、tags配列の中身を表示 */}
-          {tags.map((tag, index) => {
-            if (!tag._destroy) {
-              return (
-                <div key={index} className="flex">
-                  <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
-                    # {tag.name}
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"
-                      onClick={() => {
-                        // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
-                        // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
-                        // つまり、クリックしたタグを配列から削除する
-                        // クリックしたタグを_destroyを使って削除して、新しい配列を作成する
-                        const newTags = tags.map((t) => {
-                          if (t == tag) {
-                            t._destroy = true;
-                          }
-                          return t;
-                        });
-                        setTags(newTags);
-                      }}
-                    />
-                  </div>
-                </div>
-              );
-            }
-          })}
-        </div>
-      </div>
-
-      <div className="flex space-x-5">
-        <SelectForm
-          label={
-            <div>
-              調理時間
-              <br />
-              <div className="ml-14 text-xs">（分）</div>
+        <div>
+          {getErrorMessage() ? (
+            <div className="mt-3 text-end text-sm text-red-500">
+              {getErrorMessage()}
             </div>
-          }
-          witdh="w-1/3"
-          value={time}
-          onChange={(e) => {
-            setTime(e.target.value);
-          }}
-        />
-        <TextForm
-          label={
-            <div>
-              金額
-              <br />
-              <div className="ml-14 text-xs">（円）</div>
-            </div>
-          }
-          witdh="w-1/3"
-          value={price}
-          type="number"
-          min={0}
-          maxLength={4}
-          onChange={(e) => {
-            if (e.target.value.length <= 4) {
-              setPrice(e.target.value);
-            }
-          }}
-        />
-        <TextForm
-          label={
-            <div>
-              カロリー
-              <br />
-              <div className="ml-14 text-xs">（kcal）</div>
-            </div>
-          }
-          witdh="w-1/3"
-          value={calorie}
-          type="number"
-          min={0}
-          maxLength={4}
-          onChange={(e) => {
-            if (e.target.value.length <= 4) {
-              setCalorie(e.target.value);
-            }
-          }}
-        />
-      </div>
-      <div className="flex justify-end space-x-6">
-        <div className="mt-14">
-          <DeleteButton
-            onClick={() => {
-              deleteRecipe();
-              console.log('クリック！！');
-            }}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </DeleteButton>
+          ) : null}
         </div>
-        <div className="mt-12">
-          <PostButton
-            disabled={!title || !content}
-            onClick={() => {
-              editPostRecipe();
-              console.log('クリック！！');
-            }}
-          >
-            <FontAwesomeIcon icon={faPen} />
-          </PostButton>
-        </div>
-      </div>
-      <div>
-        {getErrorMessage() ? (
-          <div className="mt-3 text-end text-sm text-red-500">
-            {getErrorMessage()}
-          </div>
-        ) : null}
       </div>
     </div>
   );
