@@ -17,6 +17,11 @@ import TextFormArea from '@/components/TextFormArea';
 import useAuth from '@/hooks/auth/useAuth';
 import useS3 from '@/hooks/s3/useS3';
 
+type Tag = {
+  id?: number;
+  name: string;
+  _destroy?: boolean;
+};
 // レシピ投稿時に送信するデータの型
 type RecipeRequestData = {
   recipe: {
@@ -26,9 +31,7 @@ type RecipeRequestData = {
     price: string;
     calorie: string;
     image: string;
-    tags_attributes?: {
-      name: string;
-    }[];
+    tags_attributes?: Tag[];
   };
 };
 
@@ -44,7 +47,7 @@ const Post = () => {
   // const [barcodeName, setBarcodeName] = useState<string>('');
 
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
-  const [tags, setTags] = useState<string[]>([]); //送信するためのタグ配列を保持するためのstate
+  const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
   const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
@@ -78,7 +81,7 @@ const Post = () => {
       //タグが一つ以上入力されている場合だけ、タグ情報も送信する（空のタグテーブルを作成しないために条件分岐させている）
       if (tags.length > 0) {
         // タグの配列を、送信するデータの形式に合わせて変換する。例：['タグ1', 'タグ2'] => [{name: 'タグ1'}, {name: 'タグ2'}]　※この変換を行わないと、Rails側でタグの保存ができない
-        data.recipe.tags_attributes = tags.map((tag) => ({ name: tag }));
+        data.recipe.tags_attributes = tags;
       }
       const response = await axios.post('/recipes', data);
 
@@ -224,10 +227,18 @@ const Post = () => {
               <div className="ml-1 mr-4 mt-16">
                 <TagButton
                   onClick={() => {
-                    if (tempTag) {
-                      setTags([...tags, tempTag]);
+                    // _destroy が true でないタグのみをカウント
+                    const validTagCount = tags.filter(
+                      (tag) => !tag._destroy
+                    ).length;
+                    // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
+                    if (tempTag && validTagCount < 5) {
+                      setTags([...tags, { name: tempTag }]);
                       setTempTag('');
                       setInputValue('');
+                    } else if (validTagCount >= 5) {
+                      // タグの数が 5 を超える場合のエラーメッセージを表示。
+                      alert('タグは5個までしか追加できません!');
                     }
                   }}
                 >
@@ -249,7 +260,7 @@ const Post = () => {
               {tags.map((tag, index) => (
                 <div key={index} className="flex">
                   <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
-                    # {tag}
+                    # {tag.name}
                     <FontAwesomeIcon
                       icon={faCircleXmark}
                       className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"

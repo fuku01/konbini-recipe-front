@@ -119,7 +119,7 @@ const Recipes = () => {
         )}
       </div>
       {recipe?.title ? (
-        <div className="mx-2 mb-8 ml-7 whitespace-pre-wrap break-all rounded-md text-2xl font-bold text-orange-500">
+        <div className="mx-2 mb-8 ml-7 inline-block whitespace-pre-wrap break-all rounded-md text-2xl font-bold  text-orange-500">
           {recipe.title}
         </div>
       ) : (
@@ -158,13 +158,12 @@ const Recipes = () => {
           </div>
         </div>
       </div>
-      <div className="my-5 text-orange-500">カテゴリ</div>
-      <div className="my-1 text-orange-500">作り方</div>
-      <div className="rounded-sm bg-[#FDF1DE] px-2 py-2 shadow-md ">
+      <div className="mt-6 text-orange-500">作り方</div>
+      <div className="rounded-sm bg-[#FDF1DE] px-2 py-2 shadow-md">
         {/* 改行や空白を正しく表示させる処理 */}
         <div className="whitespace-pre-wrap break-all">{recipe?.content}</div>
       </div>
-      <div className="mt-5 text-orange-500">タグ</div>
+      <div className="mt-6 text-orange-500">タグ</div>
       {/* レシピに紐づくタグを表示 */}
       <div className="flex flex-wrap">
         {recipe?.tags.map((tag) => (

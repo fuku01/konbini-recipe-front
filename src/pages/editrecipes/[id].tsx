@@ -181,10 +181,14 @@ const EditRecipe = () => {
     return '';
   };
 
-  // タグ配列を確認するためのuseEffect
+  // _destroyがfalseのタグのみを確認するためのuseEffect
   useEffect(() => {
-    console.log(tags);
+    console.log(
+      '最新のタグ配列',
+      tags.filter((tag) => !tag._destroy)
+    );
   }, [tags]);
+
   // レシピとタグの詳細情報を確認するためのuseEffect
   useEffect(() => {
     console.log('レシピとタグ情報', recipe);
@@ -268,10 +272,18 @@ const EditRecipe = () => {
           <div className="ml-1 mr-4 mt-16">
             <TagButton
               onClick={() => {
-                if (tempTag) {
+                // _destroy が true でないタグのみをカウント
+                const validTagCount = tags.filter(
+                  (tag) => !tag._destroy
+                ).length;
+                // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
+                if (tempTag && validTagCount < 5) {
                   setTags([...tags, { name: tempTag }]);
                   setTempTag('');
                   setInputValue('');
+                } else if (validTagCount >= 5) {
+                  // タグの数が 5 を超える場合のエラーメッセージを表示。
+                  alert('タグは5個までしか追加できません!');
                 }
               }}
             >
