@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import router from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-// import BarcodeModal from '@/components/BarcodeModal';
+import BarcodeModal from '@/components/BarcodeModal';
 import { TagButton, BarcodeButton, PostButton } from '@/components/Button';
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
@@ -43,8 +43,7 @@ const Post = () => {
   const [calorie, setCalorie] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null); //画像のプレビューを表示するためのstate
-  // const [barcode, setBarcode] = useState<string>('');
-  // const [barcodeName, setBarcodeName] = useState<string>('');
+  const [barcode, setBarcode] = useState<string>('');
 
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
@@ -131,6 +130,15 @@ const Post = () => {
     return '';
   };
 
+  // バーコードに値が入ったら、タグにその値を追加する関数
+  useEffect(() => {
+    if (barcode) {
+      setTags([...tags, { name: barcode }]);
+      setBarcode('');
+      setValidTagCount(validTagCount + 1);
+    }
+  }, [barcode, tags, validTagCount]);
+
   // _destroyがfalseのタグのみを確認するためのuseEffect
   useEffect(() => {
     console.log(
@@ -139,23 +147,18 @@ const Post = () => {
     );
   }, [tags]);
 
-  useEffect(() => {
-    console.log('タグの数', validTagCount);
-  }, [validTagCount]);
-
   // この下からリターンの中身
   if (currentUser) {
     return (
       <div>
         <div className="relative">
-          {/* {isBarcodeModalOpen && (
-            // <BarcodeModal
-            //   isBarcodeModalOpen={isBarcodeModalOpen}
-            //   setIsBarcodeModalOpen={setIsBarcodeModalOpen}
-            //   // setBarcode={setBarcode}
-            //   // setBarcodeName={setBarcodeName}
-            // />
-          )} */}
+          {isBarcodeModalOpen && (
+            <BarcodeModal
+              isBarcodeModalOpen={isBarcodeModalOpen}
+              setIsBarcodeModalOpen={setIsBarcodeModalOpen}
+              setBarcode={setBarcode}
+            />
+          )}
           <div className="mt-2 text-center text-2xl text-[#68B68D]">
             レシピ投稿
           </div>
@@ -255,6 +258,7 @@ const Post = () => {
                   onClick={() => {
                     setIsBarcodeModalOpen(!isBarcodeModalOpen);
                   }}
+                  disabled={validTagCount > 3}
                 >
                   <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
                 </BarcodeButton>
