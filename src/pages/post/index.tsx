@@ -49,6 +49,7 @@ const Post = () => {
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
   const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
+  const [validTagCount, setValidTagCount] = useState(0); //バリデーションのためにタグの数を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
@@ -130,10 +131,17 @@ const Post = () => {
     return '';
   };
 
-  // タグ配列を確認するためのuseEffect
+  // _destroyがfalseのタグのみを確認するためのuseEffect
   useEffect(() => {
-    console.log(tags);
+    console.log(
+      '最新のタグ配列',
+      tags.filter((tag) => !tag._destroy)
+    );
   }, [tags]);
+
+  useEffect(() => {
+    console.log('タグの数', validTagCount);
+  }, [validTagCount]);
 
   // この下からリターンの中身
   if (currentUser) {
@@ -216,7 +224,7 @@ const Post = () => {
             <div className="flex items-center justify-between">
               <TextForm
                 label="タグ"
-                placeholder="タグを追加する"
+                placeholder="※ +ボタンでタグを追加（５つ以内)"
                 witdh="w-full"
                 value={inputValue}
                 onChange={(e) => {
@@ -228,19 +236,16 @@ const Post = () => {
                 <TagButton
                   onClick={() => {
                     // _destroy が true でないタグのみをカウント
-                    const validTagCount = tags.filter(
-                      (tag) => !tag._destroy
-                    ).length;
+                    const TagCount = tags.filter((tag) => !tag._destroy).length;
+                    setValidTagCount(TagCount);
                     // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
                     if (tempTag && validTagCount < 5) {
                       setTags([...tags, { name: tempTag }]);
                       setTempTag('');
                       setInputValue('');
-                    } else if (validTagCount >= 5) {
-                      // タグの数が 5 を超える場合のエラーメッセージを表示。
-                      alert('タグは5個までしか追加できません!');
                     }
                   }}
+                  disabled={validTagCount > 3}
                 >
                   <FontAwesomeIcon icon={faPlus} className="text-lg" />
                 </TagButton>
@@ -256,25 +261,35 @@ const Post = () => {
               </div>
             </div>
             <div className="flex flex-wrap">
-              {/* tags配列の中身を表示 */}
-              {tags.map((tag, index) => (
-                <div key={index} className="flex">
-                  <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
-                    # {tag.name}
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"
-                      onClick={() => {
-                        // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
-                        // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
-                        // つまり、クリックしたタグを配列から削除する
-                        const newTags = tags.filter((t) => t !== tag);
-                        setTags(newTags);
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
+              {/* _destroyがtrueのもの以外の、tags配列の中身を表示 */}
+              {tags.map((tag, index) => {
+                if (!tag._destroy) {
+                  return (
+                    <div key={index} className="flex">
+                      <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+                        # {tag.name}
+                        <FontAwesomeIcon
+                          icon={faCircleXmark}
+                          className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"
+                          onClick={() => {
+                            // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
+                            // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
+                            // つまり、クリックしたタグを配列から削除する
+                            const newTags = tags.map((t) => {
+                              if (t == tag) {
+                                t._destroy = true;
+                              }
+                              return t;
+                            });
+                            setTags(newTags);
+                            setValidTagCount(validTagCount - 1);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                }
+              })}
             </div>
           </div>
           <div className="flex space-x-5">
@@ -301,7 +316,7 @@ const Post = () => {
                   <div className="ml-14 text-xs">（円）</div>
                 </div>
               }
-              placeholder="300"
+              placeholder="未入力"
               witdh="w-1/3"
               type="number"
               min={0}
@@ -322,7 +337,7 @@ const Post = () => {
                   <div className="ml-14 text-xs">（kcal）</div>
                 </div>
               }
-              placeholder="500"
+              placeholder="未入力"
               witdh="w-1/3"
               type="number"
               min={0}

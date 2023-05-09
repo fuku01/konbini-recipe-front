@@ -68,6 +68,7 @@ const EditRecipe = () => {
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
   const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
+  const [validTagCount, setValidTagCount] = useState(0); //バリデーションのためにタグの数を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
@@ -102,6 +103,7 @@ const EditRecipe = () => {
       setDefaultImage(recipe.image ? recipe.image : null);
       setPreview(recipe.image ? recipe.image : null);
       setTags(recipe.tags ? recipe.tags : []);
+      setValidTagCount(recipe.tags ? recipe.tags.length - 1 : 0);
     }
   }, [recipe]);
 
@@ -189,11 +191,6 @@ const EditRecipe = () => {
     );
   }, [tags]);
 
-  // レシピとタグの詳細情報を確認するためのuseEffect
-  useEffect(() => {
-    console.log('レシピとタグ情報', recipe);
-  }, [recipe]);
-
   return (
     <div>
       <div className="mt-2 text-center text-2xl text-[#68B68D]">レシピ編集</div>
@@ -261,7 +258,7 @@ const EditRecipe = () => {
         <div className="flex items-center justify-between">
           <TextForm
             label="タグ"
-            placeholder="タグを追加する"
+            placeholder="※ +ボタンでタグを追加（５つ以内)"
             witdh="w-full"
             value={inputValue}
             onChange={(e) => {
@@ -273,19 +270,16 @@ const EditRecipe = () => {
             <TagButton
               onClick={() => {
                 // _destroy が true でないタグのみをカウント
-                const validTagCount = tags.filter(
-                  (tag) => !tag._destroy
-                ).length;
+                const TagCount = tags.filter((tag) => !tag._destroy).length;
+                setValidTagCount(TagCount);
                 // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
                 if (tempTag && validTagCount < 5) {
                   setTags([...tags, { name: tempTag }]);
                   setTempTag('');
                   setInputValue('');
-                } else if (validTagCount >= 5) {
-                  // タグの数が 5 を超える場合のエラーメッセージを表示。
-                  alert('タグは5個までしか追加できません!');
                 }
               }}
+              disabled={validTagCount > 3}
             >
               <FontAwesomeIcon icon={faPlus} className="text-lg" />
             </TagButton>
@@ -323,6 +317,7 @@ const EditRecipe = () => {
                           return t;
                         });
                         setTags(newTags);
+                        setValidTagCount(validTagCount - 1);
                       }}
                     />
                   </div>
@@ -356,11 +351,12 @@ const EditRecipe = () => {
               <div className="ml-14 text-xs">（円）</div>
             </div>
           }
+          placeholder="未入力"
           witdh="w-1/3"
           value={price}
           type="number"
           min={0}
-          maxLength={4}
+          max={9999}
           onChange={(e) => {
             if (e.target.value.length <= 4) {
               setPrice(e.target.value);
@@ -375,11 +371,12 @@ const EditRecipe = () => {
               <div className="ml-14 text-xs">（kcal）</div>
             </div>
           }
+          placeholder="未入力"
           witdh="w-1/3"
           value={calorie}
           type="number"
           min={0}
-          maxLength={4}
+          max={9999}
           onChange={(e) => {
             if (e.target.value.length <= 4) {
               setCalorie(e.target.value);
