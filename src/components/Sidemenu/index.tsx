@@ -62,7 +62,7 @@ const SideMenu = (props: SideMenuProps) => {
     <>
       {overlay}
       <div
-        className="absolute right-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] text-black"
+        className="absolute right-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] "
         ref={sideMenu}
       >
         <div className="flex justify-end">
@@ -84,30 +84,30 @@ const SideMenu = (props: SideMenuProps) => {
           {/* ログイン中の場合 */}
           {auth.currentUser ? (
             <div>
-              <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
+              <div className="ml-8 mt-6 hover:text-orange-500 hover:underline">
                 <Link href="/home">
                   <FontAwesomeIcon icon={faHouse} className="mr-3" />
                   ホーム
                 </Link>
               </div>
               <Link href="/post">
-                <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
+                <div className="ml-8 mt-6 hover:text-orange-500 hover:underline">
                   <FontAwesomeIcon icon={faPen} className="mr-3" />
                   レシピ投稿
                 </div>
               </Link>
               <Link href="/myrecipe">
-                <div className="ml-9 mt-6 hover:text-orange-500 hover:underline">
+                <div className="ml-8 mt-6 hover:text-orange-500 hover:underline">
                   <FontAwesomeIcon icon={faFileLines} className="mr-4" />
                   マイレシピ
                 </div>
               </Link>
-              <div className="ml-9 mt-6 hover:text-orange-500 hover:underline ">
+              <div className="ml-8 mt-6 hover:text-orange-500 hover:underline ">
                 <FontAwesomeIcon icon={faCircleQuestion} className="mr-4" />
                 使い方
               </div>
               <Link href="/edituser">
-                <div className="ml-9 mt-10 hover:text-orange-500 hover:underline">
+                <div className="ml-8 mt-10 hover:text-orange-500 hover:underline">
                   <FontAwesomeIcon icon={faUserGear} className="mr-3" />
                   設定
                 </div>
