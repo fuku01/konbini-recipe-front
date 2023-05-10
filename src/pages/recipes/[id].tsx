@@ -32,6 +32,7 @@ type Tag = {
   name: string;
 };
 type Favorite = {
+  id: number;
   user_id: number | undefined;
   recipe_id: number | undefined;
 };
@@ -113,6 +114,7 @@ const Recipes = () => {
   // お気に入りを追加する関数
   const addFavorite = async () => {
     const data: Favorite = {
+      id: 0,
       user_id: currentUser?.id,
       recipe_id: recipe?.id,
     };
@@ -123,6 +125,8 @@ const Recipes = () => {
       console.log('お気に入りの追加に失敗しました', error);
     }
   };
+
+  // 現在開いているレシピIDにお気に入りを追加済みかどうかを判定する関数
 
   return (
     <div>
@@ -136,7 +140,10 @@ const Recipes = () => {
           <div className="absolute bottom-2 right-2 rounded-full bg-[#FDF1DE] bg-opacity-80 px-2 py-2 ">
             <FontAwesomeIcon
               icon={faHeart}
-              className="cursor-pointer text-4xl"
+              className={
+                'text-4xl ' +
+                (currentUser ? 'cursor-pointer ' : 'pointer-events-none')
+              }
               onClick={addFavorite}
             />
           </div>
