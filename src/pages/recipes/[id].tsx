@@ -44,6 +44,7 @@ const Recipes = () => {
   const router = useRouter();
   const { id } = router.query;
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<User>();
 
   // レシピの取得
@@ -126,7 +127,20 @@ const Recipes = () => {
     }
   };
 
-  // 現在開いているレシピIDにお気に入りを追加済みかどうかを判定する関数
+  // お気に入りを削除する関数
+  // const deleteFavorite = async () => {
+  //   try {
+  //     const response = await axios.delete('/favorites/' + recipe?.id);
+
+  // 現在のユーザーによってお気に入りに登録されているかどうかを確認する関数
+  useEffect(() => {
+    const checkFavorite = async () => {
+      const response = await axios.get('/isRecipe_favorite/' + recipe?.id);
+      setIsFavorite(response.data.favorited);
+    };
+    checkFavorite();
+    console.log('お気に入り済みか確認に成功しました', isFavorite);
+  }, [isFavorite, recipe]);
 
   return (
     <div>
@@ -137,14 +151,25 @@ const Recipes = () => {
             alt="レシピ画像"
             className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
           />
+          {/* お気に入りボタンの処理 */}
           <div className="absolute bottom-2 right-2 rounded-full bg-[#FDF1DE] bg-opacity-80 px-2 py-2 ">
             <FontAwesomeIcon
               icon={faHeart}
               className={
                 'text-4xl ' +
-                (currentUser ? 'cursor-pointer ' : 'pointer-events-none')
+                (currentUser ? 'cursor-pointer ' : 'pointer-events-none') +
+                (isFavorite ? 'text-red-500' : 'text-gray-400')
               }
-              onClick={addFavorite}
+              onClick={() => {
+                if (isFavorite) {
+                  // deleteFavorite();
+                  // getRecipe();
+                  console.log('お気に入り登録済みです');
+                } else {
+                  addFavorite();
+                  getRecipe();
+                }
+              }}
             />
           </div>
         </div>

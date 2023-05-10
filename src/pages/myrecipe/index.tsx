@@ -24,7 +24,7 @@ const Myrecipe = () => {
 
   const getMyrecipes = () => {
     axios
-      .get<Recipe[]>('/user_recipes')
+      .get<Recipe[]>('/my_recipes')
       .then((response) => {
         setMyrecipe(response.data);
         console.log('マイレシピの取得に成功しました', response.data);
