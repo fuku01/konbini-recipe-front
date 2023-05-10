@@ -275,7 +275,9 @@ const EditRecipe = () => {
           value={title}
           maxLength={40}
           onChange={(e) => {
-            setTitle(e.target.value);
+            const newValue = e.target.value;
+            const trimmedValue = newValue.trimStart();
+            setTitle(trimmedValue);
           }}
         />
         <TextFormArea
@@ -285,7 +287,9 @@ const EditRecipe = () => {
           value={content}
           maxLength={1000}
           onChange={(e) => {
-            setContent(e.target.value);
+            const newValue = e.target.value;
+            const trimmedValue = newValue.trimStart();
+            setContent(trimmedValue);
           }}
         />
         {/* タグの表示 */}
@@ -300,13 +304,15 @@ const EditRecipe = () => {
             >
               <TextForm
                 label="タグ"
-                placeholder="※ +で追加（５つ以内)"
+                placeholder="※ 5個以内"
                 witdh="w-full"
                 value={inputValue}
                 disabled={validTagCount > 3}
                 onChange={(e) => {
-                  setTempTag(e.target.value);
-                  setInputValue(e.target.value);
+                  const newValue = e.target.value;
+                  const trimmedValue = newValue.trimStart();
+                  setTempTag(trimmedValue);
+                  setInputValue(trimmedValue);
                 }}
               />
             </form>

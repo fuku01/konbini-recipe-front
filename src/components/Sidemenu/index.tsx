@@ -68,7 +68,7 @@ const SideMenu = (props: SideMenuProps) => {
         <div className="flex justify-end">
           <FontAwesomeIcon
             icon={faXmark}
-            className="mr-6 mt-2 cursor-pointer text-4xl hover:text-orange-500"
+            className="mr-6 mt-4 cursor-pointer text-4xl hover:text-orange-500"
             onClick={() => {
               setIsMenuOpen(!isMenuOpen);
             }}
