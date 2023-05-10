@@ -1,4 +1,4 @@
-import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { faClock, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
   faFilePen,
   faFire,
@@ -30,6 +30,10 @@ type User = {
 type Tag = {
   id: number;
   name: string;
+};
+type Favorite = {
+  user_id: number | undefined;
+  recipe_id: number | undefined;
 };
 
 const Recipes = () => {
@@ -64,7 +68,6 @@ const Recipes = () => {
       console.log('ユーザーの取得に失敗しました', error);
     }
   };
-
   useEffect(() => {
     getRecipe();
     getCurrentUser();
@@ -107,19 +110,40 @@ const Recipes = () => {
     }
   };
 
+  // お気に入りを追加する関数
+  const addFavorite = async () => {
+    const data: Favorite = {
+      user_id: currentUser?.id,
+      recipe_id: recipe?.id,
+    };
+    try {
+      const response = await axios.post('/favorites', data);
+      console.log('お気に入りを追加しました', response.data);
+    } catch (error) {
+      console.log('お気に入りの追加に失敗しました', error);
+    }
+  };
+
   return (
     <div>
-      <div className="mx-auto mb-3 h-52 w-72">
-        {recipe?.image && (
+      {recipe?.image && (
+        <div className="relative mx-auto mb-3 h-52 w-72 ">
           <img
             src={recipe.image}
             alt="レシピ画像"
-            className="h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
+            className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
           />
-        )}
-      </div>
+          <div className="absolute bottom-2 right-2 rounded-full bg-[#FDF1DE] bg-opacity-80 px-2 py-2 ">
+            <FontAwesomeIcon
+              icon={faHeart}
+              className="cursor-pointer text-4xl"
+              onClick={addFavorite}
+            />
+          </div>
+        </div>
+      )}
       {recipe?.title ? (
-        <div className="mx-2 mb-8 ml-7 inline-block whitespace-pre-wrap break-all rounded-md text-2xl font-bold  text-orange-500">
+        <div className="mx-2 mb-8 ml-4 inline-block whitespace-pre-wrap break-all rounded-md text-2xl font-bold text-orange-500 lg:ml-7">
           {recipe.title}
         </div>
       ) : (
