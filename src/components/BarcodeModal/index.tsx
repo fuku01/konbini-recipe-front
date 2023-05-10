@@ -61,7 +61,7 @@ const BarcodeModal = (props: BarcodeModalProps) => {
         {overlay()}
         <div className="flex justify-center">
           <div
-            className="fixed z-50 h-3/4 w-80 bg-[#FCCFA5] text-black shadow-xl lg:mt-0"
+            className="fixed z-50 h-3/4 w-80 bg-[#FCCFA5] text-black shadow-xl lg:m-0 lg:h-96 lg:w-96"
             ref={barcodeModal}
           >
             <div className="flex justify-end">
@@ -76,10 +76,7 @@ const BarcodeModal = (props: BarcodeModalProps) => {
             {/* 以下にモーダル項目を追加する */}
             <div>
               <div className="mt-10 flex flex-col justify-center">
-                <video
-                  ref={videoRef}
-                  className="mx-auto w-4/5 rounded-lg shadow-sm"
-                />
+                <video ref={videoRef} className="mx-auto w-4/5 rounded-lg" />
                 <textarea
                   value={code}
                   disabled

@@ -1,4 +1,5 @@
 import {
+  faFileLines,
   faHeart,
   faHouse,
   faMagnifyingGlass,
@@ -16,43 +17,50 @@ const Footer = () => {
   const GetHouseColor = () => {
     if (router.pathname === '/home') {
       return 'text-orange-400';
-    } else {
-      return 'text';
     }
   };
-
   // faFilePenの色を変える関数
   const GetFilePenColor = () => {
     if (router.pathname === '/post') {
       return 'text-orange-400';
-    } else {
-      return 'text-black';
+    }
+  };
+  // faFileLinesの色を変える関数
+  const GetFileLinesColor = () => {
+    if (router.pathname === '/myrecipe') {
+      return 'text-orange-400';
     }
   };
 
   return (
-    <div className="sticky bottom-0 z-30 flex h-14 items-center justify-around bg-[#FCCFA5] pt-2">
-      <Link href="/home" className="w-10">
+    <div className="sticky bottom-0 z-30 flex h-14 items-center justify-around bg-[#FCCFA5] pt-1 text-center text-3xl">
+      <Link href="/home" className="w-20">
         <FontAwesomeIcon
           icon={faHouse}
-          className={'text-3xl hover:text-orange-500 ' + GetHouseColor()}
+          className={'hover:text-orange-500 ' + GetHouseColor()}
         />
         <div className="text-xs">
           {router.pathname === '/home' ? 'ホーム' : ''}
         </div>
       </Link>
-      <FontAwesomeIcon
-        icon={faMagnifyingGlass}
-        className="w-10 text-3xl text-black"
-      />
-      <FontAwesomeIcon icon={faHeart} className="w-10 text-3xl text-black" />
-      <Link href="/post" className="w-10">
+      <FontAwesomeIcon icon={faMagnifyingGlass} className="w-20" />
+      <FontAwesomeIcon icon={faHeart} className="w-20" />
+      <Link href="/myrecipe" className="w-20">
+        <FontAwesomeIcon
+          icon={faFileLines}
+          className={'text-3xl hover:text-orange-500 ' + GetFileLinesColor()}
+        />
+        <div className="text-xs">
+          {router.pathname === '/myrecipe' ? 'マイレシピ' : ''}
+        </div>
+      </Link>
+      <Link href="/post" className="w-20">
         <FontAwesomeIcon
           icon={faPen}
           className={'text-3xl hover:text-orange-500 ' + GetFilePenColor()}
         />
         <div className="text-xs">
-          {router.pathname === '/post' ? '投稿' : ''}
+          {router.pathname === '/post' ? 'レシピ投稿' : ''}
         </div>
       </Link>
     </div>

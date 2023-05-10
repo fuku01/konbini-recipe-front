@@ -186,6 +186,19 @@ const EditRecipe = () => {
     return '';
   };
 
+  // タグ追加のロジックをまとめた関数
+  const addTag = () => {
+    // _destroy が true でないタグのみをカウント
+    const TagCount = tags.filter((tag) => !tag._destroy).length;
+    setValidTagCount(TagCount);
+    // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
+    if (tempTag && validTagCount < 5) {
+      setTags([...tags, { name: tempTag }]);
+      setTempTag('');
+      setInputValue('');
+    }
+  };
+
   // バーコードに値が入ったら、タグにその値を追加する関数
   useEffect(() => {
     if (barcode) {
@@ -278,31 +291,27 @@ const EditRecipe = () => {
         {/* タグの表示 */}
         <div className="flex flex-col">
           <div className="flex items-center justify-between">
-            <TextForm
-              label="タグ"
-              placeholder="※ +ボタンでタグを追加（５つ以内)"
-              witdh="w-full"
-              value={inputValue}
-              onChange={(e) => {
-                setTempTag(e.target.value);
-                setInputValue(e.target.value);
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                addTag();
               }}
-            />
-            <div className="ml-1 mr-4 mt-16">
-              <TagButton
-                onClick={() => {
-                  // _destroy が true でないタグのみをカウント
-                  const TagCount = tags.filter((tag) => !tag._destroy).length;
-                  setValidTagCount(TagCount);
-                  // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
-                  if (tempTag && validTagCount < 5) {
-                    setTags([...tags, { name: tempTag }]);
-                    setTempTag('');
-                    setInputValue('');
-                  }
-                }}
+              className="w-full"
+            >
+              <TextForm
+                label="タグ"
+                placeholder="※ +で追加（５つ以内)"
+                witdh="w-full"
+                value={inputValue}
                 disabled={validTagCount > 3}
-              >
+                onChange={(e) => {
+                  setTempTag(e.target.value);
+                  setInputValue(e.target.value);
+                }}
+              />
+            </form>
+            <div className="ml-1 mr-4 mt-16">
+              <TagButton onClick={addTag} disabled={validTagCount > 3}>
                 <FontAwesomeIcon icon={faPlus} className="text-lg" />
               </TagButton>
             </div>
