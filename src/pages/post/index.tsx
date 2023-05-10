@@ -223,7 +223,9 @@ const Post = () => {
             maxLength={40}
             value={title}
             onChange={(e) => {
-              setTitle(e.target.value);
+              const newValue = e.target.value;
+              const trimmedValue = newValue.trimStart();
+              setTitle(trimmedValue);
             }}
           />
           <TextFormArea
@@ -233,7 +235,9 @@ const Post = () => {
             maxLength={1000}
             value={content}
             onChange={(e) => {
-              setContent(e.target.value);
+              const newValue = e.target.value;
+              const trimmedValue = newValue.trimStart();
+              setContent(trimmedValue);
             }}
           />
           <div className="flex flex-col">
@@ -247,13 +251,15 @@ const Post = () => {
               >
                 <TextForm
                   label="タグ"
-                  placeholder="※ +で追加（５つ以内)"
+                  placeholder="※ 5個以内"
                   witdh="w-full"
                   value={inputValue}
                   disabled={validTagCount > 3}
                   onChange={(e) => {
-                    setTempTag(e.target.value);
-                    setInputValue(e.target.value);
+                    const newValue = e.target.value;
+                    const trimmedValue = newValue.trimStart();
+                    setTempTag(trimmedValue);
+                    setInputValue(trimmedValue);
                   }}
                 />
               </form>
