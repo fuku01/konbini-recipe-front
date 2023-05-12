@@ -53,6 +53,7 @@ const Recipes = () => {
   const [isFavoriteId, setIsFavoriteId] = useState<number | undefined>(
     undefined
   ); // お気に入りのIDを管理するステート
+  const [favoriteCount, setFavoriteCount] = useState<number>(0); // お気に入りの数を管理するステート
   const [currentUser, setCurrentUser] = useState<User>();
 
   // レシピの取得
@@ -154,6 +155,26 @@ const Recipes = () => {
     }
   }, [currentUser, isFavorite, recipe]);
 
+  // レシピに紐づくお気に入りの数を取得する関数
+  const getFavoriteCount = useCallback(async () => {
+    if (recipe && recipe.id) {
+      const response = await axios.get('/favorite_count/' + recipe.id);
+      setFavoriteCount(response.data.favorite_count);
+      console.log('お気に入り数:', response.data.favorite_count);
+    }
+  }, [recipe]);
+
+  // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
+  const formatNumber = (num: number) => {
+    if (num >= 9950) {
+      return '9.9k';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'k';
+    } else {
+      return num;
+    }
+  };
+
   useEffect(() => {
     getCurrentUser();
   }, [getCurrentUser]);
@@ -166,6 +187,10 @@ const Recipes = () => {
     checkFavorite();
   }, [checkFavorite]);
 
+  useEffect(() => {
+    getFavoriteCount();
+  }, [getFavoriteCount]);
+
   return (
     <div>
       {recipe?.image && (
@@ -176,13 +201,16 @@ const Recipes = () => {
             className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
           />
           {/* お気に入りボタンの処理 */}
-          <div className="hover:bg[#F16B6E] absolute bottom-2 right-2 rounded-full bg-[#FDF1DE] bg-opacity-80 px-2 py-2">
+          <div></div>
+          <div className="absolute bottom-1.5 right-1.5 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-2">
             <FontAwesomeIcon
               icon={isFavorite ? solidHeart : regularHeart}
               className={
-                'text-4xl ' +
-                (currentUser ? 'cursor-pointer ' : '') +
-                (isFavorite ? 'text-[#F16B6E]' : 'text-gray-400')
+                'pb-3 text-4xl text-[#F16B6E] ' +
+                (currentUser
+                  ? 'cursor-pointer transition duration-300 ease-in-out hover:text-[#EE1D23] '
+                  : 'cursor-not-allowed ') +
+                (isFavorite ? ' scale-105' : '')
               }
               onClick={() => {
                 if (currentUser) {
@@ -197,10 +225,16 @@ const Recipes = () => {
                     getRecipe();
                   }
                 } else {
-                  alert('お気に入り機能を利用するにはログインが必要です!');
+                  console.log(
+                    'お気に入り機能を利用するにはログインが必要です!'
+                  );
                 }
               }}
             />
+          </div>
+          {/* お気に入りの数を表示 */}
+          <div className="absolute bottom-3 right-5 text-xs">
+            {formatNumber(favoriteCount)}
           </div>
         </div>
       )}
