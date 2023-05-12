@@ -202,11 +202,11 @@ const Recipes = () => {
           />
           {/* お気に入りボタンの処理 */}
           <div></div>
-          <div className="absolute bottom-1.5 right-1.5 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-2">
+          <div className="absolute bottom-1.5 right-1.5 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
             <FontAwesomeIcon
               icon={isFavorite ? solidHeart : regularHeart}
               className={
-                'pb-3 text-4xl text-[#F16B6E] ' +
+                'text-4xl text-[#F16B6E] ' +
                 (currentUser
                   ? 'cursor-pointer transition duration-300 ease-in-out hover:text-[#EE1D23] '
                   : 'cursor-not-allowed ') +
@@ -231,10 +231,10 @@ const Recipes = () => {
                 }
               }}
             />
-          </div>
-          {/* お気に入りの数を表示 */}
-          <div className="absolute bottom-3 right-5 text-xs">
-            {formatNumber(favoriteCount)}
+            {/* お気に入りの数を表示 */}
+            <div className="text-center text-xs">
+              {formatNumber(favoriteCount)}
+            </div>
           </div>
         </div>
       )}
