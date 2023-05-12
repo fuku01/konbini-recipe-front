@@ -44,24 +44,25 @@ const Recipes = () => {
   const router = useRouter();
   const { id } = router.query;
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false); // お気に入りの登録状態を管理するステート
+  const [isFavoriteId, setIsFavoriteId] = useState<number | undefined>(
+    undefined
+  ); // お気に入りのIDを管理するステート
   const [currentUser, setCurrentUser] = useState<User>();
 
   // レシピの取得
-  const getRecipe = useCallback(() => {
-    axios
-      .get<Recipe>('/recipes/' + id)
-      .then((response) => {
-        setRecipe(response.data);
-        console.log('レシピの取得に成功しました', response.data);
-      })
-      .catch((error) => {
-        console.log('レシピの取得に失敗しました', error);
-      });
+  const getRecipe = useCallback(async () => {
+    try {
+      const response = await axios.get<Recipe>('/recipes/' + id);
+      setRecipe(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log('レシピの取得に失敗しました', error);
+    }
   }, [id]);
 
   // ログイン中のユーザー情報の取得（ログインユーザのみ編集ボタンを表示させたいため、取得する必要がある）
-  const getCurrentUser = async () => {
+  const getCurrentUser = useCallback(async () => {
     try {
       const response = await axios.get<User>('/me');
       setCurrentUser(response.data);
@@ -69,11 +70,7 @@ const Recipes = () => {
     } catch (error) {
       console.log('ユーザーの取得に失敗しました', error);
     }
-  };
-  useEffect(() => {
-    getRecipe();
-    getCurrentUser();
-  }, [getRecipe]);
+  }, []);
 
   // 分アイコンの色を変える関数
   const GetTimeColor = () => {
@@ -128,19 +125,41 @@ const Recipes = () => {
   };
 
   // お気に入りを削除する関数
-  // const deleteFavorite = async () => {
-  //   try {
-  //     const response = await axios.delete('/favorites/' + recipe?.id);
+  const deleteFavorite = async () => {
+    try {
+      const response = await axios.delete('/favorites/' + isFavoriteId);
+      console.log('お気に入りを削除しました', response.data);
+    } catch (error) {
+      console.log('お気に入りの削除に失敗しました', error);
+    }
+  };
 
   // 現在のユーザーによってお気に入りに登録されているかどうかを確認する関数
-  useEffect(() => {
-    const checkFavorite = async () => {
-      const response = await axios.get('/isRecipe_favorite/' + recipe?.id);
+  const checkFavorite = useCallback(async () => {
+    // レシピが定義されている場合のみ処理を実行する
+    if (recipe && recipe.id) {
+      const response = await axios.get('/isRecipe_favorite/' + recipe.id);
       setIsFavorite(response.data.favorited);
-    };
-    checkFavorite();
-    console.log('お気に入り済みか確認に成功しました', isFavorite);
+      // お気に入り済みの場合は、お気に入りIDを取得する
+      if (response.data.favorited) {
+        setIsFavoriteId(response.data.favorite_id);
+        console.log('お気に入りID:', response.data.favorite_id);
+      }
+      console.log('お気に入り状態:', isFavorite);
+    }
   }, [isFavorite, recipe]);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
+
+  useEffect(() => {
+    getRecipe();
+  }, [getRecipe]);
+
+  useEffect(() => {
+    checkFavorite();
+  }, [checkFavorite]);
 
   return (
     <div>
@@ -162,11 +181,13 @@ const Recipes = () => {
               }
               onClick={() => {
                 if (isFavorite) {
-                  // deleteFavorite();
-                  // getRecipe();
+                  // お気に入り登録されている場合
+                  deleteFavorite(); // 削除
+                  getRecipe();
                   console.log('お気に入り登録済みです');
                 } else {
-                  addFavorite();
+                  // お気に入り登録されていない場合
+                  addFavorite(); // 追加
                   getRecipe();
                 }
               }}
