@@ -1,5 +1,10 @@
-import { faClock, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
+  faHeart as regularHeart,
+  faClock,
+} from '@fortawesome/free-regular-svg-icons';
+
+import {
+  faHeart as solidHeart,
   faFilePen,
   faFire,
   faYenSign,
@@ -136,8 +141,8 @@ const Recipes = () => {
 
   // 現在のユーザーによってお気に入りに登録されているかどうかを確認する関数
   const checkFavorite = useCallback(async () => {
-    // レシピが定義されている場合のみ処理を実行する
-    if (recipe && recipe.id) {
+    // ログイン中かつ、レシピが定義されている場合のみ処理を実行する
+    if (recipe && recipe.id && currentUser) {
       const response = await axios.get('/isRecipe_favorite/' + recipe.id);
       setIsFavorite(response.data.favorited);
       // お気に入り済みの場合は、お気に入りIDを取得する
@@ -147,7 +152,7 @@ const Recipes = () => {
       }
       console.log('お気に入り状態:', isFavorite);
     }
-  }, [isFavorite, recipe]);
+  }, [currentUser, isFavorite, recipe]);
 
   useEffect(() => {
     getCurrentUser();
@@ -171,24 +176,28 @@ const Recipes = () => {
             className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
           />
           {/* お気に入りボタンの処理 */}
-          <div className="absolute bottom-2 right-2 rounded-full bg-[#FDF1DE] bg-opacity-80 px-2 py-2 ">
+          <div className="hover:bg[#F16B6E] absolute bottom-2 right-2 rounded-full bg-[#FDF1DE] bg-opacity-80 px-2 py-2">
             <FontAwesomeIcon
-              icon={faHeart}
+              icon={isFavorite ? solidHeart : regularHeart}
               className={
                 'text-4xl ' +
-                (currentUser ? 'cursor-pointer ' : 'pointer-events-none') +
-                (isFavorite ? 'text-red-500' : 'text-gray-400')
+                (currentUser ? 'cursor-pointer ' : '') +
+                (isFavorite ? 'text-[#F16B6E]' : 'text-gray-400')
               }
               onClick={() => {
-                if (isFavorite) {
-                  // お気に入り登録されている場合
-                  deleteFavorite(); // 削除
-                  getRecipe();
-                  console.log('お気に入り登録済みです');
+                if (currentUser) {
+                  if (isFavorite) {
+                    // お気に入り登録されている場合
+                    deleteFavorite(); // 削除
+                    getRecipe();
+                    console.log('お気に入り登録済みです');
+                  } else {
+                    // お気に入り登録されていない場合
+                    addFavorite(); // 追加
+                    getRecipe();
+                  }
                 } else {
-                  // お気に入り登録されていない場合
-                  addFavorite(); // 追加
-                  getRecipe();
+                  alert('お気に入り機能を利用するにはログインが必要です!');
                 }
               }}
             />
