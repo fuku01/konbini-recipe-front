@@ -71,9 +71,9 @@ const Myrecipe = () => {
                       </div>
                       <div className="mr-2 mt-3 text-right text-sm lg:text-base">
                         <FontAwesomeIcon icon={faClock} />
-                        {recipe.time}／
+                        {recipe.time} /
                         <FontAwesomeIcon icon={faYenSign} />
-                        {recipe.price}／
+                        {recipe.price} /
                         <FontAwesomeIcon icon={faFire} />
                         {recipe.calorie}
                       </div>
