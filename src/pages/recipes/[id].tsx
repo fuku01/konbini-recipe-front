@@ -202,7 +202,7 @@ const Recipes = () => {
           />
           {/* お気に入りボタンの処理 */}
           <div></div>
-          <div className="absolute bottom-1.5 right-1.5 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
+          <div className="absolute bottom-2 right-2 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
             <FontAwesomeIcon
               icon={isFavorite ? solidHeart : regularHeart}
               className={
