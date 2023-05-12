@@ -338,11 +338,11 @@ const EditRecipe = () => {
               if (!tag._destroy) {
                 return (
                   <div key={index} className="flex">
-                    <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+                    <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md ">
                       # {tag.name}
                       <FontAwesomeIcon
                         icon={faCircleXmark}
-                        className="ml-1 cursor-pointer text-[#FEABAE] hover:text-[#F16B6E]"
+                        className="ml-1 cursor-pointer text-[#FEABAE] transition duration-300 ease-in-out hover:scale-105 hover:text-[#F16B6E]"
                         onClick={() => {
                           // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
                           // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
