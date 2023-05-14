@@ -125,6 +125,8 @@ const Recipes = () => {
     };
     try {
       const response = await axios.post('/favorites', data);
+      await getFavoriteCount();
+      await checkFavorite();
       console.log('お気に入りを追加しました', response.data);
     } catch (error) {
       console.log('お気に入りの追加に失敗しました', error);
@@ -135,6 +137,8 @@ const Recipes = () => {
   const deleteFavorite = async () => {
     try {
       const response = await axios.delete('/favorites/' + isFavoriteId);
+      await getFavoriteCount();
+      await checkFavorite();
       console.log('お気に入りを削除しました', response.data);
     } catch (error) {
       console.log('お気に入りの削除に失敗しました', error);
@@ -217,23 +221,15 @@ const Recipes = () => {
                 if (canClick) {
                   // クリックが可能な場合、通常の処理を実行
                   setCanClick(false); // クリックを無効化
-                  setTimeout(() => setCanClick(true), 500); // 0.5秒後にクリックを再び有効化
+                  setTimeout(() => setCanClick(true), 1000); // 0.5秒後にクリックを再び有効化
                   if (currentUser) {
                     if (isFavorite) {
                       // お気に入り登録されている場合
                       deleteFavorite(); // 削除
-                      checkFavorite();
-                      getRecipe();
-                      getFavoriteCount();
-                      setIsFavorite(true);
                       console.log('お気に入り登録済みです');
                     } else {
                       // お気に入り登録されていない場合
                       addFavorite(); // 追加
-                      checkFavorite();
-                      getRecipe();
-                      getFavoriteCount();
-                      setIsFavorite(false);
                     }
                   } else {
                     console.log(
