@@ -2,7 +2,7 @@ import { faClock, faFire, faYenSign } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useAuth from '@/hooks/auth/useAuth';
 
 type Recipe = {
@@ -22,20 +22,19 @@ const Myrecipe = () => {
   const [myrecipe, setMyrecipe] = useState<Recipe[]>([]);
   const { currentUser } = useAuth();
 
-  const getMyrecipes = () => {
-    axios
-      .get<Recipe[]>('/my_recipes')
-      .then((response) => {
-        setMyrecipe(response.data);
-        console.log('マイレシピの取得に成功しました', response.data);
-      })
-      .catch((error) => {
-        console.log('マイレシピの取得に失敗しました', error);
-      });
-  };
+  const getMyrecipes = useCallback(async () => {
+    try {
+      const response = await axios.get<Recipe[]>('/my_recipes');
+      setMyrecipe(response.data);
+      console.log('マイレシピの取得に成功しました', response.data);
+    } catch (error) {
+      console.log('マイレシピの取得に失敗しました', error);
+    }
+  }, []);
+
   useEffect(() => {
     getMyrecipes();
-  }, []);
+  }, [getMyrecipes]);
 
   if (currentUser) {
     return (
@@ -71,11 +70,14 @@ const Myrecipe = () => {
                       </div>
                       <div className="mr-2 mt-3 text-right text-sm lg:text-base">
                         <FontAwesomeIcon icon={faClock} />
-                        {recipe.time} /
+                        {recipe?.time ? recipe.time : '-'} /
                         <FontAwesomeIcon icon={faYenSign} />
-                        {recipe.price} /
+                        {recipe?.price ? recipe?.price?.toLocaleString() : '-'}
+                        /
                         <FontAwesomeIcon icon={faFire} />
-                        {recipe.calorie}
+                        {recipe?.calorie
+                          ? recipe.calorie.toLocaleString()
+                          : '-'}
                       </div>
                     </div>
                   </div>

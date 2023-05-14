@@ -54,6 +54,7 @@ const Recipes = () => {
     undefined
   ); // お気に入りのIDを管理するステート
   const [favoriteCount, setFavoriteCount] = useState<number>(0); // お気に入りの数を管理するステート
+  const [canClick, setCanClick] = useState<boolean>(true); // お気に入りボタンをクリックできるかどうかを管理するステート
   const [currentUser, setCurrentUser] = useState<User>();
 
   // レシピの取得
@@ -124,6 +125,8 @@ const Recipes = () => {
     };
     try {
       const response = await axios.post('/favorites', data);
+      await getFavoriteCount(); // お気に入りの数を取得する
+      await checkFavorite(); // お気に入りの登録状態を取得する
       console.log('お気に入りを追加しました', response.data);
     } catch (error) {
       console.log('お気に入りの追加に失敗しました', error);
@@ -134,6 +137,8 @@ const Recipes = () => {
   const deleteFavorite = async () => {
     try {
       const response = await axios.delete('/favorites/' + isFavoriteId);
+      await getFavoriteCount(); // お気に入りの数を取得する
+      await checkFavorite(); // お気に入りの登録状態を取得する
       console.log('お気に入りを削除しました', response.data);
     } catch (error) {
       console.log('お気に入りの削除に失敗しました', error);
@@ -155,7 +160,7 @@ const Recipes = () => {
     }
   }, [currentUser, isFavorite, recipe]);
 
-  // レシピに紐づくお気に入りの数を取得する関数
+  // お気に入りの数を取得する関数
   const getFavoriteCount = useCallback(async () => {
     if (recipe && recipe.id) {
       const response = await axios.get('/favorite_count/' + recipe.id);
@@ -167,7 +172,7 @@ const Recipes = () => {
   // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
   const formatNumber = (num: number) => {
     if (num >= 9950) {
-      return '9.9k';
+      return '9.9k〜';
     } else if (num >= 1000) {
       return (num / 1000).toFixed(1) + 'k';
     } else {
@@ -177,19 +182,10 @@ const Recipes = () => {
 
   useEffect(() => {
     getCurrentUser();
-  }, [getCurrentUser]);
-
-  useEffect(() => {
     getRecipe();
-  }, [getRecipe]);
-
-  useEffect(() => {
     checkFavorite();
-  }, [checkFavorite]);
-
-  useEffect(() => {
     getFavoriteCount();
-  }, [getFavoriteCount]);
+  }, [checkFavorite, getCurrentUser, getFavoriteCount, getRecipe]);
 
   return (
     <div>
@@ -208,26 +204,29 @@ const Recipes = () => {
               className={
                 'text-4xl text-[#F16B6E] ' +
                 (currentUser
-                  ? 'cursor-pointer transition duration-300 ease-in-out hover:text-[#EE1D23] '
-                  : 'cursor-not-allowed ') +
+                  ? 'cursor-pointer transition duration-75 ease-in-out hover:text-[#EE1D23] '
+                  : 'pointer-events-none') +
                 (isFavorite ? ' scale-105' : '')
               }
               onClick={() => {
-                if (currentUser) {
-                  if (isFavorite) {
-                    // お気に入り登録されている場合
-                    deleteFavorite(); // 削除
-                    getRecipe();
-                    console.log('お気に入り登録済みです');
+                if (canClick) {
+                  // クリックが可能な場合、通常の処理を実行
+                  setCanClick(false); // クリックを無効化
+                  setTimeout(() => setCanClick(true), 100); // 0.1秒後にクリックを再び有効化
+                  if (currentUser) {
+                    if (isFavorite) {
+                      // お気に入り登録されている場合
+                      deleteFavorite(); // 削除
+                      console.log('お気に入り登録済みです');
+                    } else {
+                      // お気に入り登録されていない場合
+                      addFavorite(); // 追加
+                    }
                   } else {
-                    // お気に入り登録されていない場合
-                    addFavorite(); // 追加
-                    getRecipe();
+                    console.log(
+                      'お気に入り機能を利用するにはログインが必要です!'
+                    );
                   }
-                } else {
-                  console.log(
-                    'お気に入り機能を利用するにはログインが必要です!'
-                  );
                 }
               }}
             />
