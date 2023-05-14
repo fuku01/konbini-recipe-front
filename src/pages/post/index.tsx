@@ -289,7 +289,7 @@ const Post = () => {
                         # {tag.name}
                         <FontAwesomeIcon
                           icon={faCircleXmark}
-                          className="ml-1 cursor-pointer text-[#FEABAE] transition duration-300 ease-in-out hover:scale-105 hover:text-[#F16B6E]"
+                          className="ml-1 cursor-pointer text-[#FEABAE] transition duration-75 ease-in-out hover:scale-105 hover:text-[#F16B6E]"
                           onClick={() => {
                             // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
                             // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式

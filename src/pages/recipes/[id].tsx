@@ -209,8 +209,8 @@ const Recipes = () => {
               className={
                 'text-4xl text-[#F16B6E] ' +
                 (currentUser
-                  ? 'cursor-pointer transition duration-300 ease-in-out hover:text-[#EE1D23] '
-                  : 'cursor-not-allowed ') +
+                  ? 'cursor-pointer transition duration-75 ease-in-out hover:text-[#EE1D23] '
+                  : 'pointer-events-none') +
                 (isFavorite ? ' scale-105' : '')
               }
               onClick={() => {
@@ -225,6 +225,7 @@ const Recipes = () => {
                       checkFavorite();
                       getRecipe();
                       getFavoriteCount();
+                      setIsFavorite(true);
                       console.log('お気に入り登録済みです');
                     } else {
                       // お気に入り登録されていない場合
@@ -232,6 +233,7 @@ const Recipes = () => {
                       checkFavorite();
                       getRecipe();
                       getFavoriteCount();
+                      setIsFavorite(false);
                     }
                   } else {
                     console.log(

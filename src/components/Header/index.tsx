@@ -15,7 +15,7 @@ const Header = () => {
         {/* ホーム画面以外には戻るボタンを表示する処理 */}
         {router.pathname !== '/home' ? (
           <div
-            className="absolute left-4 cursor-pointer text-3xl hover:text-orange-500"
+            className="absolute left-4 cursor-pointer text-3xl transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500"
             onClick={() => {
               window.history.back();
             }}
@@ -26,7 +26,7 @@ const Header = () => {
           ''
         )}
         <div
-          className="absolute right-6 cursor-pointer text-3xl hover:text-orange-500"
+          className="absolute right-6 cursor-pointer text-3xl transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500"
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
           }}
