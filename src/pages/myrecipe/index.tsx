@@ -1,4 +1,9 @@
-import { faClock, faFire, faYenSign } from '@fortawesome/free-solid-svg-icons';
+import {
+  faClock,
+  faFire,
+  faHeart,
+  faYenSign,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
@@ -16,6 +21,7 @@ type Recipe = {
   created_at: Date;
   updated_at: Date;
   price: number;
+  favorites_count: number;
 };
 
 const Myrecipe = () => {
@@ -37,6 +43,55 @@ const Myrecipe = () => {
     getMyrecipes();
   }, [getMyrecipes]);
 
+  // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
+  const formatNumber = (num: number) => {
+    if (num >= 9950) {
+      return '9.9k';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'k';
+    } else {
+      return num;
+    }
+  };
+
+  // 分アイコンの色を変える関数
+  const GetTimeColor = (recipe: Recipe) => {
+    if (!recipe?.time) {
+      return 'text-gray-400';
+    } else if (recipe.time < 10) {
+      return 'text-[#68B68D]';
+    } else if (recipe.time < 30) {
+      return 'text-[#FBD87F]';
+    } else {
+      return 'text-[#F16B6E]';
+    }
+  };
+
+  // 金額アイコンの色を変える関数
+  const GetPriceColor = (recipe: Recipe) => {
+    if (!recipe?.price) {
+      return 'text-gray-400';
+    } else if (recipe.price < 500) {
+      return 'text-[#68B68D]';
+    } else if (recipe.price < 2000) {
+      return 'text-[#FBD87F]';
+    } else {
+      return 'text-[#F16B6E]';
+    }
+  };
+  // カロリーアイコンの色を変える関数
+  const GetCalorieColor = (recipe: Recipe) => {
+    if (!recipe?.calorie) {
+      return 'text-gray-400';
+    } else if (recipe.calorie < 500) {
+      return 'text-[#68B68D]';
+    } else if (recipe.calorie < 1000) {
+      return 'text-[#FBD87F]';
+    } else {
+      return 'text-[#F16B6E]';
+    }
+  };
+
   if (currentUser) {
     return (
       <div>
@@ -53,7 +108,7 @@ const Myrecipe = () => {
                   }}
                 >
                   <div className="flex">
-                    <div className="flex-shrink-0">
+                    <div className="my-auto flex-shrink-0">
                       <img
                         className="mx-2 h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover"
                         alt="マイレシピ"
@@ -63,22 +118,47 @@ const Myrecipe = () => {
                       />
                     </div>
                     <div className="flex w-full flex-col">
-                      <div className="mr-1 line-clamp-1 break-all font-semibold">
+                      <div className="mr-1 line-clamp-1 break-all font-bold">
                         {recipe.title}
                       </div>
                       <div className="mr-2 mt-2 line-clamp-2 flex-grow overflow-hidden break-all text-xs">
                         {recipe.content}
                       </div>
-                      <div className="mr-2 mt-3 text-right text-sm lg:text-base">
-                        <FontAwesomeIcon icon={faClock} />
-                        {recipe?.time ? recipe.time : '-'} /
-                        <FontAwesomeIcon icon={faYenSign} />
-                        {recipe?.price ? recipe?.price?.toLocaleString() : '-'}
-                        /
-                        <FontAwesomeIcon icon={faFire} />
-                        {recipe?.calorie
-                          ? recipe.calorie.toLocaleString()
-                          : '-'}
+                      <div className="mr-1.5 mt-2.5 text-right text-xs font-semibold lg:mr-2 lg:text-base">
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          className="mr-0.5 text-[#ef6a6d]"
+                        />
+                        <span className="mr-2 lg:mr-5 lg:text-sm">
+                          {recipe?.favorites_count
+                            ? formatNumber(recipe.favorites_count)
+                            : 0}
+                        </span>
+                        <FontAwesomeIcon
+                          icon={faClock}
+                          className={'mr-0.5 ' + GetTimeColor(recipe)}
+                        />
+                        <span className="mr-2 lg:mr-5 lg:text-sm">
+                          {recipe?.time ? recipe.time : '-'}
+                        </span>
+                        <FontAwesomeIcon
+                          icon={faYenSign}
+                          className={'mr-0.5 ' + GetPriceColor(recipe)}
+                        />
+                        <span className="mr-2 lg:mr-5 lg:text-sm">
+                          {recipe?.price
+                            ? recipe?.price?.toLocaleString()
+                            : '-'}
+                        </span>
+                        <FontAwesomeIcon
+                          icon={faFire}
+                          className={'mr-0.5 ' + GetCalorieColor(recipe)}
+                        />
+                        <span className="lg:text-sm">
+                          {recipe?.calorie
+                            ? recipe.calorie.toLocaleString()
+                            : '-'}
+                        </span>
                       </div>
                     </div>
                   </div>

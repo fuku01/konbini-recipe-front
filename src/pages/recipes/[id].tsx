@@ -211,11 +211,11 @@ const Recipes = () => {
             <FontAwesomeIcon
               icon={isFavorite ? solidHeart : regularHeart}
               className={
-                'text-4xl text-[#F16B6E] ' +
+                'text-4xl text-[#FEABAE] ' +
                 (currentUser
-                  ? 'cursor-pointer transition duration-75 ease-in-out hover:text-[#EE1D23] '
+                  ? 'cursor-pointer transition duration-75 ease-in-out hover:text-[#ef6a6d]'
                   : 'pointer-events-none') +
-                (isFavorite ? ' scale-105 text-[#EE1D23]' : '') +
+                (isFavorite ? ' scale-105 text-[#ef6a6d]' : '') +
                 (!canClick ? ' pointer-events-none' : '')
               }
               onClick={() => {
@@ -241,7 +241,7 @@ const Recipes = () => {
               }}
             />
             {/* お気に入りの数を表示 */}
-            <div className="text-center text-xs">
+            <div className="text-center text-xs font-semibold">
               {formatNumber(favoriteCount)}
             </div>
           </div>
@@ -255,7 +255,7 @@ const Recipes = () => {
         <div className="mx-2 h-16" />
       )}
 
-      <div className="flex justify-around">
+      <div className="flex justify-around font-semibold">
         <div className="inline-flex min-w-[5rem] flex-col items-center rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
             icon={faClock}
