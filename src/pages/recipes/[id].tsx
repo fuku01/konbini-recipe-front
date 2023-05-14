@@ -125,8 +125,8 @@ const Recipes = () => {
     };
     try {
       const response = await axios.post('/favorites', data);
-      await getFavoriteCount(); // お気に入りの数を取得する
-      await checkFavorite(); // お気に入りの登録状態を取得する
+      await getFavoriteCount();
+      await checkFavorite();
       console.log('お気に入りを追加しました', response.data);
     } catch (error) {
       console.log('お気に入りの追加に失敗しました', error);
@@ -137,8 +137,8 @@ const Recipes = () => {
   const deleteFavorite = async () => {
     try {
       const response = await axios.delete('/favorites/' + isFavoriteId);
-      await getFavoriteCount(); // お気に入りの数を取得する
-      await checkFavorite(); // お気に入りの登録状態を取得する
+      await getFavoriteCount();
+      await checkFavorite();
       console.log('お気に入りを削除しました', response.data);
     } catch (error) {
       console.log('お気に入りの削除に失敗しました', error);
@@ -182,10 +182,19 @@ const Recipes = () => {
 
   useEffect(() => {
     getCurrentUser();
-    getRecipe();
+  }, [getCurrentUser]);
+
+  useEffect(() => {
     checkFavorite();
+  }, [checkFavorite]);
+
+  useEffect(() => {
     getFavoriteCount();
-  }, [checkFavorite, getCurrentUser, getFavoriteCount, getRecipe]);
+  }, [getFavoriteCount]);
+
+  useEffect(() => {
+    getRecipe();
+  }, [getRecipe]);
 
   return (
     <div>
@@ -206,13 +215,14 @@ const Recipes = () => {
                 (currentUser
                   ? 'cursor-pointer transition duration-75 ease-in-out hover:text-[#EE1D23] '
                   : 'pointer-events-none') +
-                (isFavorite ? ' scale-105' : '')
+                (isFavorite ? ' scale-105 text-[#EE1D23]' : '') +
+                (!canClick ? ' pointer-events-none' : '')
               }
               onClick={() => {
                 if (canClick) {
                   // クリックが可能な場合、通常の処理を実行
                   setCanClick(false); // クリックを無効化
-                  setTimeout(() => setCanClick(true), 100); // 0.1秒後にクリックを再び有効化
+                  setTimeout(() => setCanClick(true), 200); // 0.2秒後にクリックを再び有効化
                   if (currentUser) {
                     if (isFavorite) {
                       // お気に入り登録されている場合

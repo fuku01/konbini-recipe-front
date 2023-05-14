@@ -22,6 +22,7 @@ const Myrecipe = () => {
   const [myrecipe, setMyrecipe] = useState<Recipe[]>([]);
   const { currentUser } = useAuth();
 
+  // マイレシピを取得する関数
   const getMyrecipes = useCallback(async () => {
     try {
       const response = await axios.get<Recipe[]>('/my_recipes');
