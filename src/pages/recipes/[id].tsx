@@ -221,7 +221,7 @@ const Recipes = () => {
                 if (canClick) {
                   // クリックが可能な場合、通常の処理を実行
                   setCanClick(false); // クリックを無効化
-                  setTimeout(() => setCanClick(true), 1000); // 0.5秒後にクリックを再び有効化
+                  setTimeout(() => setCanClick(true), 100); // 0.5秒後にクリックを再び有効化
                   if (currentUser) {
                     if (isFavorite) {
                       // お気に入り登録されている場合
