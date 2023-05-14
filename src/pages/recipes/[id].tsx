@@ -54,6 +54,7 @@ const Recipes = () => {
     undefined
   ); // お気に入りのIDを管理するステート
   const [favoriteCount, setFavoriteCount] = useState<number>(0); // お気に入りの数を管理するステート
+  const [canClick, setCanClick] = useState<boolean>(true); // お気に入りボタンをクリックできるかどうかを管理するステート
   const [currentUser, setCurrentUser] = useState<User>();
 
   // レシピの取得
@@ -155,7 +156,7 @@ const Recipes = () => {
     }
   }, [currentUser, isFavorite, recipe]);
 
-  // レシピに紐づくお気に入りの数を取得する関数
+  // お気に入りの数を取得する関数
   const getFavoriteCount = useCallback(async () => {
     if (recipe && recipe.id) {
       const response = await axios.get('/favorite_count/' + recipe.id);
@@ -167,7 +168,7 @@ const Recipes = () => {
   // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
   const formatNumber = (num: number) => {
     if (num >= 9950) {
-      return '9.9k';
+      return '9.9k〜';
     } else if (num >= 1000) {
       return (num / 1000).toFixed(1) + 'k';
     } else {
@@ -213,21 +214,30 @@ const Recipes = () => {
                 (isFavorite ? ' scale-105' : '')
               }
               onClick={() => {
-                if (currentUser) {
-                  if (isFavorite) {
-                    // お気に入り登録されている場合
-                    deleteFavorite(); // 削除
-                    getRecipe();
-                    console.log('お気に入り登録済みです');
+                if (canClick) {
+                  // クリックが可能な場合、通常の処理を実行
+                  setCanClick(false); // クリックを無効化
+                  setTimeout(() => setCanClick(true), 500); // 0.5秒後にクリックを再び有効化
+                  if (currentUser) {
+                    if (isFavorite) {
+                      // お気に入り登録されている場合
+                      deleteFavorite(); // 削除
+                      checkFavorite();
+                      getRecipe();
+                      getFavoriteCount();
+                      console.log('お気に入り登録済みです');
+                    } else {
+                      // お気に入り登録されていない場合
+                      addFavorite(); // 追加
+                      checkFavorite();
+                      getRecipe();
+                      getFavoriteCount();
+                    }
                   } else {
-                    // お気に入り登録されていない場合
-                    addFavorite(); // 追加
-                    getRecipe();
+                    console.log(
+                      'お気に入り機能を利用するにはログインが必要です!'
+                    );
                   }
-                } else {
-                  console.log(
-                    'お気に入り機能を利用するにはログインが必要です!'
-                  );
                 }
               }}
             />
