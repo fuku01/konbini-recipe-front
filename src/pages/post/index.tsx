@@ -162,9 +162,6 @@ const Post = () => {
               setBarcode={setBarcode}
             />
           )}
-          <div className="mt-2 text-center text-2xl text-[#68B68D]">
-            レシピ投稿
-          </div>
           <input
             ref={imageForm}
             type="file"
@@ -195,7 +192,7 @@ const Post = () => {
           ) : (
             // 画像が選択されていない場合は、プレビューを表示しない
             <div
-              className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 shadow-sm hover:border-orange-500"
+              className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 hover:border-orange-500"
               onClick={() => {
                 if (imageForm.current) {
                   imageForm.current.click();
@@ -203,7 +200,7 @@ const Post = () => {
               }}
             >
               <FontAwesomeIcon icon={faCamera} className="text-8xl" />
-              <div className="text-2xl">写真</div>
+              <div className="text-2xl">写真選択</div>
             </div>
           )}
           <TextForm

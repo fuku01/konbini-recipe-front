@@ -86,7 +86,7 @@ const RcipeList = (props: RcipeListProps) => {
           {props.recipes.map((recipe) => (
             <div
               key={recipe.id}
-              className="my-3 rounded-lg bg-[#FFFAF2] py-3 shadow-md hover:bg-[#FDF1DE] hover:text-orange-500 hover:shadow-lg"
+              className="my-3 h-28 rounded-lg bg-[#FFFAF2] py-2 shadow-md hover:bg-[#FDF1DE] hover:text-orange-500 hover:shadow-lg"
             >
               <Link href={'/recipes/' + recipe.id}>
                 <div
@@ -95,12 +95,10 @@ const RcipeList = (props: RcipeListProps) => {
                   }}
                 >
                   <div className="flex">
-                    <div className="my-auto flex-shrink-0">
+                    <div className="flex-shrink-0">
                       <img
-                        className="mx-2 h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover"
+                        className="mx-1.5 h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover lg:mx-2"
                         alt="レシピリスト"
-                        width={128}
-                        height={96}
                         src={recipe.image}
                       />
                     </div>
@@ -108,31 +106,29 @@ const RcipeList = (props: RcipeListProps) => {
                       <div className="mr-1 line-clamp-1 break-all font-bold">
                         {recipe.title}
                       </div>
-                      <div className="mr-2 mt-2 line-clamp-2 flex-grow overflow-hidden break-all text-xs">
+                      <div className="ml-0.5 mr-1 mt-2.5 line-clamp-2 flex-grow overflow-hidden whitespace-pre-wrap break-all text-xs">
                         {recipe.content}
                       </div>
-                      <div className="mr-1.5 mt-2.5 text-right text-xs font-semibold lg:mr-2 lg:text-base">
+                      <div className="mr-2 mt-3 text-right text-xs font-semibold lg:text-base">
                         <FontAwesomeIcon
                           icon={faHeart}
                           className="mr-0.5 text-[#ef6a6d]"
                         />
-                        <span className="mr-2 lg:mr-5 lg:text-sm">
-                          {recipe?.favorites_count
-                            ? formatNumber(recipe.favorites_count)
-                            : 0}
+                        <span className="mr-2 lg:mr-4 lg:text-sm">
+                          {recipe?.favorites_count ? formatNumber(9999) : 0}
                         </span>
                         <FontAwesomeIcon
                           icon={faClock}
                           className={'mr-0.5 ' + GetTimeColor(recipe)}
                         />
-                        <span className="mr-2 lg:mr-5 lg:text-sm">
+                        <span className="mr-2 lg:mr-4 lg:text-sm">
                           {recipe?.time ? recipe.time : '-'}
                         </span>
                         <FontAwesomeIcon
                           icon={faYenSign}
                           className={'mr-0.5 ' + GetPriceColor(recipe)}
                         />
-                        <span className="mr-2 lg:mr-5 lg:text-sm">
+                        <span className="mr-2 lg:mr-4 lg:text-sm">
                           {recipe?.price
                             ? recipe?.price?.toLocaleString()
                             : '-'}

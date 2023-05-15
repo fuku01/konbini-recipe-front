@@ -1,4 +1,4 @@
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCrown, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
@@ -59,8 +59,9 @@ const Home = () => {
     <div>
       {/* 人気レシピの表示 */}
       <div>
-        <div className="mb-2 mr-2 bg-[#FDF1DE] py-1 text-2xl font-bold text-orange-500">
-          人気レシピランキング
+        <div className="mb-2 mr-2 rounded-lg bg-[#FDF1DE] py-1 pl-4 text-2xl font-bold text-orange-500">
+          <FontAwesomeIcon icon={faCrown} className="mr-2 text-[#FBD87F]" />
+          人気ランキング
         </div>
         <div className="flex">
           <div className="flex overflow-x-scroll whitespace-nowrap">
@@ -68,7 +69,7 @@ const Home = () => {
               <div key={recipe.id} className="mx-2 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>
                   <div
-                    className="relative mx-auto mb-3 h-52 w-72"
+                    className="relative mx-auto h-52 w-72"
                     onClick={() => {
                       console.log(
                         recipe.id,
@@ -101,7 +102,7 @@ const Home = () => {
       </div>
       {/* 新着レシピの表示 */}
       <div>
-        <div className="mb-1 mt-2 text-2xl font-bold text-orange-500">
+        <div className="mb-2 mr-2 mt-8 rounded-lg bg-[#FDF1DE] py-1 pl-4 text-2xl font-bold text-orange-500">
           新着レシピ
         </div>
         <div className="flex">
