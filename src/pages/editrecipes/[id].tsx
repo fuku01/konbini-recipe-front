@@ -65,27 +65,23 @@ const EditRecipe = () => {
   const [time, setTime] = useState('');
   const [price, setPrice] = useState('');
   const [calorie, setCalorie] = useState('');
-  const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [defaultImage, setDefaultImage] = useState<string | null>(null);
-  const [barcode, setBarcode] = useState<string>('');
-
-  const imageForm = useRef<HTMLInputElement>(null);
-
+  const [image, setImage] = useState<File | null>(null); // 画像を保持するためのstate
+  const [preview, setPreview] = useState<string | null>(null); // プレビュー画像を保持するためのstate
+  const [defaultImage, setDefaultImage] = useState<string | null>(null); // デフォルトの画像を保持するためのstate(画像を選択後、保存せずに戻った場合にデフォルト画像に戻るようにするため)
+  const [barcode, setBarcode] = useState<string>(''); //バーコードの値を保持するためのstate
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
-  const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
 
-  const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
+  const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false); //バーコードモーダルの開閉を管理するためのstate
+  const imageForm = useRef<HTMLInputElement>(null);
 
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
   const { uploadImageToS3, deleteImageFromS3 } = useS3();
 
-  // 以下のコードはレシピの詳細ページを表示するためのコード。
-  // useRouterを使って、URLのパラメーターからIDを取得しています。
-  // そのIDを使って、axiosを使って、レシピの詳細を取得しています。
+  // 以下のコードはレシピの詳細ページを表示するためのコード。useRouterを使って、URLのパラメーターからIDを取得し、そのIDを使って、axiosを使って、レシピの詳細を取得する。
   const router = useRouter();
   const { id } = router.query;
+
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<User>();
 
@@ -209,7 +205,6 @@ const EditRecipe = () => {
     if (tempTag && tags.filter((tag) => !tag._destroy).length <= 5) {
       setTags([...tags, { name: tempTag }]);
       setTempTag('');
-      setInputValue('');
     }
   };
 
@@ -228,6 +223,10 @@ const EditRecipe = () => {
       tags.filter((tag) => !tag._destroy)
     );
   }, [tags]);
+
+  useEffect(() => {
+    console.log('テンプ', tempTag);
+  }, [tempTag]);
 
   if (currentUser && recipe && recipe.user_id === currentUser.id) {
     return (
@@ -318,13 +317,12 @@ const EditRecipe = () => {
                   label="タグ"
                   placeholder="※ 5個以内"
                   witdh="w-full"
-                  value={inputValue}
+                  value={tempTag}
                   disabled={tags.filter((tag) => !tag._destroy).length >= 5}
                   onChange={(e) => {
                     const newValue = e.target.value;
                     const trimmedValue = newValue.trimStart();
                     setTempTag(trimmedValue);
-                    setInputValue(trimmedValue);
                   }}
                 />
               </form>
@@ -358,19 +356,14 @@ const EditRecipe = () => {
                         <FontAwesomeIcon
                           icon={faCircleXmark}
                           className="ml-1 cursor-pointer text-[#FEABAE] transition duration-75 ease-in-out hover:scale-105 hover:text-[#F16B6E]"
+                          // 以下のコードでは、クリックしたタグの_destroyをtrueにして、その後リクエストを送ることで、データベースからタグを削除する
                           onClick={() => {
-                            // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
-                            // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
-                            // つまり、クリックしたタグを配列から削除する
-                            // クリックしたタグを_destroyを使って削除して、新しい配列を作成する
                             const newTags = tags.map((t) => {
                               if (t == tag) {
                                 t._destroy = true;
                               }
                               return t;
                             });
-                            console.log('xボタンをクリックしました', newTags);
-
                             setTags(newTags);
                           }}
                         />

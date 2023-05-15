@@ -20,8 +20,8 @@ import useS3 from '@/hooks/s3/useS3';
 type Tag = {
   id?: number;
   name: string;
-  _destroy?: boolean;
 };
+
 // レシピ投稿時に送信するデータの型
 type RecipeRequestData = {
   recipe: {
@@ -47,7 +47,6 @@ const Post = () => {
 
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
-  const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
@@ -132,10 +131,9 @@ const Post = () => {
   // タグ追加のロジックをまとめた関数
   const addTag = () => {
     // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
-    if (tempTag && tags.filter((tag) => !tag._destroy).length <= 5) {
+    if (tempTag && tags.length <= 5) {
       setTags([...tags, { name: tempTag }]);
       setTempTag('');
-      setInputValue('');
     }
   };
 
@@ -149,10 +147,7 @@ const Post = () => {
 
   // _destroyがfalseのタグのみを確認するためのuseEffect
   useEffect(() => {
-    console.log(
-      '最新のタグ配列',
-      tags.filter((tag) => !tag._destroy)
-    );
+    console.log('最新のタグ配列', tags);
   }, [tags]);
 
   // この下からリターンの中身
@@ -248,21 +243,17 @@ const Post = () => {
                   label="タグ"
                   placeholder="※ 5個以内"
                   witdh="w-full"
-                  value={inputValue}
-                  disabled={tags.filter((tag) => !tag._destroy).length >= 5}
+                  value={tempTag}
+                  disabled={tags.length >= 5}
                   onChange={(e) => {
                     const newValue = e.target.value;
                     const trimmedValue = newValue.trimStart();
                     setTempTag(trimmedValue);
-                    setInputValue(trimmedValue);
                   }}
                 />
               </form>
               <div className="ml-1 mr-4 mt-16">
-                <TagButton
-                  onClick={addTag}
-                  disabled={tags.filter((tag) => !tag._destroy).length >= 5}
-                >
+                <TagButton onClick={addTag} disabled={tags.length >= 5}>
                   <FontAwesomeIcon icon={faPlus} className="text-lg" />
                 </TagButton>
               </div>
@@ -271,7 +262,7 @@ const Post = () => {
                   onClick={() => {
                     setIsBarcodeModalOpen(!isBarcodeModalOpen);
                   }}
-                  disabled={tags.filter((tag) => !tag._destroy).length >= 5}
+                  disabled={tags.length >= 5}
                 >
                   <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
                 </BarcodeButton>
@@ -280,31 +271,27 @@ const Post = () => {
             <div className="flex flex-wrap">
               {/* _destroyがtrueのもの以外の、tags配列の中身を表示 */}
               {tags.map((tag, index) => {
-                if (!tag._destroy) {
-                  return (
-                    <div key={index} className="flex">
-                      <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
-                        # {tag.name}
-                        <FontAwesomeIcon
-                          icon={faCircleXmark}
-                          className="ml-1 cursor-pointer text-[#FEABAE] transition duration-75 ease-in-out hover:scale-105 hover:text-[#F16B6E]"
-                          onClick={() => {
-                            // クリックしたらfilter関数を使って、クリックしたタグ以外のタグを抽出し、抽出したタグをsetTagsで更新する
-                            // t !== tag)は、クリックしたタグ以外のタグを抽出するための条件式
-                            // つまり、クリックしたタグを配列から削除する
-                            const newTags = tags.map((t) => {
-                              if (t == tag) {
-                                t._destroy = true;
-                              }
-                              return t;
-                            });
-                            setTags(newTags);
-                          }}
-                        />
-                      </div>
+                // if (!tag._destroy) {
+                return (
+                  <div key={index} className="flex">
+                    <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+                      # {tag.name}
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className="ml-1 cursor-pointer text-[#FEABAE] transition duration-75 ease-in-out hover:scale-105 hover:text-[#F16B6E]"
+                        onClick={() => {
+                          // xボタンを押したタグのみを除外した新しい配列を作る
+                          const newTags = tags.filter((_, Index) => {
+                            return Index !== index;
+                          });
+                          // setTagsに新しい配列を渡す
+                          setTags(newTags);
+                        }}
+                      />
                     </div>
-                  );
-                }
+                  </div>
+                );
+                // }
               })}
             </div>
           </div>
