@@ -31,6 +31,12 @@ const Footer = () => {
       return 'text-orange-400';
     }
   };
+  // faHeartの色を変える関数
+  const GetHeartColor = () => {
+    if (router.pathname === '/favoriterecipe') {
+      return 'text-orange-400';
+    }
+  };
 
   return (
     <div className="sticky bottom-0 z-30 flex h-14 w-full items-center justify-around bg-[#FCCFA5] pt-0.5 text-center text-3xl">
@@ -55,9 +61,17 @@ const Footer = () => {
           />
         </Link>
       </div>
-      <div className="w-20 transition duration-75 ease-in-out hover:scale-105">
-        <Link href="/home">
+      <div
+        className={
+          ' w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+          GetHeartColor()
+        }
+      >
+        <Link href="/favoriterecipe">
           <FontAwesomeIcon icon={faHeart} className="m-auto h-8 w-8" />
+          <div className="text-xs">
+            {router.pathname === '/favoriterecipe' ? 'お気に入り' : ''}
+          </div>
         </Link>
       </div>
       <div
