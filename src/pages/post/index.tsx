@@ -48,7 +48,6 @@ const Post = () => {
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
   const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
-  const [validTagCount, setValidTagCount] = useState(0); //バリデーションのためにタグの数を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
@@ -132,11 +131,8 @@ const Post = () => {
 
   // タグ追加のロジックをまとめた関数
   const addTag = () => {
-    // _destroy が true でないタグのみをカウント
-    const TagCount = tags.filter((tag) => !tag._destroy).length;
-    setValidTagCount(TagCount);
     // タグの数が 5 以下の場合のみ、タグを追加できるようにする。
-    if (tempTag && validTagCount < 5) {
+    if (tempTag && tags.filter((tag) => !tag._destroy).length <= 5) {
       setTags([...tags, { name: tempTag }]);
       setTempTag('');
       setInputValue('');
@@ -148,9 +144,8 @@ const Post = () => {
     if (barcode) {
       setTags([...tags, { name: barcode }]);
       setBarcode('');
-      setValidTagCount(validTagCount + 1);
     }
-  }, [barcode, tags, validTagCount]);
+  }, [barcode, tags]);
 
   // _destroyがfalseのタグのみを確認するためのuseEffect
   useEffect(() => {
@@ -254,7 +249,7 @@ const Post = () => {
                   placeholder="※ 5個以内"
                   witdh="w-full"
                   value={inputValue}
-                  disabled={validTagCount > 3}
+                  disabled={tags.filter((tag) => !tag._destroy).length >= 5}
                   onChange={(e) => {
                     const newValue = e.target.value;
                     const trimmedValue = newValue.trimStart();
@@ -264,7 +259,10 @@ const Post = () => {
                 />
               </form>
               <div className="ml-1 mr-4 mt-16">
-                <TagButton onClick={addTag} disabled={validTagCount > 3}>
+                <TagButton
+                  onClick={addTag}
+                  disabled={tags.filter((tag) => !tag._destroy).length >= 5}
+                >
                   <FontAwesomeIcon icon={faPlus} className="text-lg" />
                 </TagButton>
               </div>
@@ -273,7 +271,7 @@ const Post = () => {
                   onClick={() => {
                     setIsBarcodeModalOpen(!isBarcodeModalOpen);
                   }}
-                  disabled={validTagCount > 3}
+                  disabled={tags.filter((tag) => !tag._destroy).length >= 5}
                 >
                   <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
                 </BarcodeButton>
@@ -301,7 +299,6 @@ const Post = () => {
                               return t;
                             });
                             setTags(newTags);
-                            setValidTagCount(validTagCount - 1);
                           }}
                         />
                       </div>
