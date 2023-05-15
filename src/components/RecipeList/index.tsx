@@ -98,7 +98,7 @@ const RcipeList = (props: RcipeListProps) => {
                     <div className="my-auto flex-shrink-0">
                       <img
                         className="mx-2 h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover"
-                        alt="マイレシピ"
+                        alt="レシピリスト"
                         width={128}
                         height={96}
                         src={recipe.image}

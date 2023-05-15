@@ -169,7 +169,7 @@ const Recipes = () => {
     }
   }, [recipe]);
 
-  // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
+  // いいねの数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
   const formatNumber = (num: number) => {
     if (num >= 9950) {
       return '9.9k〜';
@@ -206,7 +206,6 @@ const Recipes = () => {
             className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
           />
           {/* お気に入りボタンの処理 */}
-          <div></div>
           <div className="absolute bottom-2 right-2 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
             <FontAwesomeIcon
               icon={isFavorite ? solidHeart : regularHeart}
@@ -215,7 +214,9 @@ const Recipes = () => {
                 (currentUser
                   ? 'cursor-pointer transition duration-75 ease-in-out hover:text-[#ef6a6d]'
                   : 'pointer-events-none') +
-                (isFavorite ? ' scale-105 text-[#ef6a6d]' : '') +
+                (isFavorite
+                  ? ' scale-105 text-[#ef6a6d] hover:text-[#FEABAE]'
+                  : '') +
                 (!canClick ? ' pointer-events-none' : '')
               }
               onClick={() => {
