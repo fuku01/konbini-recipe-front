@@ -48,7 +48,6 @@ const Post = () => {
   const [tempTag, setTempTag] = useState<string>(''); //フロントで一時的にタグを保持するためのstate
   const [tags, setTags] = useState<Tag[]>([]); //送信するためのタグ配列を保持するためのstate
   const [inputValue, setInputValue] = useState(''); //タグ入力フォームの値を保持するためのstate
-  // const [validTagCount, setValidTagCount] = useState(0); //バリデーションのためにタグの数を保持するためのstate
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
