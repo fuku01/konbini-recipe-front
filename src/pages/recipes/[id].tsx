@@ -43,19 +43,19 @@ type Favorite = {
 };
 
 const Recipes = () => {
-  // 以下のコードはレシピの詳細ページを表示するためのコード。
-  // useRouterを使って、URLのパラメーターからIDを取得しています。
-  // そのIDを使って、axiosを使って、レシピの詳細を取得しています。
+  // 以下のコードはレシピの詳細ページを表示するためのコード。useRouterを使って、URLのパラメーターからIDを取得し、そのIDを使って、axiosを使って、レシピの詳細を取得する。
   const router = useRouter();
   const { id } = router.query;
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
+
   const [isFavorite, setIsFavorite] = useState<boolean>(false); // お気に入りの登録状態を管理するステート
   const [isFavoriteId, setIsFavoriteId] = useState<number | undefined>(
     undefined
   ); // お気に入りのIDを管理するステート
   const [favoriteCount, setFavoriteCount] = useState<number>(0); // お気に入りの数を管理するステート
   const [canClick, setCanClick] = useState<boolean>(true); // お気に入りボタンをクリックできるかどうかを管理するステート
-  const [currentUser, setCurrentUser] = useState<User>();
+
+  const [currentUser, setCurrentUser] = useState<User>(); // ログイン中のユーザー情報を管理するステート
 
   // レシピの取得
   const getRecipe = useCallback(async () => {
