@@ -199,11 +199,11 @@ const Recipes = () => {
   return (
     <div>
       {recipe?.image && (
-        <div className="relative mx-auto mb-3 h-52 w-72 ">
+        <div className="relative mx-auto h-52 w-72 ">
           <img
             src={recipe.image}
             alt="レシピ画像"
-            className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] bg-white object-cover shadow-md"
+            className="relative h-full w-full rounded-3xl border-4 border-[#FBB87F] bg-white object-cover shadow-md"
           />
           {/* お気に入りボタンの処理 */}
           <div className="absolute bottom-2 right-2 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
@@ -249,7 +249,7 @@ const Recipes = () => {
         </div>
       )}
       {recipe?.title ? (
-        <div className="mx-2 mb-8 ml-4 inline-block whitespace-pre-wrap break-all rounded-md text-2xl font-bold text-orange-500 lg:ml-7">
+        <div className="mx-4 mb-5 mt-2 inline-block whitespace-pre-wrap break-all rounded-md text-2xl font-bold text-orange-500 lg:mx-7">
           {recipe.title}
         </div>
       ) : (
@@ -288,17 +288,21 @@ const Recipes = () => {
           </div>
         </div>
       </div>
-      <div className="mt-6 text-orange-500">作り方</div>
-      <div className="rounded-sm bg-[#FDF1DE] px-2 py-2 shadow-md">
+      <div className="mb-2 mt-10 text-lg font-semibold text-orange-500">
+        作り方
+      </div>
+      <div className="rounded-md bg-[#FDF1DE] px-2 py-2 shadow-md">
         {/* 改行や空白を正しく表示させる処理 */}
         <div className="whitespace-pre-wrap break-all">{recipe?.content}</div>
       </div>
-      <div className="mt-6 text-orange-500">タグ</div>
+      <div className="mb-2 mt-10 text-lg font-semibold text-orange-500">
+        タグ
+      </div>
       {/* レシピに紐づくタグを表示 */}
       <div className="flex flex-wrap">
         {recipe?.tags.map((tag) => (
           <div key={tag.id} className="flex">
-            <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+            <div className="mr-3 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
               # {tag.name}
             </div>
           </div>
