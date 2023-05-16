@@ -256,7 +256,7 @@ const Recipes = () => {
         <div className="mx-2 h-16" />
       )}
 
-      <div className="flex justify-around space-x-6 font-semibold">
+      <div className="flex justify-around font-semibold">
         <div className="inline-flex w-24 flex-col items-center rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
             icon={faClock}
