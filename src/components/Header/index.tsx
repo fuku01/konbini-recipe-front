@@ -33,7 +33,7 @@ const Header = () => {
         >
           <FontAwesomeIcon icon={faBars} />
         </div>
-        <div className="text-center text-2xl font-bold">
+        <div className="text-center text-3xl font-bold">
           <Link href="/home">コンビニレシピ</Link>
         </div>
       </div>
