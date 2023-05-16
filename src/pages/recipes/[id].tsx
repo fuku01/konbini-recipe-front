@@ -256,7 +256,7 @@ const Recipes = () => {
         <div className="mx-2 h-16" />
       )}
 
-      <div className="flex justify-around font-semibold">
+      <div className="flex justify-around space-x-2 font-semibold">
         <div className="inline-flex w-24 flex-col items-center rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
             icon={faClock}
@@ -321,7 +321,7 @@ const Recipes = () => {
       </div>
       {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
       {currentUser && recipe && recipe.user_id === currentUser.id && (
-        <div className="mt-2 text-right">
+        <div className="mt-8 text-right">
           <Link href={'/editrecipes/' + id}>
             <PostButton>
               <FontAwesomeIcon icon={faFilePen}></FontAwesomeIcon>
