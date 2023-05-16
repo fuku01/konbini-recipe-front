@@ -84,49 +84,49 @@ const SideMenu = (props: SideMenuProps) => {
           {/* ログイン中の場合 */}
           {auth.currentUser ? (
             <div>
-              <div className="ml-8 mt-6 hover:text-orange-500 hover:underline">
+              <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
                 <Link href="/home">
-                  <FontAwesomeIcon icon={faHouse} className="mr-3" />
+                  <FontAwesomeIcon icon={faHouse} className="mr-2 w-5" />
                   ホーム
                 </Link>
               </div>
               <Link href="/post">
-                <div className="ml-8 mt-6 hover:text-orange-500 hover:underline">
-                  <FontAwesomeIcon icon={faPen} className="mr-3" />
+                <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon icon={faPen} className="mr-2 w-5" />
                   レシピ投稿
                 </div>
               </Link>
               <Link href="/myrecipe">
-                <div className="ml-8 mt-6 hover:text-orange-500 hover:underline">
-                  <FontAwesomeIcon icon={faFileLines} className="mr-4" />
+                <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon icon={faFileLines} className="mr-2 w-5" />
                   マイレシピ
                 </div>
               </Link>
-              <div className="ml-8 mt-6 hover:text-orange-500 hover:underline ">
-                <FontAwesomeIcon icon={faCircleQuestion} className="mr-4" />
+              <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
+                <FontAwesomeIcon icon={faCircleQuestion} className="mr-2 w-5" />
                 使い方
               </div>
               <Link href="/edituser">
-                <div className="ml-8 mt-10 hover:text-orange-500 hover:underline">
-                  <FontAwesomeIcon icon={faUserGear} className="mr-3" />
+                <div className="ml-7 mt-10 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon icon={faUserGear} className="mr-2 w-5" />
                   設定
                 </div>
               </Link>
-              <div className="ml-8 mt-6">
+              <div className="ml-7 mt-6">
                 <LogoutButton />
               </div>
             </div>
           ) : (
             // ログアウト中の場合
             <div>
-              <div className="ml-8 mt-6">
+              <div className="ml-7 mt-6">
                 <SignupButton />
               </div>
-              <div className="ml-8 mt-6">
+              <div className="ml-7 mt-6">
                 <LoginButton />
               </div>
-              <div className="ml-9 mt-8 hover:text-orange-500 hover:underline ">
-                <FontAwesomeIcon icon={faCircleQuestion} className="mr-4" />
+              <div className="ml-7 mt-8 hover:text-orange-500 hover:underline ">
+                <FontAwesomeIcon icon={faCircleQuestion} className="mr-2 w-5" />
                 使い方
               </div>
             </div>
