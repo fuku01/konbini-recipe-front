@@ -256,7 +256,7 @@ const Recipes = () => {
         <div className="mx-2 h-16" />
       )}
 
-      <div className="flex justify-around space-x-7 font-semibold">
+      <div className="flex justify-around space-x-6 font-semibold">
         <div className="inline-flex w-24 flex-col items-center rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
             icon={faClock}
@@ -309,19 +309,19 @@ const Recipes = () => {
         ))}
       </div>
       {/* 作成日と更新日を表示 */}
-      <div className="mt-10 text-xs text-gray-500">
+      <div className="mt-10 text-center text-xs text-gray-500">
+        作成日：
         {recipe ? new Date(recipe?.created_at).toLocaleDateString() : 'N/A'}
-        作成{' '}
         {recipe && recipe.updated_at !== recipe.created_at && (
           <span>
-            ( 更新:
+            {'　'}( 更新日：
             {new Date(recipe.updated_at).toLocaleDateString()} )
           </span>
         )}
       </div>
       {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
       {currentUser && recipe && recipe.user_id === currentUser.id && (
-        <div className="mt-14 text-right">
+        <div className="mt-2 text-right">
           <Link href={'/editrecipes/' + id}>
             <PostButton>
               <FontAwesomeIcon icon={faFilePen}></FontAwesomeIcon>
