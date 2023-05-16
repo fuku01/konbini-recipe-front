@@ -75,17 +75,19 @@ const Home = () => {
     <div>
       {/* ----------------------人気レシピの表示------------------------ */}
       <div>
-        <div className="mb-4 mr-2 rounded-full bg-[#FDF1DE] py-1 pl-5 text-xl font-bold text-orange-500">
-          <FontAwesomeIcon
-            icon={faCrown}
-            className="mr-2 text-2xl text-[#FFD700]"
-          />
-          人気ランキング
+        <div className="mb-5">
+          <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-bold shadow-md">
+            <FontAwesomeIcon
+              icon={faCrown}
+              className="mr-2 text-2xl text-[#FFD700]"
+            />
+            人気ランキング
+          </span>
         </div>
         <div className="flex">
           <div className="flex overflow-x-scroll whitespace-nowrap">
             {rankRecipe.map((recipe, index) => (
-              <div key={recipe.id} className="mx-2 flex-shrink-0">
+              <div key={recipe.id} className="mx-2.5 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>
                   <div
                     className="relative mx-auto h-44 w-60"
@@ -102,10 +104,10 @@ const Home = () => {
                       src={recipe.image}
                     />
                     {/* お気に入りボタン */}
-                    <div className="absolute bottom-0 right-0 flex space-x-1 rounded-br-xl rounded-tl-xl bg-[#FDF1DE] px-1.5 py-1.5">
+                    <div className="absolute bottom-0 right-0 flex items-center space-x-1 rounded-br-xl rounded-tl-xl bg-[#FDF1DE] px-1.5 py-1.5">
                       <FontAwesomeIcon
                         icon={faHeart}
-                        className="text-[#ef6a6d]"
+                        className="text-sm text-[#ef6a6d]"
                       />
                       {/* お気に入りの数を表示 */}
                       <div className="text-center text-xs font-semibold">
@@ -138,12 +140,14 @@ const Home = () => {
       </div>
       {/* ------------------------新着レシピの表示 ---------------------------*/}
       <div>
-        <div className="mb-4 mr-2 mt-12 rounded-full bg-[#FDF1DE] py-1 pl-5 text-xl font-bold text-orange-500">
-          <FontAwesomeIcon
-            icon={faSeedling}
-            className="mr-2 text-2xl text-[#94C8AD]"
-          />
-          新着レシピ
+        <div className="mb-5 mt-12">
+          <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-bold shadow-md">
+            <FontAwesomeIcon
+              icon={faSeedling}
+              className="mr-2 text-2xl text-[#94C8AD]"
+            />
+            新着レシピ
+          </span>
         </div>
         <div className="flex">
           <div className="flex overflow-x-scroll whitespace-nowrap">
