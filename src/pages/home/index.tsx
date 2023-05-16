@@ -1,4 +1,9 @@
-import { faCrown, faHeart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCrown,
+  faHeart,
+  faMedal,
+  faSeedling,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import Link from 'next/link';
@@ -47,7 +52,7 @@ const Home = () => {
   // いいねの数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
   const formatNumber = (num: number) => {
     if (num >= 9950) {
-      return '9.9k〜';
+      return '9.9k';
     } else if (num >= 1000) {
       return (num / 1000).toFixed(1) + 'k';
     } else {
@@ -55,21 +60,37 @@ const Home = () => {
     }
   };
 
+  // faMedalの色を変える関数
+  const GetMedalColor = (index: number) => {
+    if (index === 0) {
+      return 'text-[#FFD233]';
+    } else if (index === 1) {
+      return 'text-[#C0C0C0]';
+    } else if (index === 2) {
+      return 'text-[#CD7F32]';
+    } else {
+      return 'text-gray-400';
+    }
+  };
+
   return (
     <div>
-      {/* 人気レシピの表示 */}
+      {/* ----------------------人気レシピの表示------------------------ */}
       <div>
-        <div className="mb-2 mr-2 rounded-lg bg-[#FDF1DE] py-1 pl-4 text-2xl font-bold text-orange-500">
-          <FontAwesomeIcon icon={faCrown} className="mr-2 text-[#FBD87F]" />
+        <div className="mb-4 mr-2 rounded-full bg-[#FDF1DE] py-1 pl-5 text-xl font-bold text-orange-500">
+          <FontAwesomeIcon
+            icon={faCrown}
+            className="mr-2 text-2xl text-[#FBD87F]"
+          />
           人気ランキング
         </div>
         <div className="flex">
           <div className="flex overflow-x-scroll whitespace-nowrap">
-            {rankRecipe.map((recipe) => (
+            {rankRecipe.map((recipe, index) => (
               <div key={recipe.id} className="mx-2 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>
                   <div
-                    className="relative mx-auto h-52 w-72"
+                    className="relative mx-auto h-44 w-60"
                     onClick={() => {
                       console.log(
                         recipe.id,
@@ -78,20 +99,37 @@ const Home = () => {
                     }}
                   >
                     <img
-                      className="relative h-full w-full rounded-3xl border-2 border-solid border-[#FBB87F] object-cover hover:border-4 hover:border-orange-500"
+                      className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] object-cover hover:border-orange-500"
                       alt="人気レシピ"
                       src={recipe.image}
                     />
-                    {/* お気に入りボタンの処理 */}
-                    <div className="absolute bottom-2 right-2 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
+                    {/* お気に入りボタン */}
+                    <div className="absolute bottom-0 right-0 flex space-x-1 rounded-br-2xl rounded-tl-2xl bg-[#FDF1DE] px-1.5 py-1.5">
                       <FontAwesomeIcon
                         icon={faHeart}
-                        className="text-4xl text-[#ef6a6d]"
+                        className="text-[#ef6a6d]"
                       />
                       {/* お気に入りの数を表示 */}
                       <div className="text-center text-xs font-semibold">
                         {formatNumber(recipe.favorites_count)}
                       </div>
+                    </div>
+                    {/* ランキング順番を表示 */}
+                    <div>
+                      {/* ランキング上位３のみアイコンを表示する */}
+                      {index < 3 && (
+                        <FontAwesomeIcon
+                          icon={faMedal}
+                          rotation={180}
+                          className={
+                            'absolute right-2 top-2 rounded-full bg-[#FDF1DE] px-1.5 pb-1 pt-2 text-3xl ' +
+                            GetMedalColor(index)
+                          }
+                        />
+                      )}
+                      <span className="absolute left-0 top-0 rounded-br-2xl rounded-tl-2xl bg-[#FDF1DE] px-3 py-1 text-xl font-extrabold ">
+                        {index + 1}
+                      </span>
                     </div>
                   </div>
                 </Link>
@@ -100,9 +138,13 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* 新着レシピの表示 */}
+      {/* ------------------------新着レシピの表示 ---------------------------*/}
       <div>
-        <div className="mb-2 mr-2 mt-8 rounded-lg bg-[#FDF1DE] py-1 pl-4 text-2xl font-bold text-orange-500">
+        <div className="mb-4 mr-2 mt-12 rounded-full bg-[#FDF1DE] py-1 pl-5 text-xl font-bold text-orange-500">
+          <FontAwesomeIcon
+            icon={faSeedling}
+            className="mr-2 text-2xl text-[#94C8AD]"
+          />
           新着レシピ
         </div>
         <div className="flex">
@@ -119,7 +161,7 @@ const Home = () => {
                     }}
                   >
                     <img
-                      className="h-24 w-32 rounded-lg border-2 border-solid border-[#FBB87F] object-cover hover:border-4 hover:border-orange-500"
+                      className="h-24 w-32 rounded-lg border-4 border-solid border-[#FBB87F] object-cover hover:border-orange-500"
                       alt="新着レシピ"
                       src={recipe.image}
                     />

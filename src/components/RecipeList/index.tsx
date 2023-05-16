@@ -115,7 +115,9 @@ const RcipeList = (props: RcipeListProps) => {
                           className="mr-0.5 text-[#ef6a6d]"
                         />
                         <span className="mr-2 lg:mr-4 lg:text-sm">
-                          {recipe?.favorites_count ? formatNumber(9999) : 0}
+                          {recipe?.favorites_count
+                            ? formatNumber(recipe.favorites_count)
+                            : 0}
                         </span>
                         <FontAwesomeIcon
                           icon={faClock}

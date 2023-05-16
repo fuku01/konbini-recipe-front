@@ -172,7 +172,7 @@ const Recipes = () => {
   // いいねの数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
   const formatNumber = (num: number) => {
     if (num >= 9950) {
-      return '9.9k〜';
+      return '9.9k';
     } else if (num >= 1000) {
       return (num / 1000).toFixed(1) + 'k';
     } else {
@@ -242,7 +242,7 @@ const Recipes = () => {
               }}
             />
             {/* お気に入りの数を表示 */}
-            <div className="text-center text-xs font-semibold">
+            <div className="text-center text-sm font-bold">
               {formatNumber(favoriteCount)}
             </div>
           </div>
