@@ -308,6 +308,17 @@ const Recipes = () => {
           </div>
         ))}
       </div>
+      {/* 作成日と更新日を表示 */}
+      <div className="mt-10 text-xs text-gray-500">
+        {recipe ? new Date(recipe?.created_at).toLocaleDateString() : 'N/A'}
+        作成{' '}
+        {recipe && recipe.updated_at !== recipe.created_at && (
+          <span>
+            ( 更新:
+            {new Date(recipe.updated_at).toLocaleDateString()} )
+          </span>
+        )}
+      </div>
       {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
       {currentUser && recipe && recipe.user_id === currentUser.id && (
         <div className="mt-14 text-right">
