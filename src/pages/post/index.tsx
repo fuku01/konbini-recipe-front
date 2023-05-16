@@ -178,7 +178,7 @@ const Post = () => {
           {preview ? (
             // 画像が選択されている場合は、プレビューを表示する
             <img
-              className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-3xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
+              className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-2xl border-4 border-solid border-[#FBB87F] object-cover shadow-md"
               onClick={() => {
                 if (imageForm.current) {
                   imageForm.current.click();
@@ -192,7 +192,7 @@ const Post = () => {
           ) : (
             // 画像が選択されていない場合は、プレビューを表示しない
             <div
-              className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-4 border-dashed border-gray-400 text-gray-500 hover:border-orange-500"
+              className="mx-auto mt-4 flex h-52 w-72 cursor-pointer flex-col items-center justify-center rounded-2xl border-4 border-dashed border-gray-400 text-gray-500 hover:border-orange-500"
               onClick={() => {
                 if (imageForm.current) {
                   imageForm.current.click();
