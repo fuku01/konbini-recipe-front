@@ -239,9 +239,7 @@ const EditRecipe = () => {
               setBarcode={setBarcode}
             />
           )}
-          <div className="mt-2 text-center text-2xl text-[#68B68D]">
-            レシピ編集
-          </div>
+          <div className="text-center text-2xl text-[#68B68D]">レシピ編集</div>
           {/* 写真編集 */}
           <input
             ref={imageForm}
