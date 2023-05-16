@@ -114,21 +114,21 @@ const RcipeList = (props: RcipeListProps) => {
                           icon={faHeart}
                           className="mr-0.5 text-[#ef6a6d]"
                         />
-                        <span className="mr-1 lg:mr-4 lg:text-sm">
+                        <span className="mr-1.5 lg:mr-4 lg:text-sm">
                           {recipe?.favorites_count ? formatNumber(9999) : 0}
                         </span>
                         <FontAwesomeIcon
                           icon={faClock}
                           className={'mr-0.5 ' + GetTimeColor(recipe)}
                         />
-                        <span className="mr-1 lg:mr-4 lg:text-sm">
+                        <span className="mr-1.5 lg:mr-4 lg:text-sm">
                           {recipe?.time ? recipe.time : '-'}
                         </span>
                         <FontAwesomeIcon
                           icon={faYenSign}
                           className={'mr-0.5 ' + GetPriceColor(recipe)}
                         />
-                        <span className="mr-1 lg:mr-4 lg:text-sm">
+                        <span className="mr-1.5 lg:mr-4 lg:text-sm">
                           {recipe?.price
                             ? recipe?.price?.toLocaleString()
                             : '-'}

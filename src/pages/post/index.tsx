@@ -238,7 +238,7 @@ const Post = () => {
               >
                 <TextForm
                   label="タグ"
-                  placeholder="※ 5個以内(15文字以内))"
+                  placeholder="※ 5個以内(15文字以内)"
                   witdh="w-full"
                   value={tempTag}
                   maxLength={15}

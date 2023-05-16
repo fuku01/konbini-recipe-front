@@ -39,7 +39,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="sticky bottom-0 z-30 flex h-14 w-full items-center justify-around bg-[#FCCFA5] pt-0.5 text-center text-3xl">
+    <div className="sticky bottom-0 z-30 flex h-14 w-full items-center justify-around -space-x-3 bg-[#FCCFA5] pt-0.5 text-center text-3xl">
       <div
         className={
           'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
