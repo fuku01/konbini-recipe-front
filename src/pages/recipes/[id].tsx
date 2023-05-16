@@ -203,10 +203,10 @@ const Recipes = () => {
           <img
             src={recipe.image}
             alt="レシピ画像"
-            className="relative h-full w-full rounded-3xl border-4 border-[#FBB87F] bg-white object-cover shadow-md"
+            className="relative h-full w-full rounded-2xl border-4 border-[#FBB87F] bg-white object-cover shadow-md"
           />
           {/* お気に入りボタンの処理 */}
-          <div className="absolute bottom-2 right-2 rounded-2xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
+          <div className="absolute bottom-1 right-1 rounded-br-xl rounded-tl-xl bg-[#FDF1DE] bg-opacity-80 px-2 py-1">
             <FontAwesomeIcon
               icon={isFavorite ? solidHeart : regularHeart}
               className={

@@ -63,13 +63,11 @@ const Home = () => {
   // faMedalの色を変える関数
   const GetMedalColor = (index: number) => {
     if (index === 0) {
-      return 'text-[#FFD233]';
+      return 'text-[#FFD700] border-[#FFD700]';
     } else if (index === 1) {
-      return 'text-[#C0C0C0]';
+      return 'text-[#C0C0C0] border-[#C0C0C0]';
     } else if (index === 2) {
-      return 'text-[#CD7F32]';
-    } else {
-      return 'text-gray-400';
+      return 'text-[#9E7642] border-[#9E7642]';
     }
   };
 
@@ -80,7 +78,7 @@ const Home = () => {
         <div className="mb-4 mr-2 rounded-full bg-[#FDF1DE] py-1 pl-5 text-xl font-bold text-orange-500">
           <FontAwesomeIcon
             icon={faCrown}
-            className="mr-2 text-2xl text-[#FBD87F]"
+            className="mr-2 text-2xl text-[#FFD700]"
           />
           人気ランキング
         </div>
@@ -99,12 +97,12 @@ const Home = () => {
                     }}
                   >
                     <img
-                      className="relative h-full w-full rounded-3xl border-4 border-solid border-[#FBB87F] object-cover hover:border-orange-500"
+                      className="relative h-full w-full rounded-2xl border-4 border-solid border-[#FBB87F] object-cover hover:border-orange-500"
                       alt="人気レシピ"
                       src={recipe.image}
                     />
                     {/* お気に入りボタン */}
-                    <div className="absolute bottom-0 right-0 flex space-x-1 rounded-br-2xl rounded-tl-2xl bg-[#FDF1DE] px-1.5 py-1.5">
+                    <div className="absolute bottom-0 right-0 flex space-x-1 rounded-br-xl rounded-tl-xl bg-[#FDF1DE] px-1.5 py-1.5">
                       <FontAwesomeIcon
                         icon={faHeart}
                         className="text-[#ef6a6d]"
@@ -122,12 +120,12 @@ const Home = () => {
                           icon={faMedal}
                           rotation={180}
                           className={
-                            'absolute right-2 top-2 rounded-full bg-[#FDF1DE] px-1.5 pb-1 pt-2 text-3xl ' +
+                            'absolute right-2 top-2 rounded-full border-2 border-double bg-[#fcf7ef] px-1.5 pb-1 pt-2 text-3xl ' +
                             GetMedalColor(index)
                           }
                         />
                       )}
-                      <span className="absolute left-0 top-0 rounded-br-2xl rounded-tl-2xl bg-[#FDF1DE] px-3 py-1 text-xl font-extrabold ">
+                      <span className="absolute left-0 top-0 rounded-br-xl rounded-tl-xl bg-[#FDF1DE] px-3 py-1 text-xl font-extrabold ">
                         {index + 1}
                       </span>
                     </div>
