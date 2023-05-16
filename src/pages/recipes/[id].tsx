@@ -256,8 +256,8 @@ const Recipes = () => {
         <div className="mx-2 h-16" />
       )}
 
-      <div className="flex justify-around font-semibold">
-        <div className="inline-flex min-w-[5rem] flex-col items-center rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
+      <div className="flex justify-around space-x-7 font-semibold">
+        <div className="inline-flex w-24 flex-col items-center rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
             icon={faClock}
             className={'mb-2 text-5xl ' + GetTimeColor()}
@@ -267,7 +267,7 @@ const Recipes = () => {
             <span className="ml-1 mt-1 text-xs">分</span>
           </div>
         </div>
-        <div className="inline-flex min-w-[5rem] flex-col rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
+        <div className="inline-flex w-24 flex-col rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
             icon={faYenSign}
             className={'mb-2 text-5xl ' + GetPriceColor()}
@@ -277,7 +277,7 @@ const Recipes = () => {
             <span className="ml-1 mt-1 text-xs">円</span>
           </div>
         </div>
-        <div className="inline-flex min-w-[5rem] flex-col rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
+        <div className="inline-flex w-24 flex-col rounded-2xl bg-[#FDF1DE] py-3 shadow-md">
           <FontAwesomeIcon
             icon={faFire}
             className={'mb-2 text-5xl ' + GetCalorieColor()}
@@ -302,7 +302,7 @@ const Recipes = () => {
       <div className="flex flex-wrap">
         {recipe?.tags.map((tag) => (
           <div key={tag.id} className="flex">
-            <div className="mr-3 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+            <div className="mb-2 mr-3 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
               # {tag.name}
             </div>
           </div>

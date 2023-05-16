@@ -109,7 +109,7 @@ const RcipeList = (props: RcipeListProps) => {
                       <div className="ml-0.5 mr-1 mt-2.5 line-clamp-2 flex-grow overflow-hidden whitespace-pre-wrap break-all text-xs">
                         {recipe.content}
                       </div>
-                      <div className="mr-2 mt-3 text-right text-xs font-semibold lg:text-base">
+                      <div className="mr-1 mt-3 text-right text-xs font-semibold lg:mr-2 lg:text-base">
                         <FontAwesomeIcon
                           icon={faHeart}
                           className="mr-0.5 text-[#ef6a6d]"

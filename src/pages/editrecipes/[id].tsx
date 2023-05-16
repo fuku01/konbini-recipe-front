@@ -281,10 +281,10 @@ const EditRecipe = () => {
           )}
           <TextForm
             label="レシピタイトル"
-            placeholder="※ 必須(40文字以内)"
+            placeholder="※ 必須(20文字以内)"
             witdh="w-full"
             value={title}
-            maxLength={40}
+            maxLength={20}
             onChange={(e) => {
               const newValue = e.target.value;
               const trimmedValue = newValue.trimStart();
@@ -293,10 +293,10 @@ const EditRecipe = () => {
           />
           <TextFormArea
             label="作り方"
-            placeholder="※ 必須(1,000文字以内)"
+            placeholder="※ 必須(500文字以内)"
             witdh="w-full"
             value={content}
-            maxLength={1000}
+            maxLength={500}
             onChange={(e) => {
               const newValue = e.target.value;
               const trimmedValue = newValue.trimStart();
@@ -315,9 +315,10 @@ const EditRecipe = () => {
               >
                 <TextForm
                   label="タグ"
-                  placeholder="※ 5個以内"
+                  placeholder="※ 5個以内(15文字以内)"
                   witdh="w-full"
                   value={tempTag}
+                  maxLength={15}
                   disabled={tags.filter((tag) => !tag._destroy).length >= 5}
                   onChange={(e) => {
                     const newValue = e.target.value;
