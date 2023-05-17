@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { AppProps } from 'next/app';
 import React from 'react';
+import { RecoilRoot } from 'recoil';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import '@/styles/globals.css';
@@ -25,7 +26,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className="lg: mx-auto flex min-h-screen w-screen flex-col bg-white lg:w-1/3">
         <Header />
         <div className="flex-1 px-4 pb-10 pt-5 lg:px-6">
-          {isWaitingUser ? <p>ロード中...</p> : <Component {...pageProps} />}
+          {isWaitingUser ? (
+            <p>ロード中...</p>
+          ) : (
+            <RecoilRoot>
+              <Component {...pageProps} />
+            </RecoilRoot>
+          )}
         </div>
         <Footer />
       </div>
