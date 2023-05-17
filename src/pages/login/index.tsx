@@ -33,7 +33,7 @@ const Login = () => {
         label="メールアドレス"
         placeholder="メールアドレス"
         type="email"
-        witdh="w-full"
+        width="w-full"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -41,7 +41,7 @@ const Login = () => {
         label="パスワード"
         placeholder="パスワード"
         type="password"
-        witdh="w-full"
+        width="w-full"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />

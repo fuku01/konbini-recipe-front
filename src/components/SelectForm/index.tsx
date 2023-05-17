@@ -2,15 +2,15 @@ import React from 'react';
 type SelectFormProps = {
   label?: React.ReactNode;
   placeholder?: string;
-  witdh: string;
+  width: string;
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const SelectForm = (props: SelectFormProps) => {
-  const { label, placeholder, witdh } = props;
+  const { label, placeholder, width } = props;
   return (
-    <div className={`flex ${witdh} mx-auto mt-10`}>
+    <div className={`flex ${width} mx-auto mt-10`}>
       <div className="h-15 relative w-full">
         <select
           placeholder={placeholder}

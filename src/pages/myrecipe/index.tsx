@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import RcipeList from '@/components/RecipeList';
+import RecipeList from '@/components/RecipeList';
 
 type Recipe = {
   id: number;
@@ -34,6 +34,6 @@ const Myrecipe = () => {
     getMyrecipes();
   }, [getMyrecipes]);
 
-  return <RcipeList recipes={myrecipe} loginCheck={true} />;
+  return <RecipeList recipes={myrecipe} loginCheck={true} />;
 };
 export default Myrecipe;

@@ -53,7 +53,7 @@ const EditUser = () => {
             <TextForm
               label="ユーザー名"
               placeholder="ユーザー名"
-              witdh="w-full"
+              width="w-full"
               onChange={(e) => setEditName(e.target.value)}
             />
           </div>

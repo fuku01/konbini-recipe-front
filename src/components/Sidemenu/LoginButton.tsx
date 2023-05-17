@@ -7,7 +7,7 @@ const LoginButton = () => {
   return (
     <div>
       <button
-        className="hover:syadow-lg rounded-full bg-[#9FCDE5] px-3 py-2 text-center text-base text-white shadow-md hover:bg-[#61B3DF]"
+        className="rounded-full bg-[#9FCDE5] px-3 py-2 text-center text-base text-white shadow-md hover:bg-[#61B3DF]"
         onClick={() => {
           router.push('/login');
         }}

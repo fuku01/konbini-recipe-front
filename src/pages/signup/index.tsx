@@ -49,7 +49,7 @@ const Signup = () => {
       <TextForm
         label="ユーザー名"
         placeholder="ユーザー名"
-        witdh="w-full"
+        width="w-full"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
@@ -57,7 +57,7 @@ const Signup = () => {
         label="メールアドレス"
         placeholder="メールアドレス"
         type="email"
-        witdh="w-full"
+        width="w-full"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -65,7 +65,7 @@ const Signup = () => {
         label="パスワード"
         placeholder="パスワード"
         type="password"
-        witdh="w-full"
+        width="w-full"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
