@@ -3,17 +3,17 @@ import React from 'react';
 type TextFormProps = {
   label?: string;
   placeholder?: string;
-  witdh: string;
+  width: string;
   value?: string | number;
   maxLength?: number;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
 const TextFormArea = (props: TextFormProps) => {
-  const { label, placeholder, witdh } = props;
+  const { label, placeholder, width } = props;
 
   return (
-    <div className={`flex ${witdh} mt-10 flex-col items-end`}>
+    <div className={`flex ${width} mt-10 flex-col items-end`}>
       <div className="relative w-full min-w-[100px]">
         <textarea
           placeholder={placeholder}

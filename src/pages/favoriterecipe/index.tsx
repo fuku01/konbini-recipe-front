@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import RcipeList from '@/components/RecipeList';
+import RecipeList from '@/components/RecipeList';
 
 type Recipe = {
   id: number;
@@ -34,6 +34,6 @@ const FavoriteRecipe = () => {
     getFavoriteRecipes();
   }, [getFavoriteRecipes]);
 
-  return <RcipeList recipes={favorite} loginCheck={true} />;
+  return <RecipeList recipes={favorite} loginCheck={true} />;
 };
 export default FavoriteRecipe;

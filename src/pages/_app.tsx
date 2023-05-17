@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const { isWaitingUser, currentUser } = useAuth();
 
   // ログインユーザーがいる場合にトークンをセット。
-  // ※【注意】useEfectの中では使えない！!この書き方にする必要がある！
+  // ※【注意】useEffectの中では使えない！!この書き方にする必要がある！
   if (currentUser) {
     currentUser.getIdToken().then((token) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

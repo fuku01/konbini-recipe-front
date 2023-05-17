@@ -23,12 +23,12 @@ type Recipe = {
   favorites_count: number;
 };
 
-type RcipeListProps = {
+type RecipeListProps = {
   recipes: Recipe[];
   loginCheck?: boolean;
 };
 
-const RcipeList = (props: RcipeListProps) => {
+const RecipeList = (props: RecipeListProps) => {
   const { currentUser } = useAuth();
 
   // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
@@ -159,4 +159,4 @@ const RcipeList = (props: RcipeListProps) => {
     return props.loginCheck === true ? <div>ログインしてください</div> : null;
   }
 };
-export default RcipeList;
+export default RecipeList;

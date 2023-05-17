@@ -3,7 +3,7 @@ import React from 'react';
 type TextFormProps = {
   label?: React.ReactNode;
   placeholder?: string;
-  witdh: string;
+  width: string;
   value?: string | number;
   type?: string;
   min?: number;
@@ -15,10 +15,10 @@ type TextFormProps = {
 };
 
 const TextForm = (props: TextFormProps) => {
-  const { label, placeholder, witdh, min, max } = props;
+  const { label, placeholder, width, min, max } = props;
 
   return (
-    <div className={`flex ${witdh} mx-auto mt-10`}>
+    <div className={`flex ${width} mx-auto mt-10`}>
       <div className="h-15 relative w-full">
         <input
           placeholder={placeholder}

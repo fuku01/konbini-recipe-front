@@ -128,10 +128,10 @@ const EditRecipe = () => {
     // 画像が存在する場合は、S3から削除する
     if (recipe?.image) {
       await deleteImageFromS3(recipe.image);
-      const respomse = await axios.delete('/recipes/' + id);
+      const response = await axios.delete('/recipes/' + id);
       alert('レシピを削除しました');
       await router.push('/myrecipe');
-      console.log('レシピの削除に成功しました', respomse.data);
+      console.log('レシピの削除に成功しました', response.data);
     }
   };
 
@@ -162,8 +162,8 @@ const EditRecipe = () => {
       data.recipe.tags_attributes = tags;
     }
 
-    const respomse = await axios.put('/recipes/' + id, data);
-    console.log('レシピの更新に成功しました', respomse.data);
+    const response = await axios.put('/recipes/' + id, data);
+    console.log('レシピの更新に成功しました', response.data);
     alert('レシピを更新しました');
     await router.push('/myrecipe');
   };
@@ -280,7 +280,7 @@ const EditRecipe = () => {
           <TextForm
             label="レシピタイトル"
             placeholder="※ 必須(20文字以内)"
-            witdh="w-full"
+            width="w-full"
             value={title}
             maxLength={20}
             onChange={(e) => {
@@ -292,7 +292,7 @@ const EditRecipe = () => {
           <TextFormArea
             label="作り方"
             placeholder="※ 必須(500文字以内)"
-            witdh="w-full"
+            width="w-full"
             value={content}
             maxLength={500}
             onChange={(e) => {
@@ -314,7 +314,7 @@ const EditRecipe = () => {
                 <TextForm
                   label="タグ"
                   placeholder="※ 5個以内(15文字以内)"
-                  witdh="w-full"
+                  width="w-full"
                   value={tempTag}
                   maxLength={15}
                   disabled={tags.filter((tag) => !tag._destroy).length >= 5}
@@ -383,7 +383,7 @@ const EditRecipe = () => {
                   <div className="ml-14 text-xs">（分）</div>
                 </div>
               }
-              witdh="w-1/3"
+              width="w-1/3"
               value={time}
               onChange={(e) => {
                 setTime(e.target.value);
@@ -398,7 +398,7 @@ const EditRecipe = () => {
                 </div>
               }
               placeholder="未入力"
-              witdh="w-1/3"
+              width="w-1/3"
               value={price}
               type="number"
               min={0}
@@ -418,7 +418,7 @@ const EditRecipe = () => {
                 </div>
               }
               placeholder="未入力"
-              witdh="w-1/3"
+              width="w-1/3"
               value={calorie}
               type="number"
               min={0}

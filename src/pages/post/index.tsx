@@ -206,7 +206,7 @@ const Post = () => {
           <TextForm
             label="レシピタイトル"
             placeholder="※ 必須(20文字以内)"
-            witdh="w-full"
+            width="w-full"
             maxLength={20}
             value={title}
             onChange={(e) => {
@@ -217,7 +217,7 @@ const Post = () => {
           />
           <TextFormArea
             placeholder="※ 必須(500文字以内)"
-            witdh="w-full"
+            width="w-full"
             label="作り方"
             maxLength={500}
             value={content}
@@ -239,7 +239,7 @@ const Post = () => {
                 <TextForm
                   label="タグ"
                   placeholder="※ 5個以内(15文字以内)"
-                  witdh="w-full"
+                  width="w-full"
                   value={tempTag}
                   maxLength={15}
                   disabled={tags.length >= 5}
@@ -303,7 +303,7 @@ const Post = () => {
                 </div>
               }
               placeholder="5分"
-              witdh="w-1/3"
+              width="w-1/3"
               value={time}
               onChange={(e) => {
                 setTime(e.target.value);
@@ -318,7 +318,7 @@ const Post = () => {
                 </div>
               }
               placeholder="未入力"
-              witdh="w-1/3"
+              width="w-1/3"
               type="number"
               min={0}
               max={9999}
@@ -339,7 +339,7 @@ const Post = () => {
                 </div>
               }
               placeholder="未入力"
-              witdh="w-1/3"
+              width="w-1/3"
               type="number"
               min={0}
               max={9999}

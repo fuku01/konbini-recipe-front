@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { SearchButton } from '@/components/Button';
-import RcipeList from '@/components/RecipeList';
+import RecipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
 import { searchResultState, searchWordState } from '@/state/search';
 
@@ -42,7 +42,7 @@ const SearchRecipe = () => {
       <div className="flex items-center justify-center">
         <SearchForm
           placeholder="検索"
-          witdh="w-1/2"
+          width="w-1/2"
           label="検索"
           value={searchWords.join(' ')}
           onChange={(e) => {
@@ -54,7 +54,7 @@ const SearchRecipe = () => {
         <SearchButton onClick={sendSearchRequest}>検索</SearchButton>
       </div>
       <div>
-        <RcipeList recipes={resultRecipes} />
+        <RecipeList recipes={resultRecipes} />
       </div>
     </div>
   );
