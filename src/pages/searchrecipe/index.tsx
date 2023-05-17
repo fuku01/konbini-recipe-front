@@ -1,7 +1,12 @@
+import {
+  faBarcode,
+  faMagnifyingGlass,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { SearchButton } from '@/components/Button';
+import { BarcodeButton, SearchButton } from '@/components/Button';
 import RecipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
 import { searchResultState, searchWordState } from '@/state/search';
@@ -40,20 +45,42 @@ const SearchRecipe = () => {
   return (
     <div className="flex-col">
       <div className="flex items-center justify-center">
-        <SearchForm
-          placeholder="検索"
-          width="w-1/2"
-          label="検索"
-          value={searchWords.join(' ')}
-          onChange={(e) => {
-            const words = e.target.value.split(/\s+/); // 空白（半角・全角）で文字列を分割
-            setSearchWords(words);
-            console.log('分割した検索ワード', words);
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            // searchWordsが全て空でない場合のみ検索を実行
+            if (!searchWords.every((word) => word === '')) {
+              sendSearchRequest();
+            }
           }}
-        ></SearchForm>
-        <SearchButton onClick={sendSearchRequest}>検索</SearchButton>
+          className="w-full"
+        >
+          <SearchForm
+            placeholder="キーワードから探す"
+            width="w-full"
+            label="検索"
+            value={searchWords.join(' ')}
+            onChange={(e) => {
+              const trimmedValue = e.target.value.trimStart(); // 入力値の先頭の空白を除去
+              const words = trimmedValue.split(/\s+/); // 空白（半角・全角）で文字列を分割
+              setSearchWords(words);
+              console.log('分割した検索ワード', words);
+            }}
+          />
+        </form>
+        <SearchButton
+          onClick={sendSearchRequest}
+          disabled={searchWords.every((word) => word === '')} // 検索ワードが空白のみの場合はボタンを無効化
+        >
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="text-2xl" />
+        </SearchButton>
+        <div className="ml-4">
+          <BarcodeButton>
+            <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
+          </BarcodeButton>
+        </div>
       </div>
-      <div>
+      <div className="mt-6">
         <RecipeList recipes={resultRecipes} />
       </div>
     </div>

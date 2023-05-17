@@ -269,7 +269,6 @@ const Post = () => {
             <div className="flex flex-wrap">
               {/* _destroyがtrueのもの以外の、tags配列の中身を表示 */}
               {tags.map((tag, index) => {
-                // if (!tag._destroy) {
                 return (
                   <div key={index} className="flex">
                     <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">

@@ -1,12 +1,16 @@
 {
-    "cSpell.words": [
-        "editrecipes",
-        "favorited",
-        "fontawesome",
-        "fortawesome",
-        "myrecipe",
-        "Myrecipes",
-        "Signup",
-        "Xmark"
-    ]
+  "cSpell.words": [
+    "Deletecheck",
+    "editrecipes",
+    "edituser",
+    "favorited",
+    "favoriterecipe",
+    "fontawesome",
+    "fortawesome",
+    "myrecipe",
+    "Myrecipes",
+    "searchrecipe",
+    "Signup",
+    "Xmark"
+  ]
 }

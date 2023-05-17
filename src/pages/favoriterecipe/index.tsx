@@ -22,7 +22,7 @@ const FavoriteRecipe = () => {
   // マイレシピを取得する関数
   const getFavoriteRecipes = useCallback(async () => {
     try {
-      const response = await axios.get<Recipe[]>('favorite_recipes');
+      const response = await axios.get<Recipe[]>('/favorite_recipes');
       setFavorite(response.data);
       console.log('お気に入りレシピの取得に成功しました', response.data);
     } catch (error) {
