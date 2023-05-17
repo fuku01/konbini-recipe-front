@@ -1,6 +1,8 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 // import RcipeList from '@/components/RecipeList';
 import { SearchButton } from '@/components/Button';
+import RcipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
 
 type Recipe = {
@@ -19,10 +21,24 @@ type Recipe = {
 
 const SearchRecipe = () => {
   const [searchWords, setSearchWords] = useState<string[]>([]); // 検索ワードを保持するstate
+  const [resultRecipes, setResultRecipes] = useState<Recipe[]>([]); // 検索結果を保持するstate
+
+  // 検索リクエストを送信する関数
+  const sendSearchRequest = async () => {
+    try {
+      const response = await axios.get<Recipe[]>('/search_recipes', {
+        params: { searchWords },
+      });
+      setResultRecipes(response.data);
+      console.log('検索結果を取得しました', response.data);
+    } catch (error) {
+      console.log('検索結果を取得できませんでした', error);
+    }
+  };
 
   return (
-    <div>
-      <div className="">
+    <div className="flex-col">
+      <div className="flex items-center justify-center">
         <SearchForm
           placeholder="検索"
           witdh="w-1/2"
@@ -33,9 +49,11 @@ const SearchRecipe = () => {
             console.log('分割した検索ワード', words);
           }}
         ></SearchForm>
+        <SearchButton onClick={sendSearchRequest}>検索</SearchButton>
       </div>
-      <SearchButton>検索</SearchButton>
-      {/* <RcipeList recipes={favorite} /> */}
+      <div>
+        <RcipeList recipes={resultRecipes} />
+      </div>
     </div>
   );
 };

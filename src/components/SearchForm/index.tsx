@@ -18,7 +18,7 @@ const TextForm = (props: TextFormProps) => {
   const { label, placeholder, witdh, min, max } = props;
 
   return (
-    <div className={`flex ${witdh} mx-auto mt-2`}>
+    <div className={`flex ${witdh} mt-2`}>
       <div className="h-15 relative w-full ">
         <input
           placeholder={placeholder}
