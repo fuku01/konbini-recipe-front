@@ -34,6 +34,6 @@ const Myrecipe = () => {
     getMyrecipes();
   }, [getMyrecipes]);
 
-  return <RcipeList recipes={myrecipe} loginMessage={true} />;
+  return <RcipeList recipes={myrecipe} loginCheck={true} />;
 };
 export default Myrecipe;

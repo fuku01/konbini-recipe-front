@@ -34,6 +34,6 @@ const FavoriteRecipe = () => {
     getFavoriteRecipes();
   }, [getFavoriteRecipes]);
 
-  return <RcipeList recipes={favorite} loginMessage={true} />;
+  return <RcipeList recipes={favorite} loginCheck={true} />;
 };
 export default FavoriteRecipe;
