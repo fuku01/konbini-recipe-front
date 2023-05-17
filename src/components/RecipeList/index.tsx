@@ -25,7 +25,7 @@ type Recipe = {
 
 type RcipeListProps = {
   recipes: Recipe[];
-  loginMessage?: boolean;
+  loginCheck?: boolean;
 };
 
 const RcipeList = (props: RcipeListProps) => {
@@ -80,7 +80,7 @@ const RcipeList = (props: RcipeListProps) => {
     }
   };
 
-  if (currentUser) {
+  if (currentUser || props.loginCheck !== true) {
     return (
       <div>
         <div>
@@ -156,7 +156,7 @@ const RcipeList = (props: RcipeListProps) => {
       </div>
     );
   } else {
-    return props.loginMessage === true ? <div>ログインしてください</div> : null;
+    return props.loginCheck === true ? <div>ログインしてください</div> : null;
   }
 };
 export default RcipeList;
