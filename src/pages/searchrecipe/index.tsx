@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-// import RcipeList from '@/components/RecipeList';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import { SearchButton } from '@/components/Button';
 import RcipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
+import { searchResultState, searchWordState } from '@/state/search';
 
 type Recipe = {
   id: number;
@@ -20,8 +21,8 @@ type Recipe = {
 };
 
 const SearchRecipe = () => {
-  const [searchWords, setSearchWords] = useState<string[]>([]); // 検索ワードを保持するstate
-  const [resultRecipes, setResultRecipes] = useState<Recipe[]>([]); // 検索結果を保持するstate
+  const [searchWords, setSearchWords] = useRecoilState(searchWordState); //検索ワードを他ページ遷移後も保持する「Recoil」のstate
+  const [resultRecipes, setResultRecipes] = useRecoilState(searchResultState); //検索結果を他ページ遷移後も保持する「Recoil」のstate
 
   // 検索リクエストを送信する関数
   const sendSearchRequest = async () => {
@@ -43,6 +44,7 @@ const SearchRecipe = () => {
           placeholder="検索"
           witdh="w-1/2"
           label="検索"
+          value={searchWords.join(' ')}
           onChange={(e) => {
             const words = e.target.value.split(/\s+/); // 空白（半角・全角）で文字列を分割
             setSearchWords(words);
