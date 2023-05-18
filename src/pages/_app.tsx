@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
   axios.defaults.baseURL = process.env.API_HOST;
 
   return (
-    <div className="w-screen bg-orange-50 text-stone-700">
+    <div className="w-screen bg-orange-50 text-stone-600">
       <div className="lg: mx-auto flex min-h-screen w-screen flex-col bg-white lg:w-1/3">
         <Header />
         <div className="flex-1 px-4 pb-10 pt-5 lg:px-6">

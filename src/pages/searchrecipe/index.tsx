@@ -1,12 +1,9 @@
-import {
-  faBarcode,
-  faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBarcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { BarcodeButton, SearchButton } from '@/components/Button';
+import { BarcodeButton } from '@/components/Button';
 import RecipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
 import { searchResultState, searchWordState } from '@/state/search';
@@ -43,8 +40,8 @@ const SearchRecipe = () => {
   };
 
   return (
-    <div className="flex-col">
-      <div className="flex items-center justify-center">
+    <div>
+      <div className="flex items-center">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -68,12 +65,6 @@ const SearchRecipe = () => {
             }}
           />
         </form>
-        <SearchButton
-          onClick={sendSearchRequest}
-          disabled={searchWords.every((word) => word === '')} // 検索ワードが空白のみの場合はボタンを無効化
-        >
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="text-2xl" />
-        </SearchButton>
         <div className="ml-4">
           <BarcodeButton>
             <FontAwesomeIcon icon={faBarcode} className="text-2xl" />

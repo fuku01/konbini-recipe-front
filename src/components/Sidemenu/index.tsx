@@ -84,31 +84,48 @@ const SideMenu = (props: SideMenuProps) => {
           {/* ログイン中の場合 */}
           {auth.currentUser ? (
             <div>
-              <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
-                <Link href="/home">
-                  <FontAwesomeIcon icon={faHouse} className="mr-2 w-5" />
+              <Link href="/home" className="hover:group">
+                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon
+                    icon={faHouse}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
                   ホーム
-                </Link>
-              </div>
-              <Link href="/post">
-                <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
-                  <FontAwesomeIcon icon={faPen} className="mr-2 w-5" />
+                </div>
+              </Link>
+              <Link href="/post" className="hover:group">
+                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon
+                    icon={faPen}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
                   レシピ投稿
                 </div>
               </Link>
-              <Link href="/myrecipe">
-                <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
-                  <FontAwesomeIcon icon={faFileLines} className="mr-2 w-5" />
+              <Link href="/myrecipe" className="hover:group">
+                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon
+                    icon={faFileLines}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
                   マイレシピ
                 </div>
               </Link>
-              <div className="ml-7 mt-6 hover:text-orange-500 hover:underline">
-                <FontAwesomeIcon icon={faCircleQuestion} className="mr-2 w-5" />
-                使い方
-              </div>
-              <Link href="/edituser">
-                <div className="ml-7 mt-10 hover:text-orange-500 hover:underline">
-                  <FontAwesomeIcon icon={faUserGear} className="mr-2 w-5" />
+              <Link href="/home" className="hover:group">
+                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon
+                    icon={faCircleQuestion}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
+                  使い方
+                </div>
+              </Link>
+              <Link href="/edituser" className="hover:group">
+                <div className="group ml-7 mt-10 hover:text-orange-500 hover:underline">
+                  <FontAwesomeIcon
+                    icon={faUserGear}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
                   設定
                 </div>
               </Link>
@@ -125,10 +142,15 @@ const SideMenu = (props: SideMenuProps) => {
               <div className="ml-7 mt-6">
                 <LoginButton />
               </div>
-              <div className="ml-7 mt-8 hover:text-orange-500 hover:underline ">
-                <FontAwesomeIcon icon={faCircleQuestion} className="mr-2 w-5" />
-                使い方
-              </div>
+              <Link href="/home" className="hover:group">
+                <div className="group ml-7 mt-8 hover:text-orange-500 hover:underline ">
+                  <FontAwesomeIcon
+                    icon={faCircleQuestion}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
+                  使い方
+                </div>
+              </Link>
             </div>
           )}
         </div>
