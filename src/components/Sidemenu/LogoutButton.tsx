@@ -19,7 +19,7 @@ const LogoutButton = () => {
   return (
     <div>
       <button
-        className="rounded-full bg-[#FEABAE] px-3 py-2 text-center text-sm text-white shadow-md hover:bg-[#F16B6E]"
+        className="rounded-full bg-[#FEABAE] px-3 py-2 text-center text-sm text-white shadow-md hover:bg-[#F16B6E] active:scale-105"
         onClick={() => {
           LogoutCheck();
         }}

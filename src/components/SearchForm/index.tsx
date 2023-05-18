@@ -17,11 +17,10 @@ type TextFormProps = {
 };
 
 const TextForm = (props: TextFormProps) => {
-  const { label, placeholder, width, min, max } = props;
+  const { placeholder, width, min, max } = props;
 
   return (
-    <div className={`flex ${width} relative mt-2`}>
-      {' '}
+    <div className={`flex ${width} relative`}>
       {/* relativeを追加 */}
       <input
         placeholder={placeholder}
@@ -29,7 +28,7 @@ const TextForm = (props: TextFormProps) => {
         type={props.type}
         min={props.type === 'number' ? min : undefined}
         max={props.type === 'number' ? max : undefined}
-        className="peer h-full w-full rounded-full bg-transparent py-1.5 pl-7 outline outline-slate-200 transition-all duration-300 focus:outline-2 focus:outline-orange-500"
+        className="peer h-full w-full rounded-lg bg-transparent py-1.5 pl-8 outline outline-1 outline-gray-300 transition-all duration-100 focus:outline-2 focus:outline-orange-500"
         onChange={props.onChange}
         maxLength={props.maxLength}
         required={props.required}
@@ -37,13 +36,13 @@ const TextForm = (props: TextFormProps) => {
       />
       <FontAwesomeIcon
         icon={faMagnifyingGlass}
-        className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 transition-all duration-300 peer-focus:text-orange-500"
+        className="absolute left-2 top-1/2 -translate-y-1/2 text-lg text-gray-400 transition-all duration-100 peer-focus:text-base peer-focus:text-orange-500"
       />
-      {label !== undefined && (
+      {/* {label !== undefined && (
         <label className="pointer-events-none absolute -left-1 -top-6 flex h-full w-full select-none text-base font-semibold leading-tight transition-all  after:absolute peer-focus:text-sm peer-focus:text-orange-500 ">
           {label}
         </label>
-      )}
+      )} */}
     </div>
   );
 };

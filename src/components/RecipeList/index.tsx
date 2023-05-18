@@ -87,7 +87,7 @@ const RecipeList = (props: RecipeListProps) => {
           {props.recipes.map((recipe) => (
             <div
               key={recipe.id}
-              className="my-3 h-28 rounded-lg bg-[#FFFAF2] py-2 shadow-md hover:bg-[#FDF1DE] hover:text-orange-500 hover:shadow-lg"
+              className="mb-3 h-28 rounded-lg bg-[#FFFAF2] py-2 shadow-md hover:bg-[#FDF1DE] hover:text-orange-500 hover:shadow-lg"
             >
               <Link href={'/recipes/' + recipe.id}>
                 <div

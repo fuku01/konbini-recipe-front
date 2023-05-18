@@ -215,7 +215,7 @@ const Recipes = () => {
                   ? 'cursor-pointer transition duration-75 ease-in-out hover:text-[#ef6a6d]'
                   : 'pointer-events-none') +
                 (isFavorite
-                  ? ' scale-105 text-[#ef6a6d] hover:text-[#FEABAE]'
+                  ? ' scale-105 text-[#ef6a6d] hover:text-[#feabae]'
                   : '') +
                 (!canClick ? ' pointer-events-none' : '')
               }

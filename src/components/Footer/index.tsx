@@ -52,12 +52,14 @@ const Footer = () => {
           GetHouseColor()
         }
       >
-        <Link href="/home">
-          <FontAwesomeIcon icon={faHouse} className="m-auto h-8 w-8" />
+        <div>
+          <Link href="/home">
+            <FontAwesomeIcon icon={faHouse} className="m-auto h-8 w-8" />
+          </Link>
           <div className="text-xs">
             {router.pathname === '/home' ? 'ホーム' : ''}
           </div>
-        </Link>
+        </div>
       </div>
       <div
         className={
@@ -65,15 +67,17 @@ const Footer = () => {
           GetMagnifyingGlassColor()
         }
       >
-        <Link href="/searchrecipe">
-          <FontAwesomeIcon
-            icon={faMagnifyingGlass}
-            className="m-auto h-8 w-8"
-          />
+        <div>
+          <Link href="/searchrecipe">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className="m-auto h-8 w-8"
+            />
+          </Link>
           <div className="text-xs">
             {router.pathname === '/searchrecipe' ? '検索' : ''}
           </div>
-        </Link>
+        </div>
       </div>
       <div
         className={
@@ -81,12 +85,14 @@ const Footer = () => {
           GetHeartColor()
         }
       >
-        <Link href="/favoriterecipe">
-          <FontAwesomeIcon icon={faHeart} className="m-auto h-8 w-8" />
+        <div>
+          <Link href="/favoriterecipe">
+            <FontAwesomeIcon icon={faHeart} className="m-auto h-8 w-8" />
+          </Link>
           <div className="text-xs">
             {router.pathname === '/favoriterecipe' ? 'お気に入り' : ''}
           </div>
-        </Link>
+        </div>
       </div>
       <div
         className={
@@ -94,12 +100,14 @@ const Footer = () => {
           GetFileLinesColor()
         }
       >
-        <Link href="/myrecipe">
-          <FontAwesomeIcon icon={faFileLines} className="m-auto h-8 w-8" />
+        <div>
+          <Link href="/myrecipe">
+            <FontAwesomeIcon icon={faFileLines} className="m-auto h-8 w-8" />
+          </Link>
           <div className="text-xs">
             {router.pathname === '/myrecipe' ? 'マイレシピ' : ''}
           </div>
-        </Link>
+        </div>
       </div>
       <div
         className={
@@ -107,12 +115,14 @@ const Footer = () => {
           GetFilePenColor()
         }
       >
-        <Link href="/post">
-          <FontAwesomeIcon icon={faPen} className="m-auto h-8 w-8" />
+        <div>
+          <Link href="/post">
+            <FontAwesomeIcon icon={faPen} className="m-auto h-8 w-8" />
+          </Link>
           <div className="text-xs">
             {router.pathname === '/post' ? 'レシピ投稿' : ''}
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );
