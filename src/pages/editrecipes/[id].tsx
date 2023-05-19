@@ -211,10 +211,10 @@ const EditRecipe = () => {
   // バーコードに値が入ったら、タグにその値を追加する関数
   useEffect(() => {
     if (barcode) {
-      setTags([...tags, { name: barcode }]);
+      setTags((prevTags) => [...prevTags, { name: barcode }]);
       setBarcode('');
     }
-  }, [barcode, tags]);
+  }, [barcode]);
 
   // _destroyがfalseのタグのみを確認するためのuseEffect
   useEffect(() => {

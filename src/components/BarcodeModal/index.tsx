@@ -6,7 +6,7 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import React, { useEffect, useRef, useState } from 'react';
 import { useScanner } from '@/hooks/scanner/useScanner';
 
-// Postページから受け取るステートの型を定義
+// 他ページから受け取るステートの型を定義
 type BarcodeModalProps = {
   isBarcodeModalOpen: boolean;
   setIsBarcodeModalOpen: React.Dispatch<React.SetStateAction<boolean>>;

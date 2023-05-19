@@ -1,8 +1,9 @@
 import { faBarcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import BarcodeModal from '@/components/BarcodeModal';
 import { BarcodeButton } from '@/components/Button';
 import RecipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
@@ -26,6 +27,9 @@ const SearchRecipe = () => {
   const [searchWords, setSearchWords] = useRecoilState(searchWordState); //検索ワードを他ページ遷移後も保持する「Recoil」のstate
   const [resultRecipes, setResultRecipes] = useRecoilState(searchResultState); //検索結果を他ページ遷移後も保持する「Recoil」のstate
   const timerId = useRef<NodeJS.Timeout | null>(null); // useRefを使ってタイマーIDを管理する。stateにすると再レンダリングされてしまうため、useRefを使う
+
+  const [barcode, setBarcode] = useState<string>('');
+  const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
   // 検索リクエストを送信する関数
   const sendSearchRequest = useCallback(async () => {
@@ -64,8 +68,24 @@ const SearchRecipe = () => {
     }
   }, [searchWords, sendSearchRequest, setResultRecipes]);
 
+  // バーコードに値が入ったら、searchWordsにその値を追加する関数
+  useEffect(() => {
+    if (barcode) {
+      setSearchWords((prevSearchWords) => [...prevSearchWords, barcode]);
+      setBarcode('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [barcode]);
+
   return (
     <div>
+      {isBarcodeModalOpen && (
+        <BarcodeModal
+          isBarcodeModalOpen={isBarcodeModalOpen}
+          setIsBarcodeModalOpen={setIsBarcodeModalOpen}
+          setBarcode={setBarcode}
+        />
+      )}
       <div className="flex items-center">
         <SearchForm
           placeholder="キーワードから探す"
@@ -80,12 +100,16 @@ const SearchRecipe = () => {
           }}
         />
         <div className="ml-4">
-          <BarcodeButton>
+          <BarcodeButton
+            onClick={() => {
+              setIsBarcodeModalOpen(!isBarcodeModalOpen);
+            }}
+          >
             <FontAwesomeIcon icon={faBarcode} className="text-2xl" />
           </BarcodeButton>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="mt-4">
         <RecipeList recipes={resultRecipes} />
       </div>
     </div>
