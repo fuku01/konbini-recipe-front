@@ -82,7 +82,7 @@ const RecipeList = (props: RecipeListProps) => {
 
   if (currentUser || props.loginCheck !== true) {
     return (
-      <div>
+      <div className="select-none">
         <div>
           {props.recipes.map((recipe) => (
             <div

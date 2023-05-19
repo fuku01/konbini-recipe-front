@@ -72,20 +72,20 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="select-none">
       {/* ----------------------人気レシピの表示------------------------ */}
       <div>
         <div className="">
           <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-bold shadow-md">
             <FontAwesomeIcon
               icon={faCrown}
-              className="mr-2 text-2xl text-[#FFD700]"
+              className="mr-2 text-2xl text-[#FFD700] "
             />
             人気ランキング
           </span>
         </div>
         <div className="flex">
-          <div className="flex overflow-x-scroll whitespace-nowrap">
+          <div className="flex overflow-x-auto overscroll-x-none scroll-smooth whitespace-nowrap">
             {rankRecipe.map((recipe, index) => (
               <div key={recipe.id} className="mx-2.5 mt-5 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>
@@ -150,7 +150,7 @@ const Home = () => {
           </span>
         </div>
         <div className="flex">
-          <div className="flex overflow-x-scroll whitespace-nowrap">
+          <div className="flex overflow-x-auto overscroll-x-none scroll-smooth whitespace-nowrap">
             {newRecipe.map((recipe) => (
               <div key={recipe.id} className="mx-2 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>

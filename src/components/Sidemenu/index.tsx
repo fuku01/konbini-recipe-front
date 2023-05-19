@@ -59,7 +59,7 @@ const SideMenu = (props: SideMenuProps) => {
   })();
 
   return (
-    <>
+    <div className="select-none">
       {overlay}
       <div
         className="absolute right-0 top-0 z-50 h-screen w-1/2 flex-1 overflow-y-auto bg-[#FCCFA5] "
@@ -155,7 +155,7 @@ const SideMenu = (props: SideMenuProps) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default SideMenu;

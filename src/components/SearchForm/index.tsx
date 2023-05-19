@@ -28,7 +28,7 @@ const TextForm = (props: TextFormProps) => {
         type={props.type}
         min={props.type === 'number' ? min : undefined}
         max={props.type === 'number' ? max : undefined}
-        className="peer h-full w-full rounded-lg bg-transparent py-1.5 pl-8 outline outline-1 outline-gray-300 transition-all duration-100 focus:outline-2 focus:outline-orange-500"
+        className="peer h-full w-full rounded-lg bg-transparent py-1.5 pl-8 caret-orange-500 outline outline-1 outline-gray-300 transition-all duration-100 focus:outline-2 focus:outline-orange-500"
         onChange={props.onChange}
         maxLength={props.maxLength}
         required={props.required}

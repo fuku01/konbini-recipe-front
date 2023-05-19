@@ -153,7 +153,7 @@ const Post = () => {
   // この下からリターンの中身
   if (currentUser) {
     return (
-      <div>
+      <div className="select-none">
         <div className="relative">
           {isBarcodeModalOpen && (
             <BarcodeModal

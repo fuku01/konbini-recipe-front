@@ -71,7 +71,7 @@ const SearchRecipe = () => {
   // バーコードに値が入ったら、searchWordsにその値を追加する関数
   useEffect(() => {
     if (barcode) {
-      setSearchWords((prevSearchWords) => [...prevSearchWords, barcode]);
+      setSearchWords([barcode]);
       setBarcode('');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
