@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className="h-screen w-screen bg-orange-50 text-stone-600">
       {/* ↓ここにボーダーを入れるとフッターアイコンがズレるので注意 */}
-      <div className="mx-auto flex h-screen w-screen flex-col bg-white outline outline-2 outline-[#FDF1DE] lg:w-1/3 ">
+      <div className="mx-auto flex h-full w-screen flex-col bg-white outline outline-2 outline-[#FDF1DE] lg:w-1/3 ">
         <Header />
         <div className="flex-1 overflow-y-auto overscroll-none px-4 pb-10 pt-5 lg:px-6">
           {isWaitingUser ? (
