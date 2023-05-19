@@ -26,7 +26,7 @@ const TextForm = (props: TextFormProps) => {
           type={props.type}
           min={props.type === 'number' ? min : undefined}
           max={props.type === 'number' ? max : undefined}
-          className="border-blue-gray-200 text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer h-full w-full rounded-none border-b bg-transparent pb-2 pt-10 text-base outline outline-0 transition-all focus:border-orange-500 focus:outline-0"
+          className="border-blue-gray-200 text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer h-full w-full rounded-none border-b bg-transparent pb-2 pt-10 text-base caret-orange-500 outline outline-0 transition-all focus:border-orange-500 focus:outline-0"
           onChange={props.onChange}
           maxLength={props.maxLength}
           required={props.required}

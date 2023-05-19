@@ -18,7 +18,7 @@ const TextFormArea = (props: TextFormProps) => {
         <textarea
           placeholder={placeholder}
           value={props.value} // ここにvalueプロパティを追加（編集ページの初期値表示のために必要）
-          className="border-blue-gray-200 text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer mt-5 h-full min-h-[200px] w-full resize-none rounded-none border-b bg-transparent pb-1.5 pt-6 text-base outline outline-0 transition-all focus:border-orange-500 focus:outline-0 disabled:resize-none"
+          className="border-blue-gray-200 text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer mt-5 h-full min-h-[200px] w-full resize-none rounded-none border-b bg-transparent pb-1.5 pt-6 text-base caret-orange-500 outline outline-0 transition-all focus:border-orange-500 focus:outline-0 disabled:resize-none"
           onChange={props.onChange}
           maxLength={props.maxLength}
         ></textarea>

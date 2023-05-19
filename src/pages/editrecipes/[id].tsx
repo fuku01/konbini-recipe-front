@@ -230,7 +230,7 @@ const EditRecipe = () => {
 
   if (currentUser && recipe && recipe.user_id === currentUser.id) {
     return (
-      <div>
+      <div className="select-none">
         <div className="relative">
           {isBarcodeModalOpen && (
             <BarcodeModal
