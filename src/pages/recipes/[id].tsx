@@ -14,7 +14,9 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { PostButton } from '@/components/Button';
+import { searchWordState } from '@/state/search';
 
 type Recipe = {
   id: number;
@@ -47,6 +49,7 @@ const Recipes = () => {
   const router = useRouter();
   const { id } = router.query;
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
+  const setSearchWords = useSetRecoilState(searchWordState); //検索ワードを他ページ遷移後も保持する「Recoil」のstateの[SETだけ使う]関数
 
   const [isFavorite, setIsFavorite] = useState<boolean>(false); // お気に入りの登録状態を管理するステート
   const [isFavoriteId, setIsFavoriteId] = useState<number | undefined>(
@@ -302,7 +305,14 @@ const Recipes = () => {
       <div className="flex flex-wrap">
         {recipe?.tags.map((tag) => (
           <div key={tag.id} className="flex">
-            <div className="mb-2 mr-3 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
+            <div
+              className="mb-2 mr-3 cursor-pointer rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md"
+              // クリックしたら検索画面に遷移すると同時に、searchrecipeパージのsetSearchWordsにタグ名の頭の空白を削除したnameを渡す
+              onClick={() => {
+                setSearchWords([tag.name]); // 検索ワードをタグ名に設定
+                router.push('/searchrecipe');
+              }}
+            >
               # {tag.name}
             </div>
           </div>
