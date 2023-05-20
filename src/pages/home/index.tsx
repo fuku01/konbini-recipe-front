@@ -120,7 +120,6 @@ const Home = () => {
                       {index < 3 && (
                         <FontAwesomeIcon
                           icon={faMedal}
-                          rotation={180}
                           className={
                             'absolute -right-1.5 -top-1.5 rounded-full border-2 border-double bg-[#fcf7ef] px-1.5 pb-1 pt-2 text-3xl ' +
                             GetMedalColor(index)

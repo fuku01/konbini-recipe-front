@@ -21,6 +21,7 @@ import { searchWordState } from '@/state/search';
 type Recipe = {
   id: number;
   user_id: number;
+  user_name: string;
   title: string;
   content: string;
   time: number;
@@ -329,6 +330,10 @@ const Recipes = () => {
           </span>
         )}
       </div>
+      {/* 作成ユーザーを表示 */}
+      {/* <div className="mt-2 text-center text-xs text-gray-500">
+        作成者：{recipe?.user_name}
+      </div> */}
       {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
       {currentUser && recipe && recipe.user_id === currentUser.id && (
         <div className="mt-8 text-right">
