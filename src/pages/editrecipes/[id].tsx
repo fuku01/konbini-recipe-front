@@ -165,7 +165,7 @@ const EditRecipe = () => {
     const response = await axios.put('/recipes/' + id, data);
     console.log('レシピの更新に成功しました', response.data);
     alert('レシピを更新しました');
-    await router.push('/myrecipe');
+    await router.push('/recipes/' + id);
   };
 
   // 画像の形式チェックとプレビュー表示を行う関数

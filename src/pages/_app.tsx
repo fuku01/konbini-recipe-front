@@ -1,3 +1,4 @@
+import { config } from '@fortawesome/fontawesome-svg-core';
 import axios from 'axios';
 import type { AppProps } from 'next/app';
 import React from 'react';
@@ -6,6 +7,8 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import '@/styles/globals.css';
 import useAuth from '@/hooks/auth/useAuth';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
   const { isWaitingUser, currentUser } = useAuth();
