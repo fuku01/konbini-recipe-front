@@ -7,7 +7,7 @@ const SignupButton = () => {
   return (
     <div>
       <button
-        className="rounded-full bg-[#94C8AD] px-3 py-2 text-center text-base text-white shadow-md hover:bg-[#68B68D] active:scale-105"
+        className="rounded-full bg-[#94C8AD] px-4 py-2 text-center text-base text-white shadow-md hover:bg-[#68B68D] active:scale-105"
         onClick={() => {
           router.push('/signup');
         }}
