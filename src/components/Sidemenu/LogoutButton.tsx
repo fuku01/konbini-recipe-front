@@ -19,12 +19,12 @@ const LogoutButton = () => {
   return (
     <div>
       <button
-        className="rounded-full bg-[#FEABAE] px-3 py-2 text-center text-sm text-white shadow-md hover:bg-[#F16B6E] active:scale-105"
+        className="rounded-full bg-[#FEABAE] px-4 py-2 text-center text-sm text-white shadow-md hover:bg-[#F16B6E] active:scale-105"
         onClick={() => {
           LogoutCheck();
         }}
       >
-        <FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />
+        <FontAwesomeIcon icon={faRightFromBracket} className="mr-2 w-5" />
         ログアウト
       </button>
     </div>

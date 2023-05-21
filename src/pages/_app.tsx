@@ -1,4 +1,4 @@
-import { config } from '@fortawesome/fontawesome-svg-core';
+import { config } from '@fortawesome/fontawesome-svg-core'; // これがないとアイコンがバグる
 import axios from 'axios';
 import type { AppProps } from 'next/app';
 import React from 'react';
@@ -7,8 +7,8 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import '@/styles/globals.css';
 import useAuth from '@/hooks/auth/useAuth';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-config.autoAddCss = false;
+import '@fortawesome/fontawesome-svg-core/styles.css'; // これがないとアイコンがバグる
+config.autoAddCss = false; // これがないとアイコンがバグる
 
 export default function App({ Component, pageProps }: AppProps) {
   const { isWaitingUser, currentUser } = useAuth();
@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
   axios.defaults.baseURL = process.env.API_HOST;
 
   return (
-    <div className="bg-orange-50 text-stone-600">
+    <div className="bg-orange-50 text-[#75665C]">
       {/* ↓ここにボーダーを入れるとフッターアイコンがズレるので注意 */}
       <div className="mx-auto flex h-screen w-screen flex-col bg-white outline outline-2 outline-[#FDF1DE] lg:w-1/3 ">
         <Header />

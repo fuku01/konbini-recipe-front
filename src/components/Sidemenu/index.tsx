@@ -1,7 +1,9 @@
 import {
   faCircleQuestion,
   faFileLines,
+  faHeart,
   faHouse,
+  faMagnifyingGlass,
   faPen,
   faUserGear,
   faXmark,
@@ -85,7 +87,7 @@ const SideMenu = (props: SideMenuProps) => {
           {auth.currentUser ? (
             <div>
               <Link href="/home" className="hover:group">
-                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faHouse}
                     className="mr-2 w-5 group-hover:scale-110"
@@ -93,8 +95,17 @@ const SideMenu = (props: SideMenuProps) => {
                   ホーム
                 </div>
               </Link>
+              <Link href="/searchrecipe" className="hover:group">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
+                  検索
+                </div>
+              </Link>
               <Link href="/post" className="hover:group">
-                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faPen}
                     className="mr-2 w-5 group-hover:scale-110"
@@ -103,7 +114,7 @@ const SideMenu = (props: SideMenuProps) => {
                 </div>
               </Link>
               <Link href="/myrecipe" className="hover:group">
-                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faFileLines}
                     className="mr-2 w-5 group-hover:scale-110"
@@ -111,8 +122,17 @@ const SideMenu = (props: SideMenuProps) => {
                   マイレシピ
                 </div>
               </Link>
+              <Link href="/favoriterecipe" className="hover:group">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
+                  お気に入り
+                </div>
+              </Link>
               <Link href="/home" className="hover:group">
-                <div className="group ml-7 mt-6 hover:text-orange-500 hover:underline">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faCircleQuestion}
                     className="mr-2 w-5 group-hover:scale-110"
@@ -121,7 +141,7 @@ const SideMenu = (props: SideMenuProps) => {
                 </div>
               </Link>
               <Link href="/edituser" className="hover:group">
-                <div className="group ml-7 mt-10 hover:text-orange-500 hover:underline">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faUserGear}
                     className="mr-2 w-5 group-hover:scale-110"
@@ -129,21 +149,21 @@ const SideMenu = (props: SideMenuProps) => {
                   設定
                 </div>
               </Link>
-              <div className="ml-7 mt-6">
+              <div className="ml-6 mt-8">
                 <LogoutButton />
               </div>
             </div>
           ) : (
             // ログアウト中の場合
             <div>
-              <div className="ml-7 mt-6">
+              <div className="ml-6 mt-6">
                 <SignupButton />
               </div>
-              <div className="ml-7 mt-6">
+              <div className="ml-6 mt-6">
                 <LoginButton />
               </div>
               <Link href="/home" className="hover:group">
-                <div className="group ml-7 mt-8 hover:text-orange-500 hover:underline ">
+                <div className="group ml-3 mr-14 mt-6 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faCircleQuestion}
                     className="mr-2 w-5 group-hover:scale-110"

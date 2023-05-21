@@ -46,84 +46,87 @@ const Footer = () => {
 
   return (
     <div className="sticky bottom-0 z-30 flex h-14 w-full select-none items-center justify-around -space-x-3 bg-[#FCCFA5] pt-0.5 text-center text-3xl">
-      <div
-        className={
-          'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
-          GetHouseColor()
-        }
-      >
-        <div>
-          <Link href="/home">
+      <Link href="/home">
+        <div
+          className={
+            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            GetHouseColor()
+          }
+        >
+          <div>
             <FontAwesomeIcon icon={faHouse} className="m-auto h-8 w-8" />
-          </Link>
-          <div className="text-xs">
-            {router.pathname === '/home' ? 'ホーム' : ''}
+            <div className="text-xs">
+              {router.pathname === '/home' ? 'ホーム' : ''}
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className={
-          'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
-          GetMagnifyingGlassColor()
-        }
-      >
-        <div>
-          <Link href="/searchrecipe">
+      </Link>
+      <Link href="/searchrecipe">
+        <div
+          className={
+            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            GetMagnifyingGlassColor()
+          }
+        >
+          <div>
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               className="m-auto h-8 w-8"
             />
-          </Link>
-          <div className="text-xs">
-            {router.pathname === '/searchrecipe' ? '検索' : ''}
+
+            <div className="text-xs">
+              {router.pathname === '/searchrecipe' ? '検索' : ''}
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className={
-          ' w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
-          GetHeartColor()
-        }
-      >
-        <div>
-          <Link href="/favoriterecipe">
+      </Link>
+      <Link href="/favoriterecipe">
+        <div
+          className={
+            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            GetHeartColor()
+          }
+        >
+          <div>
             <FontAwesomeIcon icon={faHeart} className="m-auto h-8 w-8" />
-          </Link>
-          <div className="text-xs">
-            {router.pathname === '/favoriterecipe' ? 'お気に入り' : ''}
+            <div className="text-xs">
+              {router.pathname === '/favoriterecipe' ? 'お気に入り' : ''}
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className={
-          'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
-          GetFileLinesColor()
-        }
-      >
-        <div>
-          <Link href="/myrecipe">
+      </Link>
+      <Link href="/myrecipe">
+        <div
+          className={
+            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            GetFileLinesColor()
+          }
+        >
+          <div>
             <FontAwesomeIcon icon={faFileLines} className="m-auto h-8 w-8" />
-          </Link>
-          <div className="text-xs">
-            {router.pathname === '/myrecipe' ? 'マイレシピ' : ''}
+
+            <div className="text-xs">
+              {router.pathname === '/myrecipe' ? 'マイレシピ' : ''}
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className={
-          'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
-          GetFilePenColor()
-        }
-      >
-        <div>
-          <Link href="/post">
+      </Link>
+      <Link href="/post">
+        <div
+          className={
+            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            GetFilePenColor()
+          }
+        >
+          <div>
             <FontAwesomeIcon icon={faPen} className="m-auto h-8 w-8" />
-          </Link>
-          <div className="text-xs">
-            {router.pathname === '/post' ? 'レシピ投稿' : ''}
+
+            <div className="text-xs">
+              {router.pathname === '/post' ? 'レシピ投稿' : ''}
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
