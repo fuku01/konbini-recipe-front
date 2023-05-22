@@ -308,7 +308,7 @@ const Recipes = () => {
         {recipe?.tags.map((tag) => (
           <div key={tag.id} className="flex">
             <div
-              className="mb-2 mr-3 cursor-pointer rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md transition duration-75 ease-in-out hover:bg-[#FCCFA5] active:scale-105"
+              className="mb-2 mr-3 cursor-pointer rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md transition duration-75 ease-in-out hover:bg-[#FCCFA5] hover:text-orange-500 active:scale-105"
               // クリックしたら検索画面に遷移すると同時に、searchrecipeパージのsetSearchWordsにタグ名の頭の空白を削除したnameを渡す
               onClick={() => {
                 setSearchWords([tag.name]); // 検索ワードをタグ名に設定

@@ -8,9 +8,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { searchTypeState } from '../../state/search';
 import useAuth from '@/hooks/auth/useAuth';
+import { searchPagyState } from '@/state/pagy';
 
 type Recipe = {
   id: number;
@@ -34,6 +35,8 @@ type RecipeListProps = {
 
 const RecipeList = (props: RecipeListProps) => {
   const [searchType, setSearchType] = useRecoilState(searchTypeState); // 検索の種類をボタンを管理するステート。デフォルトは新着順。
+  const setPagy = useSetRecoilState(searchPagyState); // ページネーション情報を管理するステート(ページを維持するため)
+
   const { currentUser } = useAuth();
 
   // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
@@ -104,6 +107,13 @@ const RecipeList = (props: RecipeListProps) => {
                   }
                   onClick={() => {
                     setSearchType?.('rank');
+                    // ページネーション情報を初期化
+                    setPagy({
+                      prev: null,
+                      next: null,
+                      page: 1,
+                      last: null,
+                    });
                   }}
                 >
                   人気順
@@ -116,6 +126,13 @@ const RecipeList = (props: RecipeListProps) => {
                   }
                   onClick={() => {
                     setSearchType?.('new');
+                    // ページネーション情報を初期化
+                    setPagy({
+                      prev: null,
+                      next: null,
+                      page: 1,
+                      last: null,
+                    });
                   }}
                 >
                   新着順
