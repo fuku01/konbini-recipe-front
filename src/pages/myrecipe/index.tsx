@@ -45,30 +45,38 @@ const Myrecipe = () => {
   );
 
   useEffect(() => {
-    getMyrecipes(pagy.page); // ページネーション情報のページ番号を引数に渡して、マイレシピを取得する
+    getMyrecipes(pagy.page); // ページネーション情報のページ番号を引数に渡して,マイレシピを取得する
   }, [getMyrecipes, pagy.page]);
 
   return (
     <div>
       <RecipeList recipes={myrecipe} loginCheck={true} />
-      <button
-        disabled={pagy.prev === null}
-        onClick={() => {
-          getMyrecipes(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
-        }}
-      >
-        前のページ
-      </button>
-      <span>{'　'}</span>
-      <button
-        disabled={pagy.next === null}
-        onClick={() => {
-          console.log(pagy);
-          getMyrecipes(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
-        }}
-      >
-        次のページ
-      </button>
+      {myrecipe && myrecipe.length > 0 ? (
+        <div className="mt-5 text-center font-semibold">
+          <button
+            className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
+            disabled={pagy.prev === null}
+            onClick={() => {
+              getMyrecipes(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
+            }}
+          >
+            前のページ
+          </button>
+          <span className="mx-5">
+            {pagy.page}/{pagy.last}
+          </span>
+          <button
+            className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
+            disabled={pagy.next === null}
+            onClick={() => {
+              console.log(pagy);
+              getMyrecipes(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
+            }}
+          >
+            次のページ
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

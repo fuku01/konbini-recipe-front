@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { searchTypeState } from '../../state/search';
 import useAuth from '@/hooks/auth/useAuth';
 import { searchPagyState } from '@/state/pagy';
@@ -35,7 +35,7 @@ type RecipeListProps = {
 
 const RecipeList = (props: RecipeListProps) => {
   const [searchType, setSearchType] = useRecoilState(searchTypeState); // 検索の種類をボタンを管理するステート。デフォルトは新着順。
-  const setPagy = useSetRecoilState(searchPagyState); // ページネーション情報を管理するステート(ページを維持するため)
+  const [pagy, setPagy] = useRecoilState(searchPagyState); // ページネーション情報を管理するステート(ページを維持するため)
 
   const { currentUser } = useAuth();
 
@@ -62,7 +62,6 @@ const RecipeList = (props: RecipeListProps) => {
       return 'text-[#F16B6E]';
     }
   };
-
   // 金額アイコンの色を変える関数
   const GetPriceColor = (recipe: Recipe) => {
     if (!recipe?.price) {
@@ -92,52 +91,64 @@ const RecipeList = (props: RecipeListProps) => {
     return (
       <div className="select-none">
         {/* 並び替え用のボタングループ */}
-        {props.loginCheck !== true ? (
-          <div className="mb-2 flex justify-end">
-            <div className="flex items-center">
-              <div className="mr-2 text-sm">
-                <FontAwesomeIcon icon={faArrowDownWideShort} className="mr-1" />
-                並べ替え ：
-              </div>
+        {props.loginCheck !== true && props.recipes.length > 0 ? (
+          <div className="my-5">
+            <div className="flex justify-end">
               <div className="flex items-center">
-                <button
-                  className={
-                    'mr-2 rounded-md px-1 py-0.5 text-sm hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
-                    (searchType === 'rank' ? 'scale-105 text-orange-500' : '')
-                  }
-                  onClick={() => {
-                    setSearchType?.('rank');
-                    // ページネーション情報を初期化
-                    setPagy({
-                      prev: null,
-                      next: null,
-                      page: 1,
-                      last: null,
-                    });
-                  }}
-                >
-                  人気順
-                </button>
-                <p className="ml-1 mr-2">/</p>
-                <button
-                  className={
-                    'mr-2 rounded-md px-1 py-0.5 text-sm hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
-                    (searchType === 'new' ? 'scale-105 text-orange-500' : '')
-                  }
-                  onClick={() => {
-                    setSearchType?.('new');
-                    // ページネーション情報を初期化
-                    setPagy({
-                      prev: null,
-                      next: null,
-                      page: 1,
-                      last: null,
-                    });
-                  }}
-                >
-                  新着順
-                </button>
+                <div className="mr-2 text-sm">
+                  <FontAwesomeIcon
+                    icon={faArrowDownWideShort}
+                    className="mr-1"
+                  />
+                  並べ替え ：
+                </div>
+                <div className="flex items-center">
+                  <button
+                    className={
+                      'mr-2 rounded-md px-1 py-0.5 text-sm font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
+                      (searchType === 'rank'
+                        ? 'scale-110 text-orange-500 underline'
+                        : '')
+                    }
+                    onClick={() => {
+                      setSearchType?.('rank');
+                      // ページネーション情報を初期化
+                      setPagy({
+                        prev: null,
+                        next: null,
+                        page: 1,
+                        last: null,
+                      });
+                    }}
+                  >
+                    人気順
+                  </button>
+                  <p className="ml-1 mr-2">/</p>
+                  <button
+                    className={
+                      'mr-2 rounded-md px-1 py-0.5 text-sm font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
+                      (searchType === 'new'
+                        ? 'scale-110 text-orange-500 underline'
+                        : '')
+                    }
+                    onClick={() => {
+                      setSearchType?.('new');
+                      // ページネーション情報を初期化
+                      setPagy({
+                        prev: null,
+                        next: null,
+                        page: 1,
+                        last: null,
+                      });
+                    }}
+                  >
+                    新着順
+                  </button>
+                </div>
               </div>
+            </div>
+            <div className="mt-2 text-sm font-semibold">
+              （検索結果：{pagy.count} 件）
             </div>
           </div>
         ) : null}
