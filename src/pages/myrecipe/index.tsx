@@ -45,7 +45,7 @@ const Myrecipe = () => {
   );
 
   useEffect(() => {
-    getMyrecipes(pagy.page); // ページネーション情報のページ番号を引数に渡して、マイレシピを取得する
+    getMyrecipes(pagy.page); // ページネーション情報のページ番号を引数に渡して,マイレシピを取得する
   }, [getMyrecipes, pagy.page]);
 
   return (
