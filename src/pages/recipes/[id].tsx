@@ -8,6 +8,7 @@ import {
   faFilePen,
   faFire,
   faYenSign,
+  faBarcode,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -314,7 +315,13 @@ const Recipes = () => {
                 router.push('/searchrecipe');
               }}
             >
-              # {tag.name}
+              {/* 490から始まる数字のみのタグにはバーコードアイコンを表示させる */}{' '}
+              {tag.name.match(/^490\d*$/) ? (
+                <FontAwesomeIcon icon={faBarcode} className="mr-1 " />
+              ) : (
+                '# '
+              )}
+              {tag.name}
             </div>
           </div>
         ))}

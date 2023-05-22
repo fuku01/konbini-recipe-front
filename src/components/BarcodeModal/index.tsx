@@ -61,13 +61,13 @@ const BarcodeModal = (props: BarcodeModalProps) => {
         {overlay()}
         <div className="flex justify-center">
           <div
-            className="fixed z-50 h-3/4 w-80 bg-[#FCCFA5] text-black shadow-xl lg:m-0 lg:h-96 lg:w-96"
+            className="fixed z-50 h-3/4 w-80 rounded-3xl bg-[#FCCFA5] shadow-xl lg:m-0 lg:h-96 lg:w-96"
             ref={barcodeModal}
           >
             <div className="flex justify-end">
               <FontAwesomeIcon
                 icon={faXmark}
-                className="mr-6 mt-2 cursor-pointer text-4xl hover:text-orange-500"
+                className="mr-5 mt-4 cursor-pointer text-4xl transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500"
                 onClick={() => {
                   setIsBarcodeModalOpen(false);
                 }}
@@ -76,7 +76,10 @@ const BarcodeModal = (props: BarcodeModalProps) => {
             {/* 以下にモーダル項目を追加する */}
             <div>
               <div className="mt-10 flex flex-col justify-center">
-                <video ref={videoRef} className="mx-auto w-4/5 rounded-lg" />
+                <video
+                  ref={videoRef}
+                  className="mx-auto h-4/5 w-4/5 rounded-lg"
+                />
                 <textarea
                   value={code}
                   disabled
