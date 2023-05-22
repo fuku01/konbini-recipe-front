@@ -25,3 +25,9 @@ export const searchResultState = atom<Recipe[]>({
   key: 'searchResultState',
   default: [], // 初期状態は空の配列
 });
+
+// 検索タイプの状態を管理する
+export const searchTypeState = atom<string>({
+  key: 'searchTypeState',
+  default: 'new', // 初期状態は新着検索
+});

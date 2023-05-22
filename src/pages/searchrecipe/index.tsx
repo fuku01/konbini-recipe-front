@@ -7,7 +7,11 @@ import BarcodeModal from '@/components/BarcodeModal';
 import { BarcodeButton } from '@/components/Button';
 import RecipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
-import { searchResultState, searchWordState } from '@/state/search';
+import {
+  searchResultState,
+  searchTypeState,
+  searchWordState,
+} from '@/state/search';
 
 type Recipe = {
   id: number;
@@ -28,21 +32,38 @@ const SearchRecipe = () => {
   const [resultRecipes, setResultRecipes] = useRecoilState(searchResultState); //検索結果を他ページ遷移後も保持する「Recoil」のstate
   const timerId = useRef<NodeJS.Timeout | null>(null); // useRefを使ってタイマーIDを管理する。stateにすると再レンダリングされてしまうため、useRefを使う
 
+  const [searchType] = useRecoilState(searchTypeState); // 検索の種類をボタンを管理するステート。デフォルトは新着順。
+
   const [barcode, setBarcode] = useState<string>('');
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
   // 検索リクエストを送信する関数
   const sendSearchRequest = useCallback(async () => {
-    try {
-      const response = await axios.get<Recipe[]>('/search_recipes', {
-        params: { searchWords },
-      });
-      setResultRecipes(response.data);
-      console.log('検索結果を取得しました', response.data);
-    } catch (error) {
-      console.log('検索結果を取得できませんでした', error);
+    if (searchType === 'new') {
+      try {
+        const response = await axios.get<Recipe[]>('/search_recipes', {
+          params: { searchWords },
+        });
+        setResultRecipes(response.data);
+        console.log('【新着順】の検索結果を取得しました', response.data);
+      } catch (error) {
+        console.log('【新着順】の検索結果を取得できませんでした', error);
+      }
+    } else if (searchType === 'rank') {
+      try {
+        const response = await axios.get<Recipe[]>(
+          '/search_recipes_by_favorite',
+          {
+            params: { searchWords },
+          }
+        );
+        setResultRecipes(response.data);
+        console.log('【人気順】の検索結果を取得しました', response.data);
+      } catch (error) {
+        console.log('【人気順】の検索結果を取得できませんでした', error);
+      }
     }
-  }, [searchWords, setResultRecipes]);
+  }, [searchWords, setResultRecipes, searchType]); // searchTypeを依存関係に追加。
 
   // 検索ワードが変更されたら検索リクエストを送信するuseEffect
   useEffect(() => {
