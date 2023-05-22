@@ -6,6 +6,7 @@ export type Pagy = {
   next: number | null; // 次のページ
   page: number | null; // 現在のページ
   last: number | null; // 最後のページ
+  count?: number | null; // レシピの総数
 };
 
 // マイレシピのページネーションの状態を管理する
