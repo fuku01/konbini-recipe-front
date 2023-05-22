@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import RecipeList from '@/components/RecipeList';
+import { Pagy, myPagyState } from '@/state/pagy';
 
 type Recipe = {
   id: number;
@@ -16,24 +18,58 @@ type Recipe = {
   favorites_count: number;
 };
 
+type RecipeResponse = {
+  recipes: Recipe[]; // レシピの配列
+  pagy: Pagy; // ページネーション情報
+};
+
 const Myrecipe = () => {
   const [myrecipe, setMyrecipe] = useState<Recipe[]>([]);
+  const [pagy, setPagy] = useRecoilState(myPagyState); // ページネーション情報を管理するステート(ページを維持するため)
 
   // マイレシピを取得する関数
-  const getMyrecipes = useCallback(async () => {
-    try {
-      const response = await axios.get<Recipe[]>('/my_recipes');
-      setMyrecipe(response.data);
-      console.log('マイレシピの取得に成功しました', response.data);
-    } catch (error) {
-      console.log('マイレシピの取得に失敗しました', error);
-    }
-  }, []);
+  const getMyrecipes = useCallback(
+    async (page: number | null) => {
+      try {
+        const response = await axios.get<RecipeResponse>(
+          `/my_recipes?page=${page}`
+        );
+        setMyrecipe(response.data.recipes);
+        console.log('マイレシピの取得に成功しました', response.data);
+        setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
+      } catch (error) {
+        console.log('マイレシピの取得に失敗しました', error);
+      }
+    },
+    [setPagy]
+  );
 
   useEffect(() => {
-    getMyrecipes();
-  }, [getMyrecipes]);
+    getMyrecipes(pagy.page); // ページネーション情報のページ番号を引数に渡して、マイレシピを取得する
+  }, [getMyrecipes, pagy.page]);
 
-  return <RecipeList recipes={myrecipe} loginCheck={true} />;
+  return (
+    <div>
+      <RecipeList recipes={myrecipe} loginCheck={true} />
+      <button
+        disabled={pagy.prev === null}
+        onClick={() => {
+          getMyrecipes(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
+        }}
+      >
+        前のページ
+      </button>
+      <span>{'　'}</span>
+      <button
+        disabled={pagy.next === null}
+        onClick={() => {
+          console.log(pagy);
+          getMyrecipes(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
+        }}
+      >
+        次のページ
+      </button>
+    </div>
+  );
 };
 export default Myrecipe;

@@ -7,6 +7,7 @@ import BarcodeModal from '@/components/BarcodeModal';
 import { BarcodeButton } from '@/components/Button';
 import RecipeList from '@/components/RecipeList';
 import SearchForm from '@/components/SearchForm';
+import { Pagy, searchPagyState } from '@/state/pagy';
 import {
   searchResultState,
   searchTypeState,
@@ -26,44 +27,59 @@ type Recipe = {
   price: number;
   favorites_count: number;
 };
+type RecipeResponse = {
+  recipes: Recipe[]; // レシピの配列
+  pagy: Pagy; // ページネーション情報
+};
 
 const SearchRecipe = () => {
   const [searchWords, setSearchWords] = useRecoilState(searchWordState); //検索ワードを他ページ遷移後も保持する「Recoil」のstate
   const [resultRecipes, setResultRecipes] = useRecoilState(searchResultState); //検索結果を他ページ遷移後も保持する「Recoil」のstate
   const timerId = useRef<NodeJS.Timeout | null>(null); // useRefを使ってタイマーIDを管理する。stateにすると再レンダリングされてしまうため、useRefを使う
-
   const [searchType] = useRecoilState(searchTypeState); // 検索の種類をボタンを管理するステート。デフォルトは新着順。
+
+  const [pagy, setPagy] = useRecoilState(searchPagyState); // ページネーション情報を管理するステート(ページを維持するため)
 
   const [barcode, setBarcode] = useState<string>('');
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
   // 検索リクエストを送信する関数
-  const sendSearchRequest = useCallback(async () => {
-    if (searchType === 'new') {
-      try {
-        const response = await axios.get<Recipe[]>('/search_recipes', {
-          params: { searchWords },
-        });
-        setResultRecipes(response.data);
-        console.log('【新着順】の検索結果を取得しました', response.data);
-      } catch (error) {
-        console.log('【新着順】の検索結果を取得できませんでした', error);
+  const sendSearchRequest = useCallback(
+    async (page: number | null) => {
+      if (searchType === 'new') {
+        try {
+          const response = await axios.get<RecipeResponse>(
+            `/search_recipes_by_favorite?page=${page}`,
+            {
+              params: { searchWords },
+            }
+          );
+          setResultRecipes(response.data.recipes);
+          console.log('【新着順】の検索結果を取得しました', response.data);
+          console.log('現在のページ', page);
+          setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
+        } catch (error) {
+          console.log('【新着順】の検索結果を取得できませんでした', error);
+        }
+      } else if (searchType === 'rank') {
+        try {
+          const response = await axios.get<RecipeResponse>(
+            `/search_recipes_by_favorite?page=${page}`,
+            {
+              params: { searchWords },
+            }
+          );
+          setResultRecipes(response.data.recipes);
+          console.log('【人気順】の検索結果を取得しました', response.data);
+          console.log('現在のページ', page);
+          setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
+        } catch (error) {
+          console.log('【人気順】の検索結果を取得できませんでした', error);
+        }
       }
-    } else if (searchType === 'rank') {
-      try {
-        const response = await axios.get<Recipe[]>(
-          '/search_recipes_by_favorite',
-          {
-            params: { searchWords },
-          }
-        );
-        setResultRecipes(response.data);
-        console.log('【人気順】の検索結果を取得しました', response.data);
-      } catch (error) {
-        console.log('【人気順】の検索結果を取得できませんでした', error);
-      }
-    }
-  }, [searchWords, setResultRecipes, searchType]); // searchTypeを依存関係に追加。
+    },
+    [searchType, searchWords, setResultRecipes, setPagy]
+  ); // searchTypeを依存関係に追加。
 
   // 検索ワードが変更されたら検索リクエストを送信するuseEffect
   useEffect(() => {
@@ -76,7 +92,7 @@ const SearchRecipe = () => {
       // timerId.currentに、setTimeoutの返り値を代入することで、タイマーIDを管理できる
       // 0.5秒後に、sendSearchRequest()を実行する
       timerId.current = setTimeout(() => {
-        sendSearchRequest(); // 検索リクエストを送信する関数
+        sendSearchRequest(pagy.page); // 検索リクエストを送信する関数
       }, 500);
     }
     // ---------------検索ワードが空の場合-------------------
@@ -87,7 +103,7 @@ const SearchRecipe = () => {
         clearTimeout(timerId.current); // ※タイマーをクリアする理由は、連続で入力された場合に、前回のタイマーをクリアするため
       }
     }
-  }, [searchWords, sendSearchRequest, setResultRecipes]);
+  }, [pagy.page, searchWords, sendSearchRequest, setResultRecipes]);
 
   // バーコードに値が入ったら、searchWordsにその値を追加する関数
   useEffect(() => {
@@ -131,7 +147,26 @@ const SearchRecipe = () => {
         </div>
       </div>
       <div className="mt-4">
-        <RecipeList recipes={resultRecipes} />
+        <div>
+          <RecipeList recipes={resultRecipes} />
+          <button
+            disabled={pagy.prev === null}
+            onClick={() => {
+              sendSearchRequest(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
+            }}
+          >
+            前のページ
+          </button>
+          <span>{'　'}</span>
+          <button
+            disabled={pagy.next === null}
+            onClick={() => {
+              sendSearchRequest(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
+            }}
+          >
+            次のページ
+          </button>
+        </div>
       </div>
     </div>
   );
