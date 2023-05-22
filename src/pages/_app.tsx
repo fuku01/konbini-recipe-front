@@ -30,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className="mx-auto flex h-screen w-screen flex-col bg-white outline outline-2 outline-[#FDF1DE] lg:w-1/3 ">
         <Header />
         <div className="flex-1 overflow-y-auto overscroll-none px-4 pb-36 pt-5 lg:px-6 lg:pb-10">
+          {/* ログインユーザーがいない場合はロード中を表示 */}
           {isWaitingUser ? (
             <p>ロード中...</p>
           ) : (

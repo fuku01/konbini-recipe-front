@@ -7,6 +7,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React from 'react';
+import { useRecoilState } from 'recoil';
+import { searchTypeState } from '../../state/search';
 import useAuth from '@/hooks/auth/useAuth';
 
 type Recipe = {
@@ -26,9 +28,11 @@ type Recipe = {
 type RecipeListProps = {
   recipes: Recipe[];
   loginCheck?: boolean;
+  setSearchType?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const RecipeList = (props: RecipeListProps) => {
+  const [searchType, setSearchType] = useRecoilState(searchTypeState); // 検索の種類をボタンを管理するステート。デフォルトは新着順。
   const { currentUser } = useAuth();
 
   // 数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
@@ -83,6 +87,39 @@ const RecipeList = (props: RecipeListProps) => {
   if (currentUser || props.loginCheck !== true) {
     return (
       <div className="select-none">
+        {/* 並び替え用のボタングループ */}
+        {props.loginCheck !== true ? (
+          <div className="mb-2 flex justify-end">
+            <div className="flex items-center">
+              <div className="mr-2 text-sm">並び替え ：</div>
+              <div className="flex items-center">
+                <button
+                  className={
+                    'mr-2 rounded-md px-1 py-0.5 text-sm hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
+                    (searchType === 'rank' ? 'text-orange-500' : '')
+                  }
+                  onClick={() => {
+                    setSearchType?.('rank');
+                  }}
+                >
+                  人気順
+                </button>
+                <p className="ml-1 mr-2">/</p>
+                <button
+                  className={
+                    'mr-2 rounded-md px-1 py-0.5 text-sm hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
+                    (searchType === 'new' ? 'text-orange-500' : '')
+                  }
+                  onClick={() => {
+                    setSearchType?.('new');
+                  }}
+                >
+                  新着順
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
         <div>
           {props.recipes.map((recipe) => (
             <div
