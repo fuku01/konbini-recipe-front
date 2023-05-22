@@ -351,7 +351,13 @@ const EditRecipe = () => {
                   return (
                     <div key={index} className="flex">
                       <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md ">
-                        # {tag.name}
+                        {/* 490から始まる数字のみのタグにはバーコードアイコンを表示させる */}{' '}
+                        {tag.name.match(/^490\d*$/) ? (
+                          <FontAwesomeIcon icon={faBarcode} className="mr-1 " />
+                        ) : (
+                          '# '
+                        )}
+                        {tag.name}
                         <FontAwesomeIcon
                           icon={faCircleXmark}
                           className="ml-1 cursor-pointer text-[#FEABAE] transition duration-75 ease-in-out hover:scale-105 hover:text-[#F16B6E]"

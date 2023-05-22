@@ -1,4 +1,5 @@
 import {
+  faArrowDownWideShort,
   faClock,
   faFire,
   faHeart,
@@ -91,12 +92,15 @@ const RecipeList = (props: RecipeListProps) => {
         {props.loginCheck !== true ? (
           <div className="mb-2 flex justify-end">
             <div className="flex items-center">
-              <div className="mr-2 text-sm">並び替え ：</div>
+              <div className="mr-2 text-sm">
+                <FontAwesomeIcon icon={faArrowDownWideShort} className="mr-1" />
+                並べ替え ：
+              </div>
               <div className="flex items-center">
                 <button
                   className={
                     'mr-2 rounded-md px-1 py-0.5 text-sm hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
-                    (searchType === 'rank' ? 'text-orange-500' : '')
+                    (searchType === 'rank' ? 'scale-105 text-orange-500' : '')
                   }
                   onClick={() => {
                     setSearchType?.('rank');
@@ -108,7 +112,7 @@ const RecipeList = (props: RecipeListProps) => {
                 <button
                   className={
                     'mr-2 rounded-md px-1 py-0.5 text-sm hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline ' +
-                    (searchType === 'new' ? 'text-orange-500' : '')
+                    (searchType === 'new' ? 'scale-105 text-orange-500' : '')
                   }
                   onClick={() => {
                     setSearchType?.('new');
