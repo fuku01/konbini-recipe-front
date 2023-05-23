@@ -39,7 +39,7 @@ const Login = () => {
       />
       <TextForm
         label="パスワード"
-        placeholder="パスワード"
+        placeholder="※ 6文字以上"
         type="password"
         width="w-full"
         value={password}
