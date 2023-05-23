@@ -16,6 +16,7 @@ import React, { useEffect, useRef } from 'react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import SignupButton from './SignupButton';
+import GestLoginButton from './gestLoginButton';
 import useAuth from '@/hooks/auth/useAuth';
 
 // SideMenuPropsを定義
@@ -157,9 +158,11 @@ const SideMenu = (props: SideMenuProps) => {
             // ログアウト中の場合
             <div>
               <div className="ml-6 mt-6">
+                <span className="ml-1 text-xs">初めての方はこちら</span>
                 <SignupButton />
               </div>
-              <div className="ml-6 mt-6">
+              <div className="ml-6 mt-2">
+                <span className="ml-1 text-xs">登録済みの方はこちら</span>
                 <LoginButton />
               </div>
               <Link href="/home" className="hover:group">
@@ -171,6 +174,9 @@ const SideMenu = (props: SideMenuProps) => {
                   使い方
                 </div>
               </Link>
+              <div className="ml-5 mt-10">
+                <GestLoginButton />
+              </div>
             </div>
           )}
         </div>

@@ -334,7 +334,6 @@ const Post = () => {
                 }
               }}
             />
-
             <TextForm
               label={
                 <div>
@@ -378,7 +377,7 @@ const Post = () => {
       </div>
     );
   } else {
-    return <div>ログインしてください</div>;
+    return;
   }
 };
 

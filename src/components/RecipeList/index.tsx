@@ -176,10 +176,10 @@ const RecipeList = (props: RecipeListProps) => {
                       <div className="mr-1 line-clamp-1 break-all font-bold">
                         {recipe.title}
                       </div>
-                      <div className="ml-0.5 mr-1 mt-2.5 line-clamp-2 flex-grow overflow-hidden whitespace-pre-wrap break-all text-xs">
+                      <div className="my-auto ml-0.5 mr-1 line-clamp-2 overflow-hidden whitespace-pre-wrap break-all text-xs">
                         {recipe.content}
                       </div>
-                      <div className="mr-1 mt-3 text-right text-xs font-semibold lg:mr-2 lg:text-base">
+                      <div className="mr-1 text-right text-xs font-semibold lg:mr-2 lg:text-base">
                         <FontAwesomeIcon
                           icon={faHeart}
                           className="mr-0.5 text-[#ef6a6d]"
@@ -225,7 +225,7 @@ const RecipeList = (props: RecipeListProps) => {
       </div>
     );
   } else {
-    return props.loginCheck === true ? <div>ログインしてください</div> : null;
+    return null;
   }
 };
 export default RecipeList;
