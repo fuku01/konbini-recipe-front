@@ -20,6 +20,7 @@ import {
 import SelectForm from '@/components/SelectForm';
 import TextForm from '@/components/TextForm';
 import TextFormArea from '@/components/TextFormArea';
+import useAuth from '@/hooks/auth/useAuth';
 import useS3 from '@/hooks/s3/useS3';
 
 // レシピの型（GET用）
@@ -84,19 +85,24 @@ const EditRecipe = () => {
 
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<User>();
+  const { token } = useAuth();
 
   // ページ開いたらレシピの取得をする処理
   const getRecipe = useCallback(async () => {
+    if (!token) return;
     const response = await axios.get<Recipe>('/recipes/' + id);
     setRecipe(response.data);
     console.log('レシピの取得に成功しました', response.data);
-  }, [id]);
+  }, [token, id]);
   useEffect(() => {
-    getRecipe();
-  }, [getRecipe]);
+    if (token) {
+      getRecipe();
+    }
+  }, [getRecipe, token]);
 
   // ログイン中のユーザー情報の取得（ログインユーザのみ編集ボタンを表示させたいため、取得する必要がある）
   const getCurrentUser = useCallback(async () => {
+    if (!token) return;
     try {
       const response = await axios.get<User>('/me');
       setCurrentUser(response.data);
@@ -104,10 +110,12 @@ const EditRecipe = () => {
     } catch (error) {
       console.log('ユーザーの取得に失敗しました', error);
     }
-  }, []);
+  }, [token]);
   useEffect(() => {
-    getCurrentUser();
-  }, [getCurrentUser]);
+    if (token) {
+      getCurrentUser();
+    }
+  }, [token, getCurrentUser]);
 
   // フォームの初期値に現在登録されているレシピ情報を表示させる処理
   useEffect(() => {
@@ -469,8 +477,6 @@ const EditRecipe = () => {
         </div>
       </div>
     );
-  } else {
-    return <div>ログインしてください</div>;
   }
 };
 

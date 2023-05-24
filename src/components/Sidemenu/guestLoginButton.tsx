@@ -5,7 +5,7 @@ import router from 'next/router';
 import React from 'react';
 import useAuth from '@/hooks/auth/useAuth';
 
-const GestLoginButton = () => {
+const GuestLoginButton = () => {
   const { auth } = useAuth();
 
   const loginUser = async () => {
@@ -34,4 +34,4 @@ const GestLoginButton = () => {
   );
 };
 
-export default GestLoginButton;
+export default GuestLoginButton;
