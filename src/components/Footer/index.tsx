@@ -13,7 +13,7 @@ import useAuth from '@/hooks/auth/useAuth';
 
 const Footer = () => {
   const router = useRouter();
-  const { currentUser } = useAuth();
+  const { token } = useAuth();
 
   // faHouseの色を変える関数
   const GetHouseColor = () => {
@@ -47,7 +47,7 @@ const Footer = () => {
   };
   // ログアウト中のアイコンの色を変える関数
   const GetGrayoutColor = () => {
-    if (!currentUser) {
+    if (!token) {
       return ' text-stone-400 hover:text-stone-400 ';
     }
   };
@@ -88,7 +88,7 @@ const Footer = () => {
           </div>
         </div>
       </Link>
-      <Link href={currentUser ? '/favoriterecipe' : '/guidance'}>
+      <Link href={token ? '/favoriterecipe' : '/guidance'}>
         <div
           className={
             'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
@@ -104,7 +104,7 @@ const Footer = () => {
           </div>
         </div>
       </Link>
-      <Link href={currentUser ? '/myrecipe' : '/guidance'}>
+      <Link href={token ? '/myrecipe' : '/guidance'}>
         <div
           className={
             'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
@@ -121,7 +121,7 @@ const Footer = () => {
           </div>
         </div>
       </Link>
-      <Link href={currentUser ? '/post' : '/guidance'}>
+      <Link href={token ? '/post' : '/guidance'}>
         <div
           className={
             'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +

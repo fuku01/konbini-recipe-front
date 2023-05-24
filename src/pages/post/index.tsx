@@ -50,7 +50,7 @@ const Post = () => {
 
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
 
-  const { currentUser } = useAuth();
+  const { token } = useAuth();
   const imageForm = useRef<HTMLInputElement>(null);
   // S3のカスタムフック(S3への画像アップロード処理をまとめたもの)
   const { uploadImageToS3 } = useS3();
@@ -151,7 +151,7 @@ const Post = () => {
   }, [tags]);
 
   // この下からリターンの中身
-  if (currentUser) {
+  if (token) {
     return (
       <div className="select-none">
         <div className="relative">

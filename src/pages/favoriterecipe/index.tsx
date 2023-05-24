@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import RecipeList from '@/components/RecipeList';
+import useAuth from '@/hooks/auth/useAuth';
 import { Pagy, favoritePagyState } from '@/state/pagy';
 
 type Recipe = {
@@ -26,10 +27,12 @@ type RecipeResponse = {
 const FavoriteRecipe = () => {
   const [favorite, setFavorite] = useState<Recipe[]>([]);
   const [pagy, setPagy] = useRecoilState(favoritePagyState); // ページネーション情報を管理するステート(ページを維持するため)
+  const { token } = useAuth();
 
   // マイレシピを取得する関数
   const getFavoriteRecipes = useCallback(
     async (page: number | null) => {
+      if (!token) return;
       try {
         const response = await axios.get<RecipeResponse>(
           `/favorite_recipes?page=${page}`
@@ -41,7 +44,7 @@ const FavoriteRecipe = () => {
         console.log('お気に入りレシピの取得に失敗しました', error);
       }
     },
-    [setPagy]
+    [setPagy, token]
   );
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const FavoriteRecipe = () => {
 
   return (
     <div>
-      <RecipeList recipes={favorite} loginCheck={true} />
+      {token && <RecipeList recipes={favorite} loginCheck={true} />}
       {favorite && favorite.length > 0 ? (
         <div className="mt-5 text-center font-semibold ">
           <button

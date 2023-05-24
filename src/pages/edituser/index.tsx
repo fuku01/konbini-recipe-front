@@ -6,27 +6,24 @@ import TextForm from '@/components/TextForm';
 import useAuth from '@/hooks/auth/useAuth';
 
 const EditUser = () => {
-  const { auth } = useAuth();
+  const { loginUser } = useAuth();
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
-  // const [photoURL, setPhotoURL] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
 
   //  ログイン中のユーザ情報をステートに保存
   useEffect(() => {
-    if (auth.currentUser !== null) {
-      console.log(auth.currentUser);
-      setDisplayName(auth.currentUser.displayName);
-      setEmail(auth.currentUser.email);
-      // setPhotoURL(auth.currentUser.photoURL);
+    if (loginUser !== null) {
+      console.log('ログインユーザー情報', loginUser);
+      setEmail(loginUser.email);
     }
-  }, [auth.currentUser]); // auth.currentUserを依存配列に追加
+  }, [loginUser]); // loginUserを依存配列に追加
 
   // ユーザー情報の更新
   const updateUser = async () => {
-    if (auth.currentUser !== null) {
+    if (loginUser !== null) {
       try {
-        await updateProfile(auth.currentUser, {
+        await updateProfile(loginUser, {
           displayName: editName,
         });
         setDisplayName(editName); // ユーザ名が更新された後、ステートを更新
@@ -38,7 +35,7 @@ const EditUser = () => {
 
   return (
     <div>
-      {auth.currentUser ? (
+      {loginUser ? (
         <div>
           <div>
             <div className="text-center text-[#61B3DF]">

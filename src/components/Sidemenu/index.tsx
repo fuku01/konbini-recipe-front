@@ -16,7 +16,7 @@ import React, { useEffect, useRef } from 'react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import SignupButton from './SignupButton';
-import GestLoginButton from './gestLoginButton';
+import GuestLoginButton from './guestLoginButton';
 import useAuth from '@/hooks/auth/useAuth';
 
 // SideMenuPropsを定義
@@ -31,7 +31,7 @@ type SideMenuProps = {
 const SideMenu = (props: SideMenuProps) => {
   const { isMenuOpen, setIsMenuOpen } = props;
 
-  const { auth } = useAuth();
+  const { token } = useAuth();
 
   // サイドメニュー表示中に、背景をスクロールできなくする。//
   const sideMenu = useRef(null);
@@ -85,7 +85,7 @@ const SideMenu = (props: SideMenuProps) => {
           }}
         >
           {/* ログイン中の場合 */}
-          {auth.currentUser ? (
+          {token ? (
             <div>
               <Link href="/home" className="hover:group">
                 <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
@@ -157,6 +157,33 @@ const SideMenu = (props: SideMenuProps) => {
           ) : (
             // ログアウト中の場合
             <div>
+              <Link href="/home" className="hover:group">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
+                  <FontAwesomeIcon
+                    icon={faHouse}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
+                  ホーム
+                </div>
+              </Link>
+              <Link href="/searchrecipe" className="hover:group">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
+                  検索
+                </div>
+              </Link>
+              <Link href="/home" className="hover:group">
+                <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
+                  <FontAwesomeIcon
+                    icon={faCircleQuestion}
+                    className="mr-2 w-5 group-hover:scale-110"
+                  />
+                  使い方
+                </div>
+              </Link>
               <div className="ml-6 mt-6">
                 <span className="ml-1 text-xs">初めての方はこちら</span>
                 <SignupButton />
@@ -165,17 +192,9 @@ const SideMenu = (props: SideMenuProps) => {
                 <span className="ml-1 text-xs">登録済みの方はこちら</span>
                 <LoginButton />
               </div>
-              <Link href="/home" className="hover:group">
-                <div className="group ml-3 mr-14 mt-6 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
-                  <FontAwesomeIcon
-                    icon={faCircleQuestion}
-                    className="mr-2 w-5 group-hover:scale-110"
-                  />
-                  使い方
-                </div>
-              </Link>
               <div className="ml-5 mt-10">
-                <GestLoginButton />
+                <p className="mb-1 ml-2 text-xs">まずは試してみる！</p>
+                <GuestLoginButton />
               </div>
             </div>
           )}

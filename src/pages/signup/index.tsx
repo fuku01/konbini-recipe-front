@@ -1,7 +1,7 @@
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import router from 'next/router';
 import React, { useState } from 'react';
 import { PostButton } from '@/components/Button';
@@ -23,13 +23,12 @@ const Signup = () => {
         email,
         password
       );
-      // ユーザー名を登録
-      await updateProfile(userCredential.user, { displayName: name });
-      // IDトークンを取得
+      // IDトークンを取得、ユーザー名を登録
       const idToken = await userCredential.user.getIdToken();
       // ユーザー情報をDBに登録
       await axios.post('/users', {
         id_token: idToken, // IDトークンを送信
+        name: name, // ユーザー名を送信
       });
       alert('ユーザーを登録しました');
       await router.push('/home');

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import RecipeList from '@/components/RecipeList';
+import useAuth from '@/hooks/auth/useAuth';
 import { Pagy, myPagyState } from '@/state/pagy';
 
 type Recipe = {
@@ -26,10 +27,12 @@ type RecipeResponse = {
 const Myrecipe = () => {
   const [myrecipe, setMyrecipe] = useState<Recipe[]>([]);
   const [pagy, setPagy] = useRecoilState(myPagyState); // ページネーション情報を管理するステート(ページを維持するため)
+  const { token } = useAuth();
 
   // マイレシピを取得する関数
   const getMyrecipes = useCallback(
     async (page: number | null) => {
+      if (!token) return;
       try {
         const response = await axios.get<RecipeResponse>(
           `/my_recipes?page=${page}`
@@ -41,7 +44,7 @@ const Myrecipe = () => {
         console.log('マイレシピの取得に失敗しました', error);
       }
     },
-    [setPagy]
+    [setPagy, token]
   );
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const Myrecipe = () => {
 
   return (
     <div>
-      <RecipeList recipes={myrecipe} loginCheck={true} />
+      {token && <RecipeList recipes={myrecipe} loginCheck={true} />}
       {myrecipe && myrecipe.length > 0 ? (
         <div className="mt-5 text-center font-semibold">
           <button
