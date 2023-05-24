@@ -13,7 +13,7 @@ import useAuth from '@/hooks/auth/useAuth';
 
 const Footer = () => {
   const router = useRouter();
-  const { token } = useAuth();
+  const { loginUser, isWaiting } = useAuth();
 
   // faHouseの色を変える関数
   const GetHouseColor = () => {
@@ -46,9 +46,11 @@ const Footer = () => {
     }
   };
   // ログアウト中のアイコンの色を変える関数
-  const GetGrayoutColor = () => {
-    if (!token) {
+  const IconColor = () => {
+    if (!loginUser && !isWaiting) {
       return ' text-stone-400 hover:text-stone-400 ';
+    } else {
+      return ' text-[#75665C] hover:text-orange-500 ';
     }
   };
 
@@ -57,7 +59,7 @@ const Footer = () => {
       <Link href="/home">
         <div
           className={
-            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            'w-20 transition duration-75 ease-in-out hover:scale-105 ' +
             GetHouseColor()
           }
         >
@@ -72,7 +74,7 @@ const Footer = () => {
       <Link href="/searchrecipe">
         <div
           className={
-            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            'w-20 transition duration-75 ease-in-out hover:scale-105 ' +
             GetMagnifyingGlassColor()
           }
         >
@@ -88,12 +90,12 @@ const Footer = () => {
           </div>
         </div>
       </Link>
-      <Link href={token ? '/favoriterecipe' : '/guidance'}>
+      <Link href={loginUser ? '/favoriterecipe' : '/guidance'}>
         <div
           className={
-            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            'w-20 transition duration-75 ease-in-out hover:scale-105 ' +
             GetHeartColor() +
-            GetGrayoutColor()
+            IconColor()
           }
         >
           <div>
@@ -104,12 +106,12 @@ const Footer = () => {
           </div>
         </div>
       </Link>
-      <Link href={token ? '/myrecipe' : '/guidance'}>
+      <Link href={loginUser ? '/myrecipe' : '/guidance'}>
         <div
           className={
-            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            'w-20 transition duration-75 ease-in-out hover:scale-105 ' +
             GetFileLinesColor() +
-            GetGrayoutColor()
+            IconColor()
           }
         >
           <div>
@@ -121,12 +123,12 @@ const Footer = () => {
           </div>
         </div>
       </Link>
-      <Link href={token ? '/post' : '/guidance'}>
+      <Link href={loginUser ? '/post' : '/guidance'}>
         <div
           className={
-            'w-20 transition duration-75 ease-in-out hover:scale-105 hover:text-orange-500 ' +
+            'w-20 transition duration-75 ease-in-out hover:scale-105 ' +
             GetFilePenColor() +
-            GetGrayoutColor()
+            IconColor()
           }
         >
           <div>

@@ -31,7 +31,7 @@ type SideMenuProps = {
 const SideMenu = (props: SideMenuProps) => {
   const { isMenuOpen, setIsMenuOpen } = props;
 
-  const { token } = useAuth();
+  const { loginUser } = useAuth();
 
   // サイドメニュー表示中に、背景をスクロールできなくする。//
   const sideMenu = useRef(null);
@@ -85,7 +85,7 @@ const SideMenu = (props: SideMenuProps) => {
           }}
         >
           {/* ログイン中の場合 */}
-          {token ? (
+          {loginUser ? (
             <div>
               <Link href="/home" className="hover:group">
                 <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">

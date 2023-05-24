@@ -477,8 +477,6 @@ const EditRecipe = () => {
         </div>
       </div>
     );
-  } else {
-    return <div>ログインしてください</div>;
   }
 };
 

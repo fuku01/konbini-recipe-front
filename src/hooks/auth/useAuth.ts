@@ -21,14 +21,17 @@ const useAuth = () => {
   const auth = getAuth(app); // Firebase Authenticationの認証オブジェクトを取得
   const [loginUser, setLoginUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null); // トークンを保持するための変数を定義し、初期値をnullに設定
+  const [isWaiting, setIsWaiting] = useState<boolean>(false); // ログイン状態の変化を監視するための変数を定義し、初期値をtrueに設定
 
   // ログイン状態の変化を監視する（初期描画のタイミングで、ログイン状態をセットする）
   // ※ログインのセットより初期描画の方が早いため、これをしないと、初期描画時にログイン状態がセットされず、初期描画時にログインが必要なページを表示できない。
   useEffect(() => {
+    setIsWaiting(true);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoginUser(user);
       }
+      setIsWaiting(false);
     });
   }, [auth]);
 
@@ -41,7 +44,7 @@ const useAuth = () => {
     }
   }, [loginUser]);
 
-  return { auth, loginUser, token }; // 認証オブジェクトを返す
+  return { auth, loginUser, token, isWaiting }; // 認証オブジェクトを返す
 };
 
 export default useAuth;

@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { PostButton } from '@/components/Button';
+import useAuth from '@/hooks/auth/useAuth';
 import { searchWordState } from '@/state/search';
 
 type Recipe = {
@@ -61,6 +62,7 @@ const Recipes = () => {
   const [canClick, setCanClick] = useState<boolean>(true); // お気に入りボタンをクリックできるかどうかを管理するステート
 
   const [currentUser, setCurrentUser] = useState<User>(); // ログイン中のユーザー情報を管理するステート
+  const { token } = useAuth();
 
   // レシピの取得
   const getRecipe = useCallback(async () => {
@@ -342,7 +344,7 @@ const Recipes = () => {
         作成者：{recipe?.user_name}
       </div> */}
       {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
-      {currentUser && recipe && recipe.user_id === currentUser.id && (
+      {token && currentUser && recipe && recipe.user_id === currentUser.id && (
         <div className="mt-8 text-right">
           <Link href={'/editrecipes/' + id}>
             <PostButton>

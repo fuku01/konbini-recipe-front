@@ -38,13 +38,13 @@ const Guidance = () => {
               </p>
             </div>
             <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
-              <p className="font-semibold">
+              <div className="font-semibold">
                 <FontAwesomeIcon icon={faHeart} className="mr-2 w-5" />
                 お気に入り
                 <p className="ml-5 text-xs">
                   他の人のレシピをお気に入り登録し、一覧で確認できます。
                 </p>
-              </p>
+              </div>
             </div>
           </div>
         </div>
