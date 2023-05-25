@@ -10,6 +10,8 @@ import {
   faBarcode,
   faClockRotateLeft,
   faCircleUser,
+  faUtensils,
+  faTag,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -300,6 +302,7 @@ const Recipes = () => {
         </div>
       </div>
       <div className="mb-2 mt-10 text-lg font-semibold text-orange-500">
+        <FontAwesomeIcon icon={faUtensils} className="mr-2 w-5" />
         作り方
       </div>
       <div className="rounded-md bg-[#FDF1DE] px-2 py-2 shadow-md">
@@ -307,6 +310,7 @@ const Recipes = () => {
         <div className="whitespace-pre-wrap break-all">{recipe?.content}</div>
       </div>
       <div className="mb-2 mt-10 text-lg font-semibold text-orange-500">
+        <FontAwesomeIcon icon={faTag} className="mr-2 w-5" />
         タグ
       </div>
       {/* レシピに紐づくタグを表示 */}

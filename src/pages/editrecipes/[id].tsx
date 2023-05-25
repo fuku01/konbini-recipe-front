@@ -2,9 +2,15 @@ import {
   faBarcode,
   faCamera,
   faCircleXmark,
+  faClock,
+  faFileLines,
+  faFire,
   faPen,
   faPlus,
+  faTag,
   faTrash,
+  faUtensils,
+  faYenSign,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -247,7 +253,6 @@ const EditRecipe = () => {
               setBarcode={setBarcode}
             />
           )}
-          <div className="text-center text-2xl text-[#68B68D]">レシピ編集</div>
           {/* 写真編集 */}
           <input
             ref={imageForm}
@@ -263,7 +268,7 @@ const EditRecipe = () => {
           />
           {preview ? (
             <img
-              className="mx-auto mt-4 h-52 w-72 cursor-pointer rounded-2xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
+              className="mx-auto h-52 w-72 cursor-pointer rounded-2xl border-4 border-solid border-[#FBB87F] object-cover shadow-md hover:border-orange-500"
               onClick={() => {
                 if (imageForm.current) {
                   imageForm.current.click();
@@ -287,6 +292,7 @@ const EditRecipe = () => {
           )}
           <TextForm
             label="レシピタイトル"
+            labelIcon={faFileLines}
             placeholder="※ 必須(20文字以内)"
             width="w-full"
             value={title}
@@ -299,6 +305,7 @@ const EditRecipe = () => {
           />
           <TextFormArea
             label="作り方"
+            labelIcon={faUtensils}
             placeholder="※ 必須(500文字以内)"
             width="w-full"
             value={content}
@@ -321,6 +328,7 @@ const EditRecipe = () => {
               >
                 <TextForm
                   label="タグ"
+                  labelIcon={faTag}
                   placeholder="※ 5個以内(15文字以内)"
                   width="w-full"
                   value={tempTag}
@@ -391,12 +399,13 @@ const EditRecipe = () => {
           <div className="flex space-x-5">
             <SelectForm
               label={
-                <div>
+                <>
                   調理時間
                   <br />
-                  <div className="ml-14 text-xs">（分）</div>
-                </div>
+                  <div className="ml-14 mt-1 text-xs lg:ml-24">（分）</div>
+                </>
               }
+              labelIcon={faClock}
               width="w-1/3"
               value={time}
               onChange={(e) => {
@@ -405,12 +414,13 @@ const EditRecipe = () => {
             />
             <TextForm
               label={
-                <div>
+                <>
                   金額
                   <br />
-                  <div className="ml-14 text-xs">（円）</div>
-                </div>
+                  <div className="ml-14 mt-1 text-xs lg:ml-24">（円）</div>
+                </>
               }
+              labelIcon={faYenSign}
               placeholder="未入力"
               width="w-1/3"
               value={price}
@@ -425,12 +435,13 @@ const EditRecipe = () => {
             />
             <TextForm
               label={
-                <div>
+                <>
                   カロリー
                   <br />
-                  <div className="ml-14 text-xs">（kcal）</div>
-                </div>
+                  <div className="ml-14 mt-1 text-xs lg:ml-20">（kcal）</div>
+                </>
               }
+              labelIcon={faFire}
               placeholder="未入力"
               width="w-1/3"
               value={calorie}

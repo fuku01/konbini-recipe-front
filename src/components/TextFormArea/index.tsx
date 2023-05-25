@@ -1,7 +1,10 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 type TextFormProps = {
   label?: string;
+  labelIcon?: IconDefinition;
   placeholder?: string;
   width: string;
   value?: string | number;
@@ -10,7 +13,7 @@ type TextFormProps = {
 };
 
 const TextFormArea = (props: TextFormProps) => {
-  const { label, placeholder, width } = props;
+  const { label, labelIcon, placeholder, width } = props;
 
   return (
     <div className={`flex ${width} mt-10 flex-col items-end`}>
@@ -25,7 +28,12 @@ const TextFormArea = (props: TextFormProps) => {
 
         {label && (
           <label className="after:content[' '] peer-disabled:peer-placeholder-shown:text-blue-gray-500 pointer-events-none absolute -top-2.5 left-0 flex h-full w-full select-none text-base font-semibold leading-tight transition-all after:absolute after:-bottom-1 after:block after:w-full after:scale-x-0 after:border-b after:border-orange-500 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-focus:text-sm peer-focus:leading-tight peer-focus:text-orange-500 peer-focus:after:scale-x-100 peer-focus:after:border-orange-500 peer-disabled:text-transparent">
-            {label}
+            <div>
+              {labelIcon && (
+                <FontAwesomeIcon icon={labelIcon} className="mr-1 w-5" />
+              )}
+              {label}
+            </div>
           </label>
         )}
       </div>
