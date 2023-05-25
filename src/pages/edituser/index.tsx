@@ -1,69 +1,118 @@
 import { faUserGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { updateProfile } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
 import TextForm from '@/components/TextForm';
 import useAuth from '@/hooks/auth/useAuth';
 
-const EditUser = () => {
-  const { loginUser } = useAuth();
-  const [displayName, setDisplayName] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
-  const [editName, setEditName] = useState('');
+type User = {
+  id: number;
+  name: string;
+};
 
-  //  ログイン中のユーザ情報をステートに保存
-  useEffect(() => {
-    if (loginUser !== null) {
-      console.log('ログインユーザー情報', loginUser);
-      setEmail(loginUser.email);
+const EditUser = () => {
+  const [email, setEmail] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null); // ログイン中のユーザー情報を格納するステート
+  const [editName, setEditName] = useState('');
+  const { loginUser } = useAuth();
+  const { token } = useAuth();
+
+  // ログイン中のユーザー情報の取得（ログインユーザのみ編集ボタンを表示させたいため、取得する必要がある）
+  const getCurrentUser = useCallback(async () => {
+    if (!token) return;
+    try {
+      const response = await axios.get<User>('/me');
+      setCurrentUser(response.data);
+      console.log('ユーザー情報：', response.data);
+    } catch (error) {
+      console.log('ユーザーの取得に失敗しました', error);
     }
-  }, [loginUser]); // loginUserを依存配列に追加
+  }, [token]);
 
   // ユーザー情報の更新
-  const updateUser = async () => {
-    if (loginUser !== null) {
-      try {
-        await updateProfile(loginUser, {
-          displayName: editName,
-        });
-        setDisplayName(editName); // ユーザ名が更新された後、ステートを更新
-      } catch (error) {
-        console.log(error);
-      }
+  const updateUser = useCallback(async () => {
+    if (!token) return;
+    try {
+      const response = await axios.put<User>('/edit_me', {
+        name: editName,
+      });
+      console.log('ユーザー情報の更新に成功しました', response.data);
+      setCurrentUser(response.data);
+    } catch (error) {
+      console.log('ユーザー情報の更新に失敗しました', error);
     }
-  };
+  }, [editName, token]);
+
+  // データベースからユーザー情報を取得
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
+
+  // FireBaseからメールアドレスを取得
+  useEffect(() => {
+    if (loginUser !== null) {
+      console.log('FireBase情報:', loginUser);
+      setEmail(loginUser.email);
+    }
+  }, [loginUser]);
 
   return (
-    <div>
-      {loginUser ? (
+    <div className="select-none">
+      {loginUser && (
         <div>
-          <div>
-            <div className="text-center text-[#61B3DF]">
-              <FontAwesomeIcon icon={faUserGear} className="text-6xl" />
-              <div className="mr-1 mt-2 text-2xl">ユーザー設定</div>
+          <div className="mx-6 mt-6 rounded-2xl bg-[#FDF1DE] pb-8 pl-4 pt-4  shadow-md">
+            <p className="text-center font-bold">
+              <FontAwesomeIcon icon={faUserGear} className="mr-2" />
+              ユーザー情報
+            </p>
+            <div className="mt-6 space-y-1 text-sm">
+              <p>
+                ユーザー名 ：{' '}
+                <span className="text-base font-semibold">
+                  {currentUser?.name}
+                </span>
+              </p>
+              <p>
+                メールアドレス ：
+                <span className="text-base font-semibold">{email}</span>
+              </p>
             </div>
-            <h1>ユーザー情報</h1>
-            <div>名前：{displayName}</div>
-            <div>メールアドレス：{email}</div>
           </div>
-          <div>
-            <TextForm
-              label="ユーザー名"
-              placeholder="ユーザー名"
-              width="w-full"
-              onChange={(e) => setEditName(e.target.value)}
-            />
+          <div className="flex items-center justify-center space-x-8">
+            <div className="w-3/5">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  updateUser();
+                }}
+                className="w-full"
+              >
+                <TextForm
+                  label="ユーザー名を変更する"
+                  placeholder="※ 10文字以内"
+                  width="w-full"
+                  value={editName}
+                  maxLength={10}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    const trimmedValue = newValue.trimStart();
+                    setEditName(trimmedValue);
+                  }}
+                />
+              </form>
+            </div>
+            <div className="mt-20">
+              <button
+                className="rounded-md px-1 py-0.5 underline hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline active:scale-105"
+                onClick={() => {
+                  updateUser();
+                }}
+              >
+                変更
+              </button>
+            </div>
           </div>
-          <button
-            onClick={() => {
-              updateUser();
-            }}
-          >
-            更新
-          </button>
         </div>
-      ) : (
-        <div>ログインしてください</div>
       )}
     </div>
   );
