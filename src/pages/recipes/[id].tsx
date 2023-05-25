@@ -2,13 +2,14 @@ import {
   faHeart as regularHeart,
   faClock,
 } from '@fortawesome/free-regular-svg-icons';
-
 import {
   faHeart as solidHeart,
   faFilePen,
   faFire,
   faYenSign,
   faBarcode,
+  faClockRotateLeft,
+  faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -33,9 +34,11 @@ type Recipe = {
   updated_at: Date;
   price: number;
   tags: Tag[]; // タグ情報を含むプロパティ
+  user: User; // ユーザー情報を含むプロパティ
 };
 type User = {
   id: number;
+  name: string;
 };
 type Tag = {
   id: number;
@@ -66,7 +69,6 @@ const Recipes = () => {
 
   // レシピの取得
   const getRecipe = useCallback(async () => {
-    if (!token) return;
     try {
       const response = await axios.get<Recipe>('/recipes/' + id);
       setRecipe(response.data);
@@ -74,7 +76,7 @@ const Recipes = () => {
     } catch (error) {
       console.log('レシピの取得に失敗しました', error);
     }
-  }, [id, token]);
+  }, [id]);
 
   // ログイン中のユーザー情報の取得（ログインユーザのみ編集ボタンを表示させたいため、取得する必要がある）
   const getCurrentUser = useCallback(async () => {
@@ -330,8 +332,14 @@ const Recipes = () => {
           </div>
         ))}
       </div>
+      {/* 作成ユーザーを表示 */}
+      <div className="mt-10 text-center text-sm text-gray-500">
+        <FontAwesomeIcon icon={faCircleUser} className="mr-2" />
+        作成者：{recipe?.user.name}
+      </div>
       {/* 作成日と更新日を表示 */}
-      <div className="mt-10 text-center text-xs text-gray-500">
+      <div className="mt-4 text-center text-xs text-gray-500">
+        <FontAwesomeIcon icon={faClockRotateLeft} className="mr-2" />
         作成日：
         {recipe ? new Date(recipe?.created_at).toLocaleDateString() : 'N/A'}
         {recipe && recipe.updated_at !== recipe.created_at && (
@@ -341,10 +349,6 @@ const Recipes = () => {
           </span>
         )}
       </div>
-      {/* 作成ユーザーを表示 */}
-      {/* <div className="mt-2 text-center text-xs text-gray-500">
-        作成者：{recipe?.user_name}
-      </div> */}
       {/* 現在ログインしているユーザーがレシピを作成したユーザーである場合に、編集ボタンが表示される。 */}
       {token && currentUser && recipe && recipe.user_id === currentUser.id && (
         <div className="mt-8 text-right">
