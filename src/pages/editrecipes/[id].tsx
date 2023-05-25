@@ -253,7 +253,7 @@ const EditRecipe = () => {
             ref={imageForm}
             type="file"
             className="hidden w-full"
-            accept="image/*"
+            accept="image/*" //画像のみを選択できるようにする
             onChange={(e) => {
               const fileList = e.target.files;
               if (fileList) {

@@ -47,26 +47,39 @@ const Signup = () => {
       </div>
       <TextForm
         label="ユーザー名"
-        placeholder=""
+        placeholder="※ 必須(10文字以内)"
         width="w-full"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        maxLength={10}
+        onChange={(e) => {
+          const newValue = e.target.value;
+          const trimmedValue = newValue.trimStart();
+          setName(trimmedValue);
+        }}
       />
       <TextForm
         label="メールアドレス"
-        placeholder=""
+        placeholder="※ 必須"
         type="email"
         width="w-full"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          const newValue = e.target.value;
+          const trimmedValue = newValue.trimStart();
+          setEmail(trimmedValue);
+        }}
       />
       <TextForm
         label="パスワード"
-        placeholder="※ 6文字以上"
+        placeholder="※ 必須(6文字以上)"
         type="password"
         width="w-full"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          const newValue = e.target.value;
+          const trimmedValue = newValue.trimStart();
+          setPassword(trimmedValue);
+        }}
       />
       <div className="mt-5 text-right">
         <PostButton onClick={signupUser}>

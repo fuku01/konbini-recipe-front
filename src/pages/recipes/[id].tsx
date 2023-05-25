@@ -66,6 +66,7 @@ const Recipes = () => {
 
   // レシピの取得
   const getRecipe = useCallback(async () => {
+    if (!token) return;
     try {
       const response = await axios.get<Recipe>('/recipes/' + id);
       setRecipe(response.data);
@@ -73,10 +74,11 @@ const Recipes = () => {
     } catch (error) {
       console.log('レシピの取得に失敗しました', error);
     }
-  }, [id]);
+  }, [id, token]);
 
   // ログイン中のユーザー情報の取得（ログインユーザのみ編集ボタンを表示させたいため、取得する必要がある）
   const getCurrentUser = useCallback(async () => {
+    if (!token) return;
     try {
       const response = await axios.get<User>('/me');
       setCurrentUser(response.data);
@@ -84,7 +86,7 @@ const Recipes = () => {
     } catch (error) {
       console.log('ユーザーの取得に失敗しました', error);
     }
-  }, []);
+  }, [token]);
 
   // 分アイコンの色を変える関数
   const GetTimeColor = () => {

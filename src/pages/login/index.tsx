@@ -35,7 +35,11 @@ const Login = () => {
         type="email"
         width="w-full"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          const newValue = e.target.value;
+          const trimmedValue = newValue.trimStart();
+          setEmail(trimmedValue);
+        }}
       />
       <TextForm
         label="パスワード"
@@ -43,7 +47,11 @@ const Login = () => {
         type="password"
         width="w-full"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          const newValue = e.target.value;
+          const trimmedValue = newValue.trimStart();
+          setPassword(trimmedValue);
+        }}
       />
       <div className="mt-5 text-right">
         <PostBlueButton onClick={loginUser}>

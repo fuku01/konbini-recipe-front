@@ -69,15 +69,3 @@ export const TagButton = (props: ButtonProps) => {
     </button>
   );
 };
-
-export const SearchButton = (props: ButtonProps) => {
-  return (
-    <button
-      className="rounded-full bg-orange-300 px-2 py-1.5 text-center text-base text-white shadow-md transition duration-75 ease-in-out hover:bg-orange-500 active:scale-105 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:bg-gray-400"
-      disabled={props.disabled}
-      onClick={props.onClick}
-    >
-      {props.children}
-    </button>
-  );
-};

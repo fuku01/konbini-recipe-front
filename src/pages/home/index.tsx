@@ -72,10 +72,10 @@ const Home = () => {
   };
 
   return (
-    <div className="select-none">
+    <div className="mt-2 select-none">
       {/* ----------------------人気レシピの表示------------------------ */}
       <div>
-        <div className="">
+        <div>
           <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-bold shadow-md">
             <FontAwesomeIcon
               icon={faCrown}

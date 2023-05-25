@@ -184,7 +184,7 @@ const SideMenu = (props: SideMenuProps) => {
                   使い方
                 </div>
               </Link>
-              <div className="ml-6 mt-6">
+              <div className="ml-6 mt-8">
                 <span className="ml-1 text-xs">初めての方はこちら</span>
                 <SignupButton />
               </div>
