@@ -38,11 +38,6 @@ const TextForm = (props: TextFormProps) => {
         icon={faMagnifyingGlass}
         className="absolute left-2 top-1/2 -translate-y-1/2 text-lg text-gray-400 transition-all duration-100 peer-focus:text-base peer-focus:text-orange-500"
       />
-      {/* {label !== undefined && (
-        <label className="pointer-events-none absolute -left-1 -top-6 flex h-full w-full select-none text-base font-semibold leading-tight transition-all  after:absolute peer-focus:text-sm peer-focus:text-orange-500 ">
-          {label}
-        </label>
-      )} */}
     </div>
   );
 };

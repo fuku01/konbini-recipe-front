@@ -66,7 +66,7 @@ const FavoriteRecipe = () => {
             前のページ
           </button>
           <span className="mx-5">
-            {pagy.page}/{pagy.last}
+            {pagy.page} / {pagy.last}
           </span>
           <button
             className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"

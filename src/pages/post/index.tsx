@@ -2,8 +2,14 @@ import {
   faBarcode,
   faCamera,
   faCircleXmark,
+  faClock,
+  faFileLines,
+  faFire,
   faPen,
   faPlus,
+  faTag,
+  faUtensils,
+  faYenSign,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -205,6 +211,7 @@ const Post = () => {
           )}
           <TextForm
             label="レシピタイトル"
+            labelIcon={faFileLines}
             placeholder="※ 必須(20文字以内)"
             width="w-full"
             maxLength={20}
@@ -219,6 +226,7 @@ const Post = () => {
             placeholder="※ 必須(500文字以内)"
             width="w-full"
             label="作り方"
+            labelIcon={faUtensils}
             maxLength={500}
             value={content}
             onChange={(e) => {
@@ -238,6 +246,7 @@ const Post = () => {
               >
                 <TextForm
                   label="タグ"
+                  labelIcon={faTag}
                   placeholder="※ 5個以内(15文字以内)"
                   width="w-full"
                   value={tempTag}
@@ -301,12 +310,13 @@ const Post = () => {
           <div className="flex space-x-5">
             <SelectForm
               label={
-                <div>
+                <>
                   調理時間
                   <br />
-                  <div className="ml-14 text-xs">（分）</div>
-                </div>
+                  <div className="ml-14 mt-1 text-xs lg:ml-24">（分）</div>
+                </>
               }
+              labelIcon={faClock}
               placeholder="5分"
               width="w-1/3"
               value={time}
@@ -316,12 +326,13 @@ const Post = () => {
             />
             <TextForm
               label={
-                <div>
+                <>
                   金額
                   <br />
-                  <div className="ml-14 text-xs">（円）</div>
-                </div>
+                  <div className="ml-14 mt-1 text-xs lg:ml-24">（円）</div>
+                </>
               }
+              labelIcon={faYenSign}
               placeholder="未入力"
               width="w-1/3"
               type="number"
@@ -336,12 +347,13 @@ const Post = () => {
             />
             <TextForm
               label={
-                <div>
+                <>
                   カロリー
                   <br />
-                  <div className="ml-14 text-xs">（kcal）</div>
-                </div>
+                  <div className="ml-14 mt-1 text-xs lg:ml-20">（kcal）</div>
+                </>
               }
+              labelIcon={faFire}
               placeholder="未入力"
               width="w-1/3"
               type="number"

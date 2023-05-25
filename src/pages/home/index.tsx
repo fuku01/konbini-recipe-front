@@ -72,7 +72,7 @@ const Home = () => {
   };
 
   return (
-    <div className="mt-2 select-none">
+    <div className="mt-3 select-none">
       {/* ----------------------人気レシピの表示------------------------ */}
       <div>
         <div>
@@ -87,7 +87,7 @@ const Home = () => {
         <div className="flex">
           <div className="flex overflow-x-auto overscroll-x-none scroll-smooth whitespace-nowrap">
             {rankRecipe.map((recipe, index) => (
-              <div key={recipe.id} className="mx-2.5 mt-5 flex-shrink-0">
+              <div key={recipe.id} className="mx-2.5 mt-6 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>
                   <div
                     className="relative mx-auto h-44 w-60"
@@ -139,7 +139,7 @@ const Home = () => {
       </div>
       {/* ------------------------新着レシピの表示 ---------------------------*/}
       <div>
-        <div className="mb-5 mt-12">
+        <div className="mb-6 mt-16">
           <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-bold shadow-md">
             <FontAwesomeIcon
               icon={faSeedling}

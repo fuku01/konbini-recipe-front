@@ -132,7 +132,7 @@ const SideMenu = (props: SideMenuProps) => {
                   お気に入り
                 </div>
               </Link>
-              <Link href="/home" className="hover:group">
+              <Link href="/information" className="hover:group">
                 <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faCircleQuestion}
@@ -175,7 +175,7 @@ const SideMenu = (props: SideMenuProps) => {
                   検索
                 </div>
               </Link>
-              <Link href="/home" className="hover:group">
+              <Link href="/information" className="hover:group">
                 <div className="group ml-3 mr-6 mt-3 rounded-xl py-1.5 pl-4 transition duration-75 ease-in-out hover:bg-[#FBB87F] hover:text-orange-500">
                   <FontAwesomeIcon
                     icon={faCircleQuestion}
