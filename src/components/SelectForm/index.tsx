@@ -18,7 +18,7 @@ const SelectForm = (props: SelectFormProps) => {
         <select
           placeholder={placeholder}
           value={props.value} // ここにvalueプロパティを追加（編集ページの初期値表示のために必要。）
-          className={`border-blue-gray-200 text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer h-full w-full appearance-none rounded-none border-b bg-transparent pb-2 pt-10 text-center text-base outline outline-0 transition-all focus:border-orange-500 focus:outline-0 disabled:border-0 ${
+          className={`border-blue-gray-200 text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer h-full w-full appearance-none rounded-none border-b bg-transparent pb-2 pl-12 pt-10 text-base outline outline-0 transition-all focus:border-orange-500 focus:outline-0 disabled:border-0 ${
             props.value === '' ? 'text-gray-400' : 'text-blue-gray-700'
           }`}
           onChange={props.onChange}

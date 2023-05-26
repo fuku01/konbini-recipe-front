@@ -1,42 +1,100 @@
-import { faFileLines, faHeart, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+import {
+  faBarcode,
+  faFileLines,
+  faHeart as solidHeart,
+  faMagnifyingGlass,
+  faPen,
+  faTag,
+  faCircleQuestion,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import Link from 'next/link';
 import React from 'react';
 
 const Information = () => {
   return (
-    <div className="select-none text-sm">
-      {/* ------------------------------機能の案内---------------------------------- */}
-      <div>
-        <div className="mx-6 mt-3">
-          <div className="border-y-2 border-dotted border-[#FCCFA5] py-2.5">
-            <p className="font-semibold">
-              <FontAwesomeIcon icon={faPen} className="mr-2 w-5" />
-              レシピ投稿
-            </p>
-            <p className="ml-5 text-xs">
-              自分のレシピを投稿して、他の人に共有できます。
-            </p>
-          </div>
-          <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
-            <p className="font-semibold">
-              <FontAwesomeIcon icon={faFileLines} className="mr-2 w-5" />
-              マイレシピ
-            </p>
-            <p className="ml-5 text-xs">
-              自分が投稿したレシピを一覧で確認し、編集・削除できます。
-            </p>
-          </div>
-          <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
-            <div className="font-semibold">
-              <FontAwesomeIcon icon={faHeart} className="mr-2 w-5" />
-              お気に入り
-              <p className="ml-5 text-xs">
-                他の人のレシピをお気に入り登録し、一覧で確認できます。
-              </p>
-            </div>
-          </div>
+    <div className="mx-2 select-none text-sm">
+      <div className="border-b-2 border-dotted border-[#FCCFA5] pb-8">
+        <p className="mb-2 text-base font-bold">
+          <FontAwesomeIcon icon={faCircleQuestion} className="w-5" />
+          「コンビニレシピ」とは
+        </p>
+        <div className="ml-5 space-y-2 text-sm">
+          <p>
+            特に普段料理をせずコンビニご飯が多い方を対象にした、簡単なコンビニ食材のアレンジ方法を共有するサービスです。
+          </p>
+          <p>
+            バーコードスキャン機能を使えば、商品のバーコードを読み取るだけで、関連レシピを手間なく簡単に探すことができます。
+          </p>
+          <p>
+            料理が苦手でも、手軽に入手できるコンビニ食材を工夫することで、日々の食事をより美味しく楽しくしていきましょう！
+          </p>
+          <p className="pt-2 text-xs text-red-500">
+            ※ レシピの投稿やお気に入り登録にはログインが必要となります。
+          </p>
         </div>
+      </div>
+      <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-1 w-5" />
+          レシピの探し方
+        </span>
+        <div className="ml-5 mt-2 space-y-2 text-xs">
+          <p>
+            <span className="font-semibold">❶ ホームから探す</span>
+            ：ホーム画面では、人気ランキングと新着レシピをチェックすることができます。
+          </p>
+          <p>
+            <span className="font-semibold">❷ キーワードから探す</span>
+            ：「
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4" />
+            検索バー」に料理名や食材を入力し、レシピを検索できます。
+          </p>
+          <p>
+            <span className="font-semibold">❸ タグから探す</span>
+            ：レシピページの特定の 「
+            <FontAwesomeIcon icon={faTag} className="w-4" />
+            タグ」をクリックし、同じタグが付いたレシピを検索できます。
+          </p>
+          <p>
+            <span className="font-semibold">❹ バーコードから探す</span>
+            ：検索バーの横にある「
+            <FontAwesomeIcon icon={faBarcode} className="w-4 " />
+            バーコード」ボタンをクリックし、カメラで食材のバーコードをスキャン。その商品を使用したレシピを検索できます。
+          </p>
+        </div>
+      </div>
+      <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+          <FontAwesomeIcon icon={faPen} className="mr-1 w-5 " />
+          自分のレシピを投稿する
+        </span>
+        <p className="ml-5 mt-2 text-xs">
+          「<FontAwesomeIcon icon={faPen} className="w-4 " />
+          レシピ投稿」ボタンをクリックし、写真・タイトル・作り方・タグ（任意の文字列や、カメラで食材の
+          「<FontAwesomeIcon icon={faBarcode} className="w-4 " />
+          バーコード」をスキャンして登録）・調理時間・金額・カロリーを入力します。
+        </p>
+      </div>
+      <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+          <FontAwesomeIcon icon={faFileLines} className="mr-1 w-5 " />
+          マイレシピの確認
+        </span>
+        <p className="ml-5 mt-2 text-xs">
+          「マイレシピ」から自分が投稿したレシピの一覧を確認できます。各レシピはいつでも編集や削除が可能です。
+        </p>
+      </div>
+      <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+          <FontAwesomeIcon icon={solidHeart} className="mr-1 w-5 " />
+          レシピのお気に入り登録
+        </span>
+        <p className="ml-5 mt-2 text-xs">
+          お気に入りのレシピを見つけたら、「
+          <FontAwesomeIcon icon={regularHeart} className="w-4 " />
+          お気に入り」ボタンをクリックして保存できます。お気に入り登録したレシピは素早く参照することが可能です。
+        </p>
       </div>
     </div>
   );
