@@ -16,9 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className="bg-orange-50 text-[#75665C]">
       {/* ↓ここにボーダーを入れるとフッターアイコンがズレるので注意 */}
-      <div className="mx-auto flex h-screen w-screen flex-col bg-white outline outline-2 outline-[#FDF1DE] lg:w-1/3 ">
+      <div className="mx-auto flex min-h-screen w-screen flex-col bg-white outline outline-2 outline-[#FDF1DE] lg:h-screen lg:w-1/3 ">
         <Header />
-        <div className="flex-1 overflow-y-auto overscroll-none px-4 pb-36 pt-5 lg:px-6 lg:pb-10">
+        <div className="flex-1 overflow-y-auto overscroll-none px-4 pb-10 pt-5 lg:px-6">
           <RecoilRoot>
             <Component {...pageProps} />
           </RecoilRoot>
