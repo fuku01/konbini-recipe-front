@@ -25,10 +25,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className="text-center text-[#61B3DF]">
-        <FontAwesomeIcon icon={faRightToBracket} className="text-6xl" />
-        <div className="ml-1 mt-2 text-2xl">ログイン</div>
-      </div>
+      <div className="text-center text-2xl text-[#61B3DF]">ログイン</div>
       <TextForm
         label="メールアドレス"
         placeholder="メールアドレス"
