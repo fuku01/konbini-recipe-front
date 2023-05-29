@@ -27,6 +27,7 @@ type RecipeResponse = {
 const FavoriteRecipe = () => {
   const [favorite, setFavorite] = useState<Recipe[]>([]);
   const [pagy, setPagy] = useRecoilState(favoritePagyState); // ページネーション情報を管理するステート(ページを維持するため)
+  const [canClick, setCanClick] = useState<boolean>(true); // ページネーションのボタンを連打できないようにするためのステート
   const { token } = useAuth();
 
   // マイレシピを取得する関数
@@ -60,7 +61,13 @@ const FavoriteRecipe = () => {
             className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
             disabled={pagy.prev === null}
             onClick={() => {
-              getFavoriteRecipes(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
+              if (canClick) {
+                setCanClick(false);
+                setTimeout(() => {
+                  setCanClick(true);
+                }, 400);
+                getFavoriteRecipes(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
+              }
             }}
           >
             前のページ
@@ -72,8 +79,14 @@ const FavoriteRecipe = () => {
             className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
             disabled={pagy.next === null}
             onClick={() => {
-              console.log(pagy);
-              getFavoriteRecipes(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
+              if (canClick) {
+                setCanClick(false);
+                setTimeout(() => {
+                  setCanClick(true);
+                }, 400);
+                console.log(pagy);
+                getFavoriteRecipes(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
+              }
             }}
           >
             次のページ
