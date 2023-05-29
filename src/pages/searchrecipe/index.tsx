@@ -39,6 +39,7 @@ const SearchRecipe = () => {
   const [searchType] = useRecoilState(searchTypeState); // 検索の種類をボタンを管理するステート。デフォルトは新着順。
 
   const [pagy, setPagy] = useRecoilState(searchPagyState); // ページネーション情報を管理するステート(ページを維持するため)
+  const [canClick, setCanClick] = useState<boolean>(true); // ページネーションのボタンを連打できないようにするためのステート
 
   const [barcode, setBarcode] = useState<string>('');
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
@@ -103,11 +104,18 @@ const SearchRecipe = () => {
         clearTimeout(timerId.current); // ※タイマーをクリアする理由は、連続で入力された場合に、前回のタイマーをクリアするため
       }
     }
-  }, [pagy.page, searchWords, sendSearchRequest, setResultRecipes]);
+  }, [pagy.page, searchWords, sendSearchRequest, setPagy, setResultRecipes]);
 
   // バーコードに値が入ったら、searchWordsにその値を追加する関数
   useEffect(() => {
     if (barcode) {
+      // ページネーション情報を初期化
+      setPagy({
+        prev: null,
+        next: null,
+        page: 1,
+        last: null,
+      });
       setSearchWords([barcode]);
       setBarcode('');
     }
@@ -133,6 +141,13 @@ const SearchRecipe = () => {
             const trimmedValue = e.target.value.trimStart(); // 入力値の先頭の空白を除去
             const words = trimmedValue.split(/\s+/); // 空白（半角・全角）で文字列を分割
             setSearchWords(words); // 検索ワードをstateにセット
+            // ページネーション情報を初期化
+            setPagy({
+              prev: null,
+              next: null,
+              page: 1,
+              last: null,
+            });
             console.log('分割した検索ワード', words);
           }}
         />
@@ -154,7 +169,13 @@ const SearchRecipe = () => {
               className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
               disabled={pagy.prev === null}
               onClick={() => {
-                sendSearchRequest(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
+                if (canClick) {
+                  setCanClick(false);
+                  setTimeout(() => {
+                    setCanClick(true);
+                  }, 400);
+                  sendSearchRequest(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
+                }
               }}
             >
               前のページ
@@ -166,7 +187,13 @@ const SearchRecipe = () => {
               className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
               disabled={pagy.next === null}
               onClick={() => {
-                sendSearchRequest(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
+                if (canClick) {
+                  setCanClick(false);
+                  setTimeout(() => {
+                    setCanClick(true);
+                  }, 400);
+                  sendSearchRequest(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
+                }
               }}
             >
               次のページ
