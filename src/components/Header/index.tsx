@@ -33,16 +33,15 @@ const Header = () => {
         >
           <FontAwesomeIcon icon={faBars} />
         </div>
-        <Link href="/home">
-          <div className="text-center text-3xl font-bold">
-            {/* <img
-              src="/icon/konbini.svg"
-              alt="Icon"
-              className="absolute ml-4 mr-2 h-10 w-10"
-            /> */}
-            コンビニレシピ
-          </div>
-        </Link>
+        <div className="flex items-center justify-center">
+          <Link href="/home">
+            <img
+              src="/icon/logo.svg"
+              alt="logo"
+              className="mr-2 mt-0.5 h-9 w-56 lg:mr-0 lg:w-72"
+            />
+          </Link>
+        </div>
       </div>
       {isMenuOpen && (
         <SideMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />

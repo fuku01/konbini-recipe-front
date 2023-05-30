@@ -21,10 +21,17 @@ const Information = () => {
         </p>
         <div className="ml-5 space-y-2 text-sm">
           <p>
-            特に普段料理をせずコンビニご飯が多い方を対象にした、簡単なコンビニ食材のアレンジ方法を共有するサービスです。
+            特に普段料理をせず
+            <span className="font-semibold text-orange-500">
+              コンビニご飯が多い方
+            </span>
+            を対象にした、簡単なコンビニ食材のアレンジ方法を共有するサービスです。
           </p>
           <p>
-            バーコードスキャン機能を使えば、商品のバーコードを読み取るだけで、関連レシピを手間なく簡単に探すことができます。
+            <span className="font-semibold text-orange-500">
+              バーコードスキャン機能
+            </span>
+            を使えば、商品のバーコードを読み取るだけで、関連レシピを手間なく簡単に探すことができます。
           </p>
           <p>
             料理が苦手でも、手軽に入手できるコンビニ食材を工夫することで、日々の食事をより美味しく楽しくしていきましょう！
@@ -46,21 +53,32 @@ const Information = () => {
           </p>
           <p>
             <span className="font-semibold">❷ キーワードから探す</span>
-            ：「
-            <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4" />
-            検索バー」に料理名や食材を入力し、レシピを検索できます。
+            <span className="text-orange-500">
+              「
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4" />
+              検索バー」
+            </span>
+            に料理名や食材を入力し、レシピを検索できます。
           </p>
           <p>
             <span className="font-semibold">❸ タグから探す</span>
-            ：レシピページの特定の 「
-            <FontAwesomeIcon icon={faTag} className="w-4" />
-            タグ」をクリックし、同じタグが付いたレシピを検索できます。
+            ：レシピページの特定の{' '}
+            <span className="text-orange-500">
+              「
+              <FontAwesomeIcon icon={faTag} className="w-4" />
+              タグ」
+            </span>
+            をクリックし、同じタグが付いたレシピを検索できます。
           </p>
           <p>
             <span className="font-semibold">❹ バーコードから探す</span>
-            ：検索バーの横にある「
-            <FontAwesomeIcon icon={faBarcode} className="w-4 " />
-            バーコード」ボタンをクリックし、カメラで食材のバーコードをスキャン。その商品を使用したレシピを検索できます。
+            ：検索バーの横にある
+            <span className="text-orange-500">
+              「
+              <FontAwesomeIcon icon={faBarcode} className="w-4 " />
+              バーコード」
+            </span>
+            ボタンをクリックし、カメラで食材のバーコードをスキャン。その商品を使用したレシピを検索できます。
           </p>
         </div>
       </div>
@@ -70,10 +88,16 @@ const Information = () => {
           自分のレシピを投稿する
         </span>
         <p className="ml-5 mt-2 text-xs">
-          「<FontAwesomeIcon icon={faPen} className="w-4 " />
-          レシピ投稿」ボタンをクリックし、写真・タイトル・作り方・タグ（任意の文字列や、カメラで食材の
-          「<FontAwesomeIcon icon={faBarcode} className="w-4 " />
-          バーコード」をスキャンして登録）・調理時間・金額・カロリーを入力します。
+          <span className="text-orange-500">
+            「<FontAwesomeIcon icon={faPen} className="w-4 " />
+            レシピ投稿」
+          </span>
+          ボタンをクリックし、写真・タイトル・作り方・タグ（任意の文字列や、カメラで食材の
+          <span className="text-orange-500">
+            「<FontAwesomeIcon icon={faBarcode} className="w-4 " />
+            バーコード」
+          </span>
+          をスキャンして登録）・調理時間・金額・カロリーを入力します。
         </p>
       </div>
       <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
@@ -82,7 +106,11 @@ const Information = () => {
           マイレシピの確認
         </span>
         <p className="ml-5 mt-2 text-xs">
-          「マイレシピ」から自分が投稿したレシピの一覧を確認できます。各レシピはいつでも編集や削除が可能です。
+          <span className="text-orange-500">
+            「<FontAwesomeIcon icon={faFileLines} className="w-4" />
+            マイレシピ」
+          </span>
+          ボタンから自分が投稿したレシピの一覧を確認できます。各レシピはいつでも編集や削除が可能です。
         </p>
       </div>
       <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
@@ -91,9 +119,13 @@ const Information = () => {
           レシピのお気に入り登録
         </span>
         <p className="ml-5 mt-2 text-xs">
-          お気に入りのレシピを見つけたら、「
-          <FontAwesomeIcon icon={regularHeart} className="w-4 " />
-          お気に入り」ボタンをクリックして保存できます。お気に入り登録したレシピは素早く参照することが可能です。
+          お気に入りのレシピを見つけたら、{' '}
+          <span className="text-orange-500">
+            「
+            <FontAwesomeIcon icon={regularHeart} className="w-4 " />
+            お気に入り」
+          </span>
+          ボタンをクリックして保存できます。お気に入り登録したレシピは素早く参照することが可能です。
         </p>
       </div>
     </div>

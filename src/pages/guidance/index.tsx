@@ -55,14 +55,14 @@ const Guidance = () => {
         </div>
         <div className="mt-6 text-center">
           <p className="ml-5 text-base font-bold text-orange-500">
-            詳しい使い方はこちらをクリック
+            詳しい使い方はこちらをクリック↓
           </p>
           <Link href="/information" className="hover:group">
             <div className="group mt-1 text-xl underline underline-offset-4 transition duration-75 ease-in-out hover:text-orange-500">
-              <span className="rounded-lg px-1 py-0.5 hover:bg-[#FDF1DE] ">
+              <span className="rounded-lg px-3 py-0.5 hover:bg-[#FDF1DE] ">
                 <FontAwesomeIcon
                   icon={faCircleQuestion}
-                  className="mr-1 w-5 group-hover:scale-110"
+                  className="mr-2 w-5 group-hover:scale-110"
                 />
                 使い方
               </span>
