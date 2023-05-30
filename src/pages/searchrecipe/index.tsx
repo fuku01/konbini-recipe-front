@@ -167,13 +167,13 @@ const SearchRecipe = () => {
           <div className="mt-5 text-center font-semibold">
             <button
               className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline active:scale-105 disabled:pointer-events-none disabled:bg-opacity-0 disabled:text-gray-400 disabled:no-underline"
-              disabled={pagy.prev === null}
+              disabled={pagy.prev === null || canClick === false}
               onClick={() => {
                 if (canClick) {
                   setCanClick(false);
                   setTimeout(() => {
                     setCanClick(true);
-                  }, 400);
+                  }, 500);
                   sendSearchRequest(pagy.prev ?? 1); // ページネーション情報のprevを引数に渡してマイレシピを取得する、prevがnullの場合は1を渡す
                 }
               }}
@@ -185,13 +185,13 @@ const SearchRecipe = () => {
             </span>
             <button
               className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline active:scale-105 disabled:pointer-events-none disabled:bg-opacity-0 disabled:text-gray-400 disabled:no-underline"
-              disabled={pagy.next === null}
+              disabled={pagy.next === null || canClick === false}
               onClick={() => {
                 if (canClick) {
                   setCanClick(false);
                   setTimeout(() => {
                     setCanClick(true);
-                  }, 400);
+                  }, 500);
                   sendSearchRequest(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
                 }
               }}
