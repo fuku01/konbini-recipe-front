@@ -54,11 +54,11 @@ const Guidance = () => {
           </div>
         </div>
         <div className="mt-6 text-center">
-          <p className="ml-5 text-sm font-bold text-orange-500">
+          <p className="ml-5 text-base font-bold text-orange-500">
             詳しい使い方はこちらをクリック
           </p>
           <Link href="/information" className="hover:group">
-            <div className="group mt-1 text-lg underline transition duration-75 ease-in-out hover:text-orange-500">
+            <div className="group mt-1 text-xl underline underline-offset-4 transition duration-75 ease-in-out hover:text-orange-500">
               <span className="rounded-lg px-1 py-0.5 hover:bg-[#FDF1DE] ">
                 <FontAwesomeIcon
                   icon={faCircleQuestion}
@@ -70,7 +70,7 @@ const Guidance = () => {
           </Link>
         </div>
         {/* -----------------------------ログインの案内--------------------------------- */}
-        <div className="mx-6 mb-8 mt-4 rounded-2xl bg-[#FDF1DE] pb-10 pt-5 text-center shadow-md">
+        <div className="mx-6 mb-8 mt-5 rounded-2xl bg-[#FDF1DE] pb-10 pt-5 text-center shadow-md">
           <div className="mx-2 flex justify-around">
             <div>
               <span className="text-xs">初めての方はこちら</span>
