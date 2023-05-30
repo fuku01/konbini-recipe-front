@@ -53,12 +53,12 @@ const FavoriteRecipe = () => {
   }, [getFavoriteRecipes, pagy.page]);
 
   return (
-    <div>
+    <div className="select-none">
       {token && <RecipeList recipes={favorite} loginCheck={true} />}
       {favorite && favorite.length > 0 ? (
         <div className="mt-5 text-center font-semibold ">
           <button
-            className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
+            className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline active:scale-105 disabled:pointer-events-none disabled:bg-opacity-0 disabled:text-gray-400 disabled:no-underline"
             disabled={pagy.prev === null}
             onClick={() => {
               if (canClick) {
@@ -76,7 +76,7 @@ const FavoriteRecipe = () => {
             {pagy.page} / {pagy.last}
           </span>
           <button
-            className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline"
+            className="cursor-pointer rounded-md px-1 py-0.5 font-semibold hover:bg-[#FDF1DE] hover:text-orange-500 hover:underline active:scale-105 disabled:pointer-events-none disabled:bg-opacity-0 disabled:text-gray-400 disabled:no-underline"
             disabled={pagy.next === null}
             onClick={() => {
               if (canClick) {

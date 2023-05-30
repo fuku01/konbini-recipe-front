@@ -22,7 +22,7 @@ const GuestLoginButton = () => {
   return (
     <div>
       <button
-        className="rounded-full bg-[#FFE9AF] px-4 py-3 text-center text-sm font-black shadow-md outline-dashed hover:bg-[#FBD87F] active:scale-105 lg:text-lg "
+        className="rounded-full bg-[#FFE9AF] px-4 py-3 text-center text-sm font-black shadow-md outline-dotted hover:bg-[#FBD87F] active:scale-105 lg:text-lg "
         onClick={() => {
           loginUser();
         }}
