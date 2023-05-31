@@ -281,8 +281,8 @@ const Post = () => {
                 return (
                   <div key={index} className="flex">
                     <div className="mr-3 mt-2 rounded-md bg-[#FDF1DE] px-1 py-0.5 shadow-md">
-                      {/* 490から始まる数字のみのタグにはバーコードアイコンを表示させる */}{' '}
-                      {tag.name.match(/^490\d*$/) ? (
+                      {/* 4桁以上で数字のみのタグにはバーコードアイコンを表示させる */}{' '}
+                      {tag.name.match(/^\d{4,}$/) ? (
                         <FontAwesomeIcon icon={faBarcode} className="mr-1 " />
                       ) : (
                         '# '

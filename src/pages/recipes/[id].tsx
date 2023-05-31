@@ -325,8 +325,8 @@ const Recipes = () => {
                 router.push('/searchrecipe');
               }}
             >
-              {/* 490から始まる数字のみのタグにはバーコードアイコンを表示させる */}{' '}
-              {tag.name.match(/^490\d*$/) ? (
+              {/* 4桁の数字のみのタグにはバーコードアイコンを表示させる */}{' '}
+              {tag.name.match(/^\d{4,}$/) ? (
                 <FontAwesomeIcon icon={faBarcode} className="mr-1 " />
               ) : (
                 '# '
