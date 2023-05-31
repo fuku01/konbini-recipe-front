@@ -56,12 +56,8 @@ const SearchRecipe = () => {
             }
           );
           setResultRecipes(response.data.recipes);
-          console.log('【新着順】の検索結果を取得しました', response.data);
-          console.log('現在のページ', page);
           setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
-        } catch (error) {
-          console.log('【新着順】の検索結果を取得できませんでした', error);
-        }
+        } catch (error) {}
       } else if (searchType === 'rank') {
         try {
           const response = await axios.get<RecipeResponse>(
@@ -71,12 +67,8 @@ const SearchRecipe = () => {
             }
           );
           setResultRecipes(response.data.recipes);
-          console.log('【人気順】の検索結果を取得しました', response.data);
-          console.log('現在のページ', page);
           setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
-        } catch (error) {
-          console.log('【人気順】の検索結果を取得できませんでした', error);
-        }
+        } catch (error) {}
       }
     },
     [searchType, searchWords, setResultRecipes, setPagy]
@@ -148,7 +140,6 @@ const SearchRecipe = () => {
               page: 1,
               last: null,
             });
-            console.log('分割した検索ワード', words);
           }}
         />
         <div className="ml-4">

@@ -23,7 +23,6 @@ const EditUser = () => {
     try {
       const response = await axios.get<User>('/me');
       setCurrentUser(response.data);
-      console.log('ユーザー情報：', response.data);
     } catch (error) {
       console.log('ユーザーの取得に失敗しました', error);
     }
@@ -36,7 +35,6 @@ const EditUser = () => {
       const response = await axios.put<User>('/edit_me', {
         name: editName,
       });
-      console.log('ユーザー情報の更新に成功しました', response.data);
       setCurrentUser(response.data);
     } catch (error) {
       console.log('ユーザー情報の更新に失敗しました', error);
@@ -51,7 +49,6 @@ const EditUser = () => {
   // FireBaseからメールアドレスを取得
   useEffect(() => {
     if (loginUser !== null) {
-      console.log('FireBase情報:', loginUser);
       setEmail(loginUser.email);
     }
   }, [loginUser]);

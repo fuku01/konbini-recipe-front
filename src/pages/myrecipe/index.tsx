@@ -39,7 +39,6 @@ const Myrecipe = () => {
           `/my_recipes?page=${page}`
         );
         setMyrecipe(response.data.recipes);
-        console.log('マイレシピの取得に成功しました', response.data);
         setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
       } catch (error) {
         console.log('マイレシピの取得に失敗しました', error);

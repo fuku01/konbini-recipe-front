@@ -31,22 +31,18 @@ const Home = () => {
   const getNewRecipe = async () => {
     const response = await axios.get<Recipe[]>('/new_recipes');
     setNewRecipe(response.data);
-    console.log(response.data);
   };
   useEffect(() => {
     getNewRecipe();
-    console.log('新着レシピの取得に成功しました');
   }, []);
 
   // 人気レシピを取得する関数
   const getRankRecipe = async () => {
     const response = await axios.get<Recipe[]>('/rank_recipes');
     setRankRecipe(response.data);
-    console.log(response.data);
   };
   useEffect(() => {
     getRankRecipe();
-    console.log('人気レシピの取得に成功しました');
   }, []);
 
   // いいねの数字を見やすくする関数(Kとかつける。　※最大9.9Kまで表示)
@@ -89,15 +85,7 @@ const Home = () => {
             {rankRecipe.map((recipe, index) => (
               <div key={recipe.id} className="mx-2.5 mt-6 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>
-                  <div
-                    className="relative mx-auto h-44 w-60"
-                    onClick={() => {
-                      console.log(
-                        recipe.id,
-                        '←このIDのレシピをクリックしました'
-                      );
-                    }}
-                  >
+                  <div className="relative mx-auto h-44 w-60">
                     <img
                       className="relative h-full w-full rounded-2xl border-4 border-solid border-[#FBB87F] object-cover hover:border-orange-500"
                       alt="人気レシピ"
@@ -153,14 +141,7 @@ const Home = () => {
             {newRecipe.map((recipe) => (
               <div key={recipe.id} className="mx-2 flex-shrink-0">
                 <Link href={'/recipes/' + recipe.id}>
-                  <div
-                    onClick={() => {
-                      console.log(
-                        recipe.id,
-                        '←このIDのレシピをクリックしました'
-                      );
-                    }}
-                  >
+                  <div>
                     <img
                       className="h-24 w-32 rounded-lg border-4 border-solid border-[#FBB87F] object-cover hover:border-orange-500"
                       alt="新着レシピ"
