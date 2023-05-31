@@ -1,7 +1,10 @@
 # はじめに
 リポジトリをご覧いただきありがとうございます。
-[「ふく（fuku01）」](https://twitter.com/fuku_pg) と申します。
 
+こちらはフロントエンドのリポジトリです。
+バックエンドは[こちら](https://github.com/fuku01/konbini-recipe-api)
+
+[「ふく（fuku01）」](https://twitter.com/fuku_pg) と申します。
 簡単にポートフォリオの紹介をさせていただきます。
 
 
