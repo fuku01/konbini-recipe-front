@@ -26,7 +26,7 @@ ___
 調理時間・金額・カロリーなどの必要な情報が見やすくシンプルなデザインを追求しました。
 また、数値によって各項目の色が変わるようにしたことで、レシピの情報が直感的に判断できるようにしました。
 
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/bddb8d95-5502-498a-78ee-d02b5bbd7a91.jpeg" width=29%>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/bddb8d95-5502-498a-78ee-d02b5bbd7a91.jpeg" width=30%>
 
 ___
 ### （３） サービス開発の背景
