@@ -38,7 +38,7 @@ const Header = () => {
             <img
               src="/icon/logo.svg"
               alt="logo"
-              className="mr-2 mt-0.5 h-9 w-56 lg:mr-0 lg:w-72"
+              className="mr-4 mt-0.5 h-9 w-56 lg:w-72"
             />
           </Link>
         </div>
