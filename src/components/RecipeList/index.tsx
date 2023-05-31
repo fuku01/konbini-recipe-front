@@ -152,11 +152,7 @@ const RecipeList = (props: RecipeListProps) => {
             className="mb-3 h-28 rounded-lg bg-[#FFFAF2] py-2 shadow-md hover:bg-[#FDF1DE] hover:text-orange-500 hover:shadow-lg"
           >
             <Link href={'/recipes/' + recipe.id}>
-              <div
-                onClick={() => {
-                  console.log(recipe.id, '←このIDのレシピをクリックしました');
-                }}
-              >
+              <div>
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <img

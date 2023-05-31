@@ -87,9 +87,7 @@ const Post = () => {
         // タグの配列を、送信するデータの形式に合わせて変換する。例：['タグ1', 'タグ2'] => [{name: 'タグ1'}, {name: 'タグ2'}]　※この変換を行わないと、Rails側でタグの保存ができない
         data.recipe.tags_attributes = tags;
       }
-      const response = await axios.post('/recipes', data);
-
-      console.log('レシピの投稿に成功しました', response.data);
+      await axios.post('/recipes', data);
       alert('レシピの投稿に成功しました');
       await router.push('/home');
     }
@@ -150,11 +148,6 @@ const Post = () => {
       setBarcode('');
     }
   }, [barcode]);
-
-  // _destroyがfalseのタグのみを確認するためのuseEffect
-  useEffect(() => {
-    console.log('最新のタグ配列', tags);
-  }, [tags]);
 
   // この下からリターンの中身
   if (token) {

@@ -98,7 +98,6 @@ const EditRecipe = () => {
     if (!token) return;
     const response = await axios.get<Recipe>('/recipes/' + id);
     setRecipe(response.data);
-    console.log('レシピの取得に成功しました', response.data);
   }, [token, id]);
   useEffect(() => {
     if (token) {
@@ -112,7 +111,6 @@ const EditRecipe = () => {
     try {
       const response = await axios.get<User>('/me');
       setCurrentUser(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log('ユーザーの取得に失敗しました', error);
     }
@@ -142,10 +140,9 @@ const EditRecipe = () => {
     // 画像が存在する場合は、S3から削除する
     if (recipe?.image) {
       await deleteImageFromS3(recipe.image);
-      const response = await axios.delete('/recipes/' + id);
+      await axios.delete('/recipes/' + id);
       alert('レシピを削除しました');
       await router.push('/myrecipe');
-      console.log('レシピの削除に成功しました', response.data);
     }
   };
 
@@ -176,8 +173,7 @@ const EditRecipe = () => {
       data.recipe.tags_attributes = tags;
     }
 
-    const response = await axios.put('/recipes/' + id, data);
-    console.log('レシピの更新に成功しました', response.data);
+    await axios.put('/recipes/' + id, data);
     alert('レシピを更新しました');
     await router.push('/recipes/' + id);
   };
@@ -229,18 +225,6 @@ const EditRecipe = () => {
       setBarcode('');
     }
   }, [barcode]);
-
-  // _destroyがfalseのタグのみを確認するためのuseEffect
-  useEffect(() => {
-    console.log(
-      '最新のタグ配列',
-      tags.filter((tag) => !tag._destroy)
-    );
-  }, [tags]);
-
-  useEffect(() => {
-    console.log('テンプ', tempTag);
-  }, [tempTag]);
 
   if (currentUser && recipe && recipe.user_id === currentUser.id) {
     return (
@@ -460,7 +444,6 @@ const EditRecipe = () => {
               <DeleteButton
                 onClick={() => {
                   deleteRecipe();
-                  console.log('クリック！！');
                 }}
               >
                 <FontAwesomeIcon icon={faTrash} />
@@ -471,7 +454,6 @@ const EditRecipe = () => {
                 disabled={!title || !content}
                 onClick={() => {
                   editPostRecipe();
-                  console.log('クリック！！');
                 }}
               >
                 <FontAwesomeIcon icon={faPen} />

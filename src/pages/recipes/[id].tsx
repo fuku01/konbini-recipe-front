@@ -74,7 +74,6 @@ const Recipes = () => {
     try {
       const response = await axios.get<Recipe>('/recipes/' + id);
       setRecipe(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log('レシピの取得に失敗しました', error);
     }
@@ -86,7 +85,6 @@ const Recipes = () => {
     try {
       const response = await axios.get<User>('/me');
       setCurrentUser(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log('ユーザーの取得に失敗しました', error);
     }
@@ -137,10 +135,9 @@ const Recipes = () => {
       recipe_id: recipe?.id,
     };
     try {
-      const response = await axios.post('/favorites', data);
+      await axios.post('/favorites', data);
       await getFavoriteCount();
       await checkFavorite();
-      console.log('お気に入りを追加しました', response.data);
     } catch (error) {
       console.log('お気に入りの追加に失敗しました', error);
     }
@@ -149,10 +146,9 @@ const Recipes = () => {
   // お気に入りを削除する関数
   const deleteFavorite = async () => {
     try {
-      const response = await axios.delete('/favorites/' + isFavoriteId);
+      await axios.delete('/favorites/' + isFavoriteId);
       await getFavoriteCount();
       await checkFavorite();
-      console.log('お気に入りを削除しました', response.data);
     } catch (error) {
       console.log('お気に入りの削除に失敗しました', error);
     }
@@ -167,18 +163,15 @@ const Recipes = () => {
       // お気に入り済みの場合は、お気に入りIDを取得する
       if (response.data.favorited) {
         setIsFavoriteId(response.data.favorite_id);
-        console.log('お気に入りID:', response.data.favorite_id);
       }
-      console.log('お気に入り状態:', isFavorite);
     }
-  }, [currentUser, isFavorite, recipe]);
+  }, [currentUser, recipe]);
 
   // お気に入りの数を取得する関数
   const getFavoriteCount = useCallback(async () => {
     if (recipe && recipe.id) {
       const response = await axios.get('/favorite_count/' + recipe.id);
       setFavoriteCount(response.data.favorite_count);
-      console.log('お気に入り数:', response.data.favorite_count);
     }
   }, [recipe]);
 
@@ -241,7 +234,6 @@ const Recipes = () => {
                     if (isFavorite) {
                       // お気に入り登録されている場合
                       deleteFavorite(); // 削除
-                      console.log('お気に入り登録済みです');
                     } else {
                       // お気に入り登録されていない場合
                       addFavorite(); // 追加

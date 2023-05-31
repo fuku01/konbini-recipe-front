@@ -39,7 +39,6 @@ const FavoriteRecipe = () => {
           `/favorite_recipes?page=${page}`
         );
         setFavorite(response.data.recipes);
-        console.log('お気に入りレシピの取得に成功しました', response.data);
         setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
       } catch (error) {
         console.log('お気に入りレシピの取得に失敗しました', error);
@@ -84,7 +83,6 @@ const FavoriteRecipe = () => {
                 setTimeout(() => {
                   setCanClick(true);
                 }, 500);
-                console.log(pagy);
                 getFavoriteRecipes(pagy.next ?? pagy.last); // ページネーション情報のnextを引数に渡してマイレシピを取得する、nextがnullの場合はlastを渡す
               }
             }}
