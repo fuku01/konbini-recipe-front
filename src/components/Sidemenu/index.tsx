@@ -50,7 +50,7 @@ const SideMenu = (props: SideMenuProps) => {
     if (isMenuOpen === true) {
       return (
         <div
-          className="fixed inset-0 z-40 mx-auto flex items-center justify-center bg-black opacity-50 lg:w-1/3"
+          className="fixed inset-0 z-40 mx-auto flex items-center justify-center bg-black opacity-50 lg:w-[473px]"
           onClick={() => {
             setIsMenuOpen(false);
           }}
