@@ -72,7 +72,7 @@ const Home = () => {
       {/* ----------------------人気レシピの表示------------------------ */}
       <div>
         <div>
-          <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-bold shadow-md">
+          <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-medium shadow-md">
             <FontAwesomeIcon
               icon={faCrown}
               className="mr-2 text-2xl text-[#FFD700] "
@@ -128,7 +128,7 @@ const Home = () => {
       {/* ------------------------新着レシピの表示 ---------------------------*/}
       <div>
         <div className="mb-6 mt-16">
-          <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-bold shadow-md">
+          <span className="rounded-full bg-[#FDF1DE] px-5 py-1 text-xl font-medium shadow-md">
             <FontAwesomeIcon
               icon={faSeedling}
               className="mr-2 text-2xl text-[#94C8AD]"

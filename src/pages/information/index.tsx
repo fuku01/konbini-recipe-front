@@ -42,7 +42,7 @@ const Information = () => {
         </div>
       </div>
       <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
-        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-semibold">
           <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-1 w-5" />
           レシピの探し方
         </span>
@@ -83,7 +83,7 @@ const Information = () => {
         </div>
       </div>
       <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
-        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-semibold">
           <FontAwesomeIcon icon={faPen} className="mr-1 w-5 " />
           自分のレシピを投稿する
         </span>
@@ -101,7 +101,7 @@ const Information = () => {
         </p>
       </div>
       <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
-        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-semibold">
           <FontAwesomeIcon icon={faFileLines} className="mr-1 w-5 " />
           マイレシピの確認
         </span>
@@ -114,7 +114,7 @@ const Information = () => {
         </p>
       </div>
       <div className="border-b-2 border-dotted border-[#FCCFA5] py-2.5">
-        <span className="rounded-lg bg-[#FDF1DE] px-1 font-bold">
+        <span className="rounded-lg bg-[#FDF1DE] px-1 font-semibold">
           <FontAwesomeIcon icon={solidHeart} className="mr-1 w-5 " />
           レシピのお気に入り登録
         </span>
