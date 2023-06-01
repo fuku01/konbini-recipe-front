@@ -10,7 +10,7 @@
 
 ## 1. ポートフォリオ紹介
 ### （１） 概要
-[<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/83ed5024-d1e0-d952-10d9-5007ae26dd3a.png" width=20%>](https://konbini-recipe.link/home)
+[<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/83ed5024-d1e0-d952-10d9-5007ae26dd3a.png" width=200>](https://konbini-recipe.link/home)
 
 **「コンビニレシピ」URL :(https://konbini-recipe.link/home)**
 - 普段料理をせず<font color="DarkOrange">コンビニご飯が多い方</font>を対象とした、簡単なコンビニ食材のアレンジ方法を共有するサービスです。
@@ -20,17 +20,15 @@
 (※ より気軽にカメラを使ったバーコードスキャン機能を使用したいため、基本的には<ins>iPhoneなどのスマートフォンでの使用を想定</ins>しています。)
 ___
 ### （２） 使用イメージ
-#### 「バーコードスキャンによるレシピ検索」
+- **「バーコードスキャンによるレシピ検索」**
 カメラでバーコードをスキャンすると、その商品を使ったレシピ(同じバーコードが登録されたレシピ)を簡単に探すことができます。
 
-![barcode-test.GIF](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/e6af4cc4-fec9-84e0-956c-1a1e2334375b.gif)
-
-#### 「レシピ詳細ページ」
+- **「レシピ詳細ページ」**
 調理時間・金額・カロリーなどの必要な情報が見やすくシンプルなデザインを追求しました。
 また、数値によって各項目の色が変わるようにしたことで、レシピの情報が直感的に判断できるようにしました。
-
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/bddb8d95-5502-498a-78ee-d02b5bbd7a91.jpeg" width=30%>
-
+　
+ 
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/420b3692-ef59-76f8-262a-a89a6f67aa3c.gif" width=350>　<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3192049/0e0c40d9-b495-dc6b-0753-695752404991.jpeg" width=350>
 ___
 ### （３） サービス開発の背景
 - 私は日々の仕事帰りや夜遅くに帰ると、疲れた状態で料理をする気になれず、つい「コンビニ」で買い物をすることが多くなっていました。しかし、普通のレシピサイトを見ても、難しい料理ばかりで使いこなせなかったり、コンビニ食材の組み合わせには限りがあるためレシピを探すことも難しく、自分には敷居が高いと感じていました。
