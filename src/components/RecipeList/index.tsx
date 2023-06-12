@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { searchTypeState } from '../../state/search';
 import { searchPagyState } from '@/state/pagy';
@@ -84,6 +84,11 @@ const RecipeList = (props: RecipeListProps) => {
     }
   };
 
+  // props.recipeの中身をコンソールで確認するuseEffect
+  useEffect(() => {
+    console.log(pagy);
+  }, [pagy]);
+
   return (
     <div className="select-none">
       {/* 並び替え用のボタングループ */}
@@ -143,6 +148,11 @@ const RecipeList = (props: RecipeListProps) => {
           <div className="mt-2 text-sm font-semibold">
             （検索結果：{pagy.count} 件）
           </div>
+        </div>
+      ) : null}
+      {pagy.count === 0 ? (
+        <div className="mt-4 text-center text-base font-semibold">
+          該当するレシピがありませんでした。
         </div>
       ) : null}
       <div>

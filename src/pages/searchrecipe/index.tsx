@@ -47,6 +47,7 @@ const SearchRecipe = () => {
   // 検索リクエストを送信する関数
   const sendSearchRequest = useCallback(
     async (page: number | null) => {
+      // サーチタイプがnewの場合
       if (searchType === 'new') {
         try {
           const response = await axios.get<RecipeResponse>(
@@ -58,6 +59,7 @@ const SearchRecipe = () => {
           setResultRecipes(response.data.recipes);
           setPagy(response.data.pagy); // ページネーション情報を更新する(ページを維持するため)
         } catch (error) {}
+        // サーチタイプがrankの場合
       } else if (searchType === 'rank') {
         try {
           const response = await axios.get<RecipeResponse>(
