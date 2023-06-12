@@ -17,7 +17,7 @@ type Recipe = {
 // 検索ワードの状態を管理する
 export const searchWordState = atom<string[]>({
   key: 'searchWordState',
-  default: [], // 初期状態は空の配列
+  default: [''], // 初期状態は空の配列
 });
 
 // 検索結果の状態を管理する
