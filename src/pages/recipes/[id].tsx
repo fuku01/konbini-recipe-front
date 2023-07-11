@@ -331,7 +331,18 @@ const Recipes = () => {
       {/* 作成ユーザーを表示 */}
       <div className="mt-10 text-center text-sm text-gray-500">
         <FontAwesomeIcon icon={faCircleUser} className="mr-2" />
-        作成者：{recipe?.user.name}
+        作成者：
+        <span
+          className="inline-block cursor-pointer rounded-md px-0.5 py-0.5 transition duration-75 ease-in-out hover:bg-[#FCCFA5] hover:text-orange-500 hover:shadow-md active:scale-105"
+          onClick={() => {
+            if (recipe) {
+              setSearchWords([recipe.user.name]);
+              router.push('/searchrecipe');
+            }
+          }}
+        >
+          {recipe?.user.name}
+        </span>
       </div>
       {/* 作成日と更新日を表示 */}
       <div className="mt-4 text-center text-xs text-gray-500">

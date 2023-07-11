@@ -20,13 +20,13 @@ export const searchWordState = atom<string[]>({
   default: [''], // 初期状態は空の配列
 });
 
-// 検索結果の状態を管理する
+// 検索結果(レシピが表示された状態)の状態を管理する
 export const searchResultState = atom<Recipe[]>({
   key: 'searchResultState',
   default: [], // 初期状態は空の配列
 });
 
-// 検索タイプの状態を管理する
+// 検索タイプ（新着or人気順）の状態を管理する
 export const searchTypeState = atom<string>({
   key: 'searchTypeState',
   default: 'new', // 初期状態は新着検索
